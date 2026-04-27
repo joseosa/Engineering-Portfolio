@@ -2,10 +2,11 @@ const projects = {
   "crescent-moon": {
     tag: "Space Architecture",
     title: "Dual Person Spacecraft: Crescent Moon",
+    image: "crescent-moon.png",
     summary:
       "A spacecraft architecture concept for analog service near-Earth objects, developed through a Space Architecture Studio.",
     context:
-      "This project sits at the intersection of spacecraft design, mission architecture, habitability, and human-centered aerospace engineering. It communicates your ability to think beyond components and toward integrated systems.",
+      "This project sits at the intersection of spacecraft design, mission architecture, habitability, and human-centered aerospace engineering. It communicates the ability to think beyond components and toward integrated systems.",
     bullets: [
       "Near-Earth object mission concept",
       "Dual-person spacecraft architecture",
@@ -18,6 +19,7 @@ const projects = {
   "quantum-oscillator": {
     tag: "Computational Physics",
     title: "The Isotropic 3D Quantum Oscillator as a Molecular Model",
+    image: "quantum-oscillator.png",
     summary:
       "A Mathematica-based computational analysis modeling three-dimensional quantum atoms for group 6 hexafluorides.",
     context:
@@ -34,10 +36,11 @@ const projects = {
   ares: {
     tag: "NASA RASC-AL",
     title: "Ares Mission: Martian Habitat",
+    image: "ares.png",
     summary:
       "A Columbia Space Initiative project focused on designing a self-sufficient Martian habitat.",
     context:
-      "This project showcases your direct space systems interest, especially long-duration mission design, autonomous habitat planning, and engineering for extreme environments.",
+      "This project showcases direct space systems interest, especially long-duration mission design, autonomous habitat planning, and engineering for extreme environments.",
     bullets: [
       "Mars surface architecture",
       "Self-sufficient habitat concept",
@@ -50,10 +53,11 @@ const projects = {
   dawnism: {
     tag: "Systems Research",
     title: "Dawnism",
+    image: "dawnism.png",
     summary:
-      "An extensive interdisciplinary research project addressing climate change, global politics, healthcare, infrastructure, and societal systems.",
+      "An interdisciplinary research project addressing climate change, global politics, healthcare, infrastructure, and societal systems.",
     context:
-      "This is your broadest systems-thinking project. It positions you as someone who sees engineering not only as technical design, but as a tool for societal-scale intervention.",
+      "This is a broad systems-thinking project. It positions engineering not only as technical design, but as a tool for societal-scale intervention.",
     bullets: [
       "Climate and infrastructure systems",
       "Global-scale problem framing",
@@ -66,6 +70,7 @@ const projects = {
   titan: {
     tag: "NASA Blue Skies",
     title: "TITAN Project",
+    image: "titan.png",
     summary:
       "A Columbia Space Initiative aeronautical concept aimed at tackling agriculture problems with flight vehicles.",
     context:
@@ -82,10 +87,11 @@ const projects = {
   "argon-plasma": {
     tag: "Plasma Physics",
     title: "Manipulation of Argon Plasma Under Controlled Environments",
+    image: "argon-plasma.png",
     summary:
       "A senior physics seminar project involving argon plasma analysis and plasma element identification.",
     context:
-      "This project gives your portfolio a strong experimental physics anchor and links naturally to propulsion, plasma diagnostics, high-energy systems, and advanced aerospace technologies.",
+      "This project gives the portfolio a strong experimental physics anchor and links naturally to propulsion, plasma diagnostics, high-energy systems, and advanced aerospace technologies.",
     bullets: [
       "Argon plasma behavior",
       "Controlled-environment experimentation",
@@ -96,6 +102,8 @@ const projects = {
   }
 };
 
+
+/* Reveal animations */
 const revealElements = document.querySelectorAll(".reveal");
 
 const observer = new IntersectionObserver(
@@ -111,6 +119,8 @@ const observer = new IntersectionObserver(
 
 revealElements.forEach(el => observer.observe(el));
 
+
+/* Populate project pages */
 const params = new URLSearchParams(window.location.search);
 const id = params.get("id");
 
@@ -118,59 +128,99 @@ if (id && projects[id]) {
   const project = projects[id];
 
   document.title = `${project.title} | Jose Osa`;
-  document.getElementById("projectTag").textContent = project.tag;
-  document.getElementById("projectTitle").textContent = project.title;
-  document.getElementById("projectSummary").textContent = project.summary;
-  document.getElementById("projectContext").textContent = project.context;
 
+  const tag = document.getElementById("projectTag");
+  const title = document.getElementById("projectTitle");
+  const summary = document.getElementById("projectSummary");
+  const context = document.getElementById("projectContext");
   const list = document.getElementById("projectBullets");
-  project.bullets.forEach(item => {
-    const li = document.createElement("li");
-    li.textContent = item;
-    list.appendChild(li);
+  const image = document.getElementById("projectImage");
+
+  if (tag) tag.textContent = project.tag;
+  if (title) title.textContent = project.title;
+  if (summary) summary.textContent = project.summary;
+  if (context) context.textContent = project.context;
+
+  if (image) {
+    image.src = project.image;
+    image.alt = project.title;
+  }
+
+  if (list) {
+    list.innerHTML = "";
+    project.bullets.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
+    });
+  }
+}
+
+
+/* Project click transition animations */
+const transitionLayer = document.getElementById("pageTransition");
+
+if (transitionLayer) {
+  document.querySelectorAll(".image-card").forEach(card => {
+    card.addEventListener("click", event => {
+      event.preventDefault();
+
+      const target = card.getAttribute("href");
+      const transitionType = card.dataset.transition || "orbit";
+
+      transitionLayer.className = `page-transition active ${transitionType}`;
+
+      setTimeout(() => {
+        window.location.href = target;
+      }, 850);
+    });
   });
 }
 
+
+/* Animated star background */
 const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
 
-let stars = [];
+if (canvas) {
+  const ctx = canvas.getContext("2d");
+  let stars = [];
 
-function resizeCanvas() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-  stars = Array.from({ length: 120 }, () => ({
-    x: Math.random() * canvas.width,
-    y: Math.random() * canvas.height,
-    r: Math.random() * 1.6,
-    vx: (Math.random() - 0.5) * 0.18,
-    vy: (Math.random() - 0.5) * 0.18
-  }));
+    stars = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.6,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18
+    }));
+  }
+
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    stars.forEach(star => {
+      star.x += star.vx;
+      star.y += star.vy;
+
+      if (star.x < 0) star.x = canvas.width;
+      if (star.x > canvas.width) star.x = 0;
+      if (star.y < 0) star.y = canvas.height;
+      if (star.y > canvas.height) star.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animateStars);
+  }
+
+  resizeCanvas();
+  animateStars();
+
+  window.addEventListener("resize", resizeCanvas);
 }
-
-function animateStars() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  stars.forEach(star => {
-    star.x += star.vx;
-    star.y += star.vy;
-
-    if (star.x < 0) star.x = canvas.width;
-    if (star.x > canvas.width) star.x = 0;
-    if (star.y < 0) star.y = canvas.height;
-    if (star.y > canvas.height) star.y = 0;
-
-    ctx.beginPath();
-    ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(255,255,255,0.75)";
-    ctx.fill();
-  });
-
-  requestAnimationFrame(animateStars);
-}
-
-resizeCanvas();
-animateStars();
-
-window.addEventListener("resize", resizeCanvas);
