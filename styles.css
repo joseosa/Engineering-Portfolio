@@ -375,3 +375,180 @@ footer {
     flex-wrap: wrap;
   }
 }
+.image-card {
+  padding: 0;
+  min-height: 330px;
+  isolation: isolate;
+}
+
+.image-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0.72;
+  transform: scale(1.04);
+  transition: transform 0.7s ease, opacity 0.7s ease;
+  z-index: 0;
+}
+
+.image-card:hover img {
+  transform: scale(1.13);
+  opacity: 0.95;
+}
+
+.card-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(5,8,22,0.25), rgba(5,8,22,0.92)),
+    radial-gradient(circle at top right, rgba(120,240,255,0.25), transparent 45%);
+  z-index: 1;
+}
+
+.card-content {
+  position: relative;
+  z-index: 2;
+  padding: 1.5rem;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.page-transition {
+  position: fixed;
+  inset: 0;
+  z-index: 999;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(circle, rgba(120,240,255,0.18), rgba(5,8,22,0.98) 65%);
+  transition: opacity 0.25s ease;
+}
+
+.page-transition.active {
+  opacity: 1;
+}
+
+.transition-object {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 160px;
+  height: 160px;
+  transform: translate(-50%, -50%);
+}
+
+/* Drone transition */
+.page-transition.drone .transition-object {
+  width: 220px;
+  height: 80px;
+  background:
+    radial-gradient(circle at 15% 50%, #78f0ff 0 8px, transparent 9px),
+    radial-gradient(circle at 85% 50%, #78f0ff 0 8px, transparent 9px),
+    linear-gradient(90deg, transparent 10%, #ffffff 45%, #78f0ff 55%, transparent 90%);
+  filter: drop-shadow(0 0 24px #78f0ff);
+  animation: droneFly 0.9s ease forwards;
+}
+
+/* Orbit transition */
+.page-transition.orbit .transition-object {
+  border: 2px solid rgba(120,240,255,0.7);
+  border-radius: 50%;
+  box-shadow: 0 0 40px rgba(120,240,255,0.8);
+  animation: orbitExpand 0.9s ease forwards;
+}
+
+/* Atom transition */
+.page-transition.atom .transition-object {
+  border: 2px solid #9b7cff;
+  border-radius: 50%;
+  box-shadow: 0 0 35px #9b7cff;
+  animation: atomPulse 0.9s ease forwards;
+}
+
+.page-transition.atom .transition-object::before,
+.page-transition.atom .transition-object::after {
+  content: "";
+  position: absolute;
+  inset: 18px;
+  border: 1px solid rgba(120,240,255,0.8);
+  border-radius: 50%;
+}
+
+.page-transition.atom .transition-object::before {
+  transform: rotate(60deg) scaleX(1.8);
+}
+
+.page-transition.atom .transition-object::after {
+  transform: rotate(-60deg) scaleX(1.8);
+}
+
+/* Mars transition */
+.page-transition.mars {
+  background: radial-gradient(circle at center, #c2613d, #39120d 45%, #050816 80%);
+}
+
+.page-transition.mars .transition-object {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #ffbd83, #a53f2b 55%, #35110d);
+  box-shadow: 0 0 80px rgba(255,120,80,0.8);
+  animation: planetZoom 0.9s ease forwards;
+}
+
+/* Sunrise transition */
+.page-transition.sunrise .transition-object {
+  width: 280px;
+  height: 140px;
+  border-radius: 280px 280px 0 0;
+  background: linear-gradient(180deg, #fff6a5, #ff8a4c);
+  box-shadow: 0 0 80px rgba(255,180,90,0.8);
+  animation: sunriseLift 0.9s ease forwards;
+}
+
+/* Plasma transition */
+.page-transition.plasma {
+  background:
+    radial-gradient(circle at 35% 45%, rgba(155,124,255,0.55), transparent 28%),
+    radial-gradient(circle at 65% 55%, rgba(120,240,255,0.45), transparent 30%),
+    #050816;
+}
+
+.page-transition.plasma .transition-object {
+  border-radius: 50%;
+  background: radial-gradient(circle, #ffffff, #78f0ff 20%, #9b7cff 55%, transparent 70%);
+  filter: blur(3px);
+  animation: plasmaBurst 0.9s ease forwards;
+}
+
+@keyframes droneFly {
+  0% { transform: translate(-180vw, -50%) scale(0.8); }
+  55% { transform: translate(-50%, -50%) scale(1.1); }
+  100% { transform: translate(120vw, -50%) scale(1.3); }
+}
+
+@keyframes orbitExpand {
+  from { transform: translate(-50%, -50%) scale(0.2) rotate(0deg); opacity: 0.3; }
+  to { transform: translate(-50%, -50%) scale(7) rotate(260deg); opacity: 1; }
+}
+
+@keyframes atomPulse {
+  from { transform: translate(-50%, -50%) scale(0.4) rotate(0deg); opacity: 0.4; }
+  to { transform: translate(-50%, -50%) scale(5) rotate(220deg); opacity: 1; }
+}
+
+@keyframes planetZoom {
+  from { transform: translate(-50%, -50%) scale(0.3); }
+  to { transform: translate(-50%, -50%) scale(7); }
+}
+
+@keyframes sunriseLift {
+  from { transform: translate(-50%, 80%) scale(0.8); }
+  to { transform: translate(-50%, -50%) scale(5); }
+}
+
+@keyframes plasmaBurst {
+  from { transform: translate(-50%, -50%) scale(0.2); opacity: 0.2; }
+  to { transform: translate(-50%, -50%) scale(8); opacity: 1; }
+}
