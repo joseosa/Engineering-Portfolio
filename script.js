@@ -284,7 +284,7 @@ if (id && projects[id]) {
 }
 
 
-/* Project click transition animations */
+/* Project-card transition animations */
 const transitionLayer = document.getElementById("pageTransition");
 
 if (transitionLayer) {
@@ -303,6 +303,26 @@ if (transitionLayer) {
     });
   });
 }
+
+
+/* Rocket wipe transition from project pages back to homepage */
+document.addEventListener("DOMContentLoaded", () => {
+  const backButton = document.querySelector(".back-transition");
+  const backLayer = document.getElementById("backTransition");
+
+  if (backButton && backLayer) {
+    backButton.addEventListener("click", event => {
+      event.preventDefault();
+
+      const target = backButton.getAttribute("href");
+      backLayer.classList.add("active");
+
+      setTimeout(() => {
+        window.location.href = target;
+      }, 950);
+    });
+  }
+});
 
 
 /* Animated star background */
@@ -350,20 +370,4 @@ if (canvas) {
   animateStars();
 
   window.addEventListener("resize", resizeCanvas);
-}
-/* Back transition from project pages to homepage */
-const backTransitionButton = document.querySelector(".back-transition");
-const backTransitionLayer = document.getElementById("backTransition");
-
-if (backTransitionButton && backTransitionLayer) {
-  backTransitionButton.addEventListener("click", event => {
-    event.preventDefault();
-
-    const target = backTransitionButton.getAttribute("href");
-    backTransitionLayer.classList.add("active");
-
-    setTimeout(() => {
-      window.location.href = target;
-    }, 1000);
-  });
 }
