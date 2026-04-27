@@ -1003,3 +1003,326 @@ footer {
     min-height: 420px;
   }
 }
+/* Atom-to-space homepage hero */
+.atom-space-hero {
+  height: 540px;
+  position: relative;
+  display: grid;
+  place-items: center;
+  perspective: 1000px;
+}
+
+.atom-earth-core {
+  width: 92px;
+  height: 92px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff 0 8%, #78f0ff 18%, #9b7cff 48%, #17245e 72%);
+  box-shadow:
+    0 0 50px rgba(120,240,255,0.85),
+    inset -18px -18px 35px rgba(0,0,0,0.45);
+  animation: atomToEarth 8s ease-in-out infinite;
+  z-index: 4;
+}
+
+.atom-orbit {
+  position: absolute;
+  width: 320px;
+  height: 120px;
+  border: 1px solid rgba(120,240,255,0.6);
+  border-radius: 50%;
+  filter: drop-shadow(0 0 16px rgba(120,240,255,0.35));
+  animation: orbitFadeToSpace 8s ease-in-out infinite;
+}
+
+.orbit-a {
+  transform: rotate(28deg);
+}
+
+.orbit-b {
+  transform: rotate(-62deg);
+}
+
+.electron {
+  position: absolute;
+  top: 50%;
+  left: -7px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 20px #78f0ff;
+  animation: electronTravel 2.6s linear infinite;
+}
+
+.spacecraft-orbit {
+  position: absolute;
+  width: 410px;
+  height: 410px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 50%;
+  opacity: 0;
+  animation: spacecraftOrbitAppear 8s ease-in-out infinite;
+}
+
+.spacecraft {
+  position: absolute;
+  left: 50%;
+  top: -12px;
+  width: 54px;
+  height: 22px;
+  transform: translateX(-50%) rotate(25deg);
+  background:
+    linear-gradient(90deg, transparent 0 10%, #ffffff 34%, #78f0ff 58%, transparent 88%);
+  filter: drop-shadow(0 0 18px #78f0ff);
+}
+
+.spacecraft::before,
+.spacecraft::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 22px;
+  height: 2px;
+  background: rgba(255,255,255,0.9);
+}
+
+.spacecraft::before {
+  left: -16px;
+  transform: rotate(25deg);
+}
+
+.spacecraft::after {
+  right: -16px;
+  transform: rotate(-25deg);
+}
+
+.hero-caption {
+  position: absolute;
+  bottom: 48px;
+  color: var(--muted);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 800;
+  animation: captionPulse 8s ease-in-out infinite;
+}
+
+@keyframes atomToEarth {
+  0%, 28% {
+    width: 92px;
+    height: 92px;
+    background:
+      radial-gradient(circle at 35% 30%, #ffffff 0 8%, #78f0ff 18%, #9b7cff 48%, #17245e 72%);
+    transform: scale(1);
+  }
+
+  45%, 100% {
+    width: 250px;
+    height: 250px;
+    background:
+      radial-gradient(circle at 34% 28%, #ffffff 0 5%, #7de8ff 10%, #1c75bc 32%, #143d7a 48%, #10204a 72%),
+      radial-gradient(circle at 58% 48%, #61d394 0 10%, transparent 18%),
+      radial-gradient(circle at 42% 58%, #61d394 0 9%, transparent 17%);
+    transform: scale(1);
+    box-shadow:
+      0 0 90px rgba(120,240,255,0.55),
+      inset -35px -35px 70px rgba(0,0,0,0.52);
+  }
+}
+
+@keyframes orbitFadeToSpace {
+  0%, 32% {
+    opacity: 1;
+  }
+
+  48%, 100% {
+    opacity: 0;
+    transform: rotate(0deg) scale(1.4);
+  }
+}
+
+@keyframes electronTravel {
+  from {
+    offset-distance: 0%;
+  }
+
+  to {
+    offset-distance: 100%;
+  }
+}
+
+.atom-orbit .electron {
+  offset-path: ellipse(160px 60px at 160px 60px);
+}
+
+@keyframes spacecraftOrbitAppear {
+  0%, 38% {
+    opacity: 0;
+    transform: rotate(0deg) scale(0.7);
+  }
+
+  48% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+@keyframes captionPulse {
+  0%, 34% {
+    opacity: 0.5;
+  }
+
+  48%, 100% {
+    opacity: 1;
+  }
+}
+
+/* Back-to-home transition */
+.back-transition-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0;
+  background:
+    radial-gradient(circle at center, rgba(120,240,255,0.25), transparent 26%),
+    linear-gradient(180deg, #050816, #0b1026);
+  transition: opacity 0.25s ease;
+}
+
+.back-transition-layer.active {
+  opacity: 1;
+}
+
+.back-atom-earth {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.back-core {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #ffffff, #78f0ff 20%, #9b7cff 52%, #17245e 72%);
+  box-shadow: 0 0 70px rgba(120,240,255,0.8);
+  animation: backCoreTransform 1.05s ease forwards;
+}
+
+.back-ring {
+  position: absolute;
+  width: 310px;
+  height: 115px;
+  border: 1px solid rgba(120,240,255,0.7);
+  border-radius: 50%;
+  animation: backRingTransform 1.05s ease forwards;
+}
+
+.back-ring.ring-one {
+  transform: rotate(28deg);
+}
+
+.back-ring.ring-two {
+  transform: rotate(-62deg);
+}
+
+.back-ship {
+  position: absolute;
+  width: 52px;
+  height: 22px;
+  background:
+    linear-gradient(90deg, transparent 0 10%, #ffffff 34%, #78f0ff 58%, transparent 88%);
+  filter: drop-shadow(0 0 20px #78f0ff);
+  animation: backShipOrbit 1.05s ease forwards;
+}
+
+@keyframes backCoreTransform {
+  0% {
+    width: 90px;
+    height: 90px;
+    transform: scale(0.5);
+  }
+
+  55% {
+    width: 230px;
+    height: 230px;
+    background:
+      radial-gradient(circle at 34% 28%, #ffffff 0 5%, #7de8ff 10%, #1c75bc 32%, #143d7a 48%, #10204a 72%);
+  }
+
+  100% {
+    width: 260px;
+    height: 260px;
+    transform: scale(1.08);
+    background:
+      radial-gradient(circle at 34% 28%, #ffffff 0 5%, #7de8ff 10%, #1c75bc 32%, #143d7a 48%, #10204a 72%);
+  }
+}
+
+@keyframes backRingTransform {
+  0% {
+    opacity: 1;
+    transform: rotate(0deg) scale(0.55);
+  }
+
+  45% {
+    opacity: 0.7;
+  }
+
+  100% {
+    opacity: 0;
+    transform: rotate(180deg) scale(1.8);
+  }
+}
+
+@keyframes backShipOrbit {
+  0% {
+    opacity: 0;
+    transform: rotate(0deg) translateX(60px) rotate(25deg);
+  }
+
+  40% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: rotate(320deg) translateX(210px) rotate(25deg);
+  }
+}
+
+@media (max-width: 900px) {
+  .atom-space-hero {
+    height: 390px;
+  }
+
+  .atom-earth-core {
+    animation-name: atomToEarthMobile;
+  }
+
+  .spacecraft-orbit {
+    width: 300px;
+    height: 300px;
+  }
+
+  @keyframes atomToEarthMobile {
+    0%, 28% {
+      width: 82px;
+      height: 82px;
+      transform: scale(1);
+    }
+
+    45%, 100% {
+      width: 185px;
+      height: 185px;
+      transform: scale(1);
+    }
+  }
+}
