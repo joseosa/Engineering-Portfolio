@@ -351,3 +351,19 @@ if (canvas) {
 
   window.addEventListener("resize", resizeCanvas);
 }
+/* Back transition from project pages to homepage */
+const backTransitionButton = document.querySelector(".back-transition");
+const backTransitionLayer = document.getElementById("backTransition");
+
+if (backTransitionButton && backTransitionLayer) {
+  backTransitionButton.addEventListener("click", event => {
+    event.preventDefault();
+
+    const target = backTransitionButton.getAttribute("href");
+    backTransitionLayer.classList.add("active");
+
+    setTimeout(() => {
+      window.location.href = target;
+    }, 1000);
+  });
+}
