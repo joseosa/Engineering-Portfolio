@@ -331,12 +331,13 @@ function setupStarBackground() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    stars = Array.from({ length: 120 }, () => ({
+    stars = Array.from({ length: 140 }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
-      r: Math.random() * 1.6,
-      vx: (Math.random() - 0.5) * 0.18,
-      vy: (Math.random() - 0.5) * 0.18
+      r: Math.random() * 1.7 + 0.2,
+      vx: (Math.random() - 0.5) * 0.12,
+      vy: (Math.random() - 0.5) * 0.12,
+      alpha: Math.random() * 0.65 + 0.25
     }));
   }
 
@@ -354,7 +355,7 @@ function setupStarBackground() {
 
       ctx.beginPath();
       ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.fillStyle = `rgba(255,255,255,${star.alpha})`;
       ctx.fill();
     });
 
