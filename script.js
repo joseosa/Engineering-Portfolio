@@ -154,25 +154,9 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function setupRevealAnimations() {
-  const revealElements = document.querySelectorAll(".reveal");
-
-  if (!("IntersectionObserver" in window)) {
-    revealElements.forEach(el => el.classList.add("visible"));
-    return;
-  }
-
-  const observer = new IntersectionObserver(
-    entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    },
-    { threshold: 0.12 }
-  );
-
-  revealElements.forEach(el => observer.observe(el));
+  document.querySelectorAll(".reveal").forEach(el => {
+    el.classList.add("visible");
+  });
 }
 
 function populateProjectPage() {
