@@ -309,11 +309,14 @@ function setupBackTransition() {
     event.preventDefault();
 
     const target = backButton.getAttribute("href");
+
+    backLayer.classList.remove("active");
+    void backLayer.offsetWidth;
     backLayer.classList.add("active");
 
     setTimeout(() => {
       window.location.href = target;
-    }, 950);
+    }, 1150);
   });
 }
 
