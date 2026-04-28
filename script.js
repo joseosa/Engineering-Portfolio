@@ -146,8 +146,20 @@ const projects = {
 };
 
 document.addEventListener("DOMContentLoaded", () => {
-  /* Reveal animations */
+  setupRevealAnimations();
+  populateProjectPage();
+  setupProjectCardTransitions();
+  setupBackTransition();
+  setupStarBackground();
+});
+
+function setupRevealAnimations() {
   const revealElements = document.querySelectorAll(".reveal");
+
+  if (!("IntersectionObserver" in window)) {
+    revealElements.forEach(el => el.classList.add("visible"));
+    return;
+  }
 
   const observer = new IntersectionObserver(
     entries => {
@@ -157,244 +169,212 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.12 }
   );
 
   revealElements.forEach(el => observer.observe(el));
+}
 
-  /* Populate project pages */
+function populateProjectPage() {
   const params = new URLSearchParams(window.location.search);
   const id = params.get("id");
 
-  if (id && projects[id]) {
-    const project = projects[id];
+  if (!id || !projects[id]) return;
 
-    document.title = `${project.title} | Jose Osa`;
+  const project = projects[id];
+  document.title = `${project.title} | Jose Osa`;
 
-    const fields = {
-      projectTag: project.tag,
-      projectTitle: project.title,
-      projectSummary: project.summary,
-      overviewTitle: project.title,
-      projectOverview: project.overview,
-      projectChallenge: project.challenge,
-      projectSolution: project.solution,
-      projectImpact: project.impact,
-      visualTitle: project.visualTitle,
-      visualText: project.visualText
-    };
+  const fields = {
+    projectTag: project.tag,
+    projectTitle: project.title,
+    projectSummary: project.summary,
+    overviewTitle: project.title,
+    projectOverview: project.overview,
+    projectChallenge: project.challenge,
+    projectSolution: project.solution,
+    projectImpact: project.impact,
+    visualTitle: project.visualTitle,
+    visualText: project.visualText
+  };
 
-    Object.keys(fields).forEach(elementId => {
-      const element = document.getElementById(elementId);
-      if (element) element.textContent = fields[elementId];
+  Object.entries(fields).forEach(([elementId, value]) => {
+    const element = document.getElementById(elementId);
+    if (element) element.textContent = value;
+  });
+
+  const image = document.getElementById("projectImage");
+  if (image) {
+    image.src = project.image;
+    image.alt = project.title;
+  }
+
+  const list = document.getElementById("projectBullets");
+  if (list) {
+    list.innerHTML = "";
+    project.bullets.forEach(item => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      list.appendChild(li);
     });
+  }
 
-    const image = document.getElementById("projectImage");
-    if (image) {
-      image.src = project.image;
-      image.alt = project.title;
-    }
+  const visualStage = document.getElementById("visualStage");
+  const diagramImage = document.getElementById("diagramImage");
+  const generatedVisual = document.getElementById("generatedVisual");
 
-    const list = document.getElementById("projectBullets");
-    if (list) {
-      list.innerHTML = "";
-      project.bullets.forEach(item => {
-        const li = document.createElement("li");
-        li.textContent = item;
-        list.appendChild(li);
-      });
-    }
+  if (visualStage) {
+    visualStage.className = `visual-stage ${project.visualType || "image"}`;
+  }
 
-    const visualStage = document.getElementById("visualStage");
-    const diagramImage = document.getElementById("diagramImage");
-    const generatedVisual = document.getElementById("generatedVisual");
-
-    if (visualStage) {
-      visualStage.className = `visual-stage ${project.visualType || "image"}`;
-    }
-
-    if (diagramImage) {
-      if (project.diagram) {
-        diagramImage.src = project.diagram;
-        diagramImage.alt = `${project.title} engineering diagram`;
-        diagramImage.style.display = "block";
-      } else {
-        diagramImage.style.display = "none";
-      }
-    }
-
-    if (generatedVisual) {
-      generatedVisual.innerHTML = "";
-
-      if (project.visualType === "quantum") {
-        generatedVisual.innerHTML = `
-          <div class="quantum-visual">
-            <div class="nucleus"></div>
-            <div class="orbital orbital-one"></div>
-            <div class="orbital orbital-two"></div>
-            <div class="orbital orbital-three"></div>
-            <div class="particle p1"></div>
-            <div class="particle p2"></div>
-            <div class="particle p3"></div>
-          </div>
-        `;
-      }
-
-      if (project.visualType === "dawnism") {
-        generatedVisual.innerHTML = `
-          <div class="dawnism-visual">
-            <div class="sunrise-core"></div>
-            <div class="earth-arc"></div>
-            <div class="network-dot d1"></div>
-            <div class="network-dot d2"></div>
-            <div class="network-dot d3"></div>
-            <div class="network-dot d4"></div>
-            <div class="network-line l1"></div>
-            <div class="network-line l2"></div>
-            <div class="network-line l3"></div>
-          </div>
-        `;
-      }
-
-      if (project.visualType === "titan") {
-        generatedVisual.innerHTML = `
-          <div class="drone-overlay">
-            <div class="mini-drone">
-              <span></span><span></span><span></span><span></span>
-            </div>
-            <div class="fertilizer-drops">
-              <i></i><i></i><i></i><i></i><i></i>
-            </div>
-          </div>
-        `;
-      }
-
-      if (project.visualType === "plasma") {
-        generatedVisual.innerHTML = `
-          <div class="plasma-overlay">
-            <div class="plasma-tube"></div>
-            <div class="plasma-glow g1"></div>
-            <div class="plasma-glow g2"></div>
-            <div class="plasma-glow g3"></div>
-          </div>
-        `;
-      }
+  if (diagramImage) {
+    if (project.diagram) {
+      diagramImage.src = project.diagram;
+      diagramImage.alt = `${project.title} engineering diagram`;
+      diagramImage.style.display = "block";
+    } else {
+      diagramImage.style.display = "none";
     }
   }
 
-  /* Project-card transition animations */
+  if (!generatedVisual) return;
+
+  generatedVisual.innerHTML = "";
+
+  if (project.visualType === "quantum") {
+    generatedVisual.innerHTML = `
+      <div class="quantum-visual">
+        <div class="nucleus"></div>
+        <div class="orbital orbital-one"></div>
+        <div class="orbital orbital-two"></div>
+        <div class="orbital orbital-three"></div>
+        <div class="particle p1"></div>
+        <div class="particle p2"></div>
+        <div class="particle p3"></div>
+      </div>
+    `;
+  }
+
+  if (project.visualType === "dawnism") {
+    generatedVisual.innerHTML = `
+      <div class="dawnism-visual">
+        <div class="sunrise-core"></div>
+        <div class="earth-arc"></div>
+        <div class="network-dot d1"></div>
+        <div class="network-dot d2"></div>
+        <div class="network-dot d3"></div>
+        <div class="network-dot d4"></div>
+        <div class="network-line l1"></div>
+        <div class="network-line l2"></div>
+        <div class="network-line l3"></div>
+      </div>
+    `;
+  }
+
+  if (project.visualType === "titan") {
+    generatedVisual.innerHTML = `
+      <div class="drone-overlay">
+        <div class="mini-drone">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <div class="fertilizer-drops">
+          <i></i><i></i><i></i><i></i><i></i>
+        </div>
+      </div>
+    `;
+  }
+
+  if (project.visualType === "plasma") {
+    generatedVisual.innerHTML = `
+      <div class="plasma-overlay">
+        <div class="plasma-tube"></div>
+        <div class="plasma-glow g1"></div>
+        <div class="plasma-glow g2"></div>
+        <div class="plasma-glow g3"></div>
+      </div>
+    `;
+  }
+}
+
+function setupProjectCardTransitions() {
   const transitionLayer = document.getElementById("pageTransition");
+  if (!transitionLayer) return;
 
-  if (transitionLayer) {
-    document.querySelectorAll(".image-card").forEach(card => {
-      card.addEventListener("click", event => {
-        event.preventDefault();
-
-        const target = card.getAttribute("href");
-        const transitionType = card.dataset.transition || "orbit";
-
-        transitionLayer.className = `page-transition active ${transitionType}`;
-
-        setTimeout(() => {
-          window.location.href = target;
-        }, 850);
-      });
-    });
-  }
-
-  /* Rocket wipe transition from project pages back to homepage */
-  const backButton = document.querySelector(".back-transition");
-  const backLayer = document.getElementById("backTransition");
-
-  if (backButton && backLayer) {
-    backButton.addEventListener("click", event => {
+  document.querySelectorAll(".image-card").forEach(card => {
+    card.addEventListener("click", event => {
       event.preventDefault();
 
-      const target = backButton.getAttribute("href");
-      backLayer.classList.add("active");
+      const target = card.getAttribute("href");
+      const transitionType = card.dataset.transition || "orbit";
+
+      transitionLayer.className = `page-transition active ${transitionType}`;
 
       setTimeout(() => {
         window.location.href = target;
-      }, 950);
+      }, 850);
     });
-  }
+  });
+}
 
-  /* Animated star background */
+function setupBackTransition() {
+  const backButton = document.querySelector(".back-transition");
+  const backLayer = document.getElementById("backTransition");
+
+  if (!backButton || !backLayer) return;
+
+  backButton.addEventListener("click", event => {
+    event.preventDefault();
+
+    const target = backButton.getAttribute("href");
+    backLayer.classList.add("active");
+
+    setTimeout(() => {
+      window.location.href = target;
+    }, 950);
+  });
+}
+
+function setupStarBackground() {
   const canvas = document.getElementById("stars");
+  if (!canvas) return;
 
-  if (canvas) {
-    const ctx = canvas.getContext("2d");
-    let stars = [];
+  const ctx = canvas.getContext("2d");
+  let stars = [];
 
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-      stars = Array.from({ length: 120 }, () => ({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 1.6,
-        vx: (Math.random() - 0.5) * 0.18,
-        vy: (Math.random() - 0.5) * 0.18
-      }));
-    }
-
-    function animateStars() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      stars.forEach(star => {
-        star.x += star.vx;
-        star.y += star.vy;
-
-        if (star.x < 0) star.x = canvas.width;
-        if (star.x > canvas.width) star.x = 0;
-        if (star.y < 0) star.y = canvas.height;
-        if (star.y > canvas.height) star.y = 0;
-
-        ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
-        ctx.fillStyle = "rgba(255,255,255,0.75)";
-        ctx.fill();
-      });
-
-      requestAnimationFrame(animateStars);
-    }
-
-    resizeCanvas();
-    animateStars();
-
-    window.addEventListener("resize", resizeCanvas);
-  }
-});
-.canvas-hero {
-  height: 540px;
-  position: relative;
-  display: grid;
-  place-items: center;
-}
-
-#heroCanvas {
-  width: min(100%, 620px);
-  height: 520px;
-  display: block;
-}
-
-.canvas-hero .hero-caption {
-  position: absolute;
-  bottom: 42px;
-  color: var(--muted);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-size: 0.74rem;
-  font-weight: 800;
-}
-
-@media (max-width: 900px) {
-  .canvas-hero {
-    height: 390px;
+    stars = Array.from({ length: 120 }, () => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      r: Math.random() * 1.6,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18
+    }));
   }
 
-  #heroCanvas {
-    height: 360px;
+  function animateStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    stars.forEach(star => {
+      star.x += star.vx;
+      star.y += star.vy;
+
+      if (star.x < 0) star.x = canvas.width;
+      if (star.x > canvas.width) star.x = 0;
+      if (star.y < 0) star.y = canvas.height;
+      if (star.y > canvas.height) star.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+      ctx.fillStyle = "rgba(255,255,255,0.75)";
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animateStars);
   }
+
+  resizeCanvas();
+  animateStars();
+  window.addEventListener("resize", resizeCanvas);
 }
