@@ -366,3 +366,35 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("resize", resizeCanvas);
   }
 });
+.canvas-hero {
+  height: 540px;
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+
+#heroCanvas {
+  width: min(100%, 620px);
+  height: 520px;
+  display: block;
+}
+
+.canvas-hero .hero-caption {
+  position: absolute;
+  bottom: 42px;
+  color: var(--muted);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-size: 0.74rem;
+  font-weight: 800;
+}
+
+@media (max-width: 900px) {
+  .canvas-hero {
+    height: 390px;
+  }
+
+  #heroCanvas {
+    height: 360px;
+  }
+}
