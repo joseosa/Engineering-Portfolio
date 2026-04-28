@@ -10,7 +10,6 @@
 <body>
   <canvas id="stars"></canvas>
 
-  <!-- NAVBAR -->
   <header class="nav">
     <a href="index.html" class="logo">JOSE OSA</a>
     <nav>
@@ -22,8 +21,6 @@
   </header>
 
   <main>
-
-    <!-- HERO -->
     <section class="hero">
       <div class="hero-text reveal">
         <p class="eyebrow">Materials Science · Aerospace · Space Systems</p>
@@ -39,16 +36,13 @@
         </div>
       </div>
 
-      <!-- 🔥 VIDEO HERO (THIS IS THE IMPORTANT PART) -->
-      <div class="canvas-hero reveal">
-        <video class="hero-video" autoplay muted loop playsinline>
-          <source src="hero-animation.mp4" type="video/mp4">
+      <div class="video-hero reveal">
+        <video class="hero-video" autoplay muted loop playsinline preload="auto">
+          <source src="hero-animation.mp4" type="video/mp4" />
         </video>
-        <div class="hero-caption">atoms → materials → spacecraft</div>
       </div>
     </section>
 
-    <!-- PROJECTS -->
     <section id="projects" class="section">
       <div class="section-head reveal">
         <p class="eyebrow">Selected Portfolio</p>
@@ -56,120 +50,116 @@
       </div>
 
       <div class="grid">
-
         <a class="card image-card reveal" href="project.html?id=crescent-moon" data-transition="orbit">
-          <img src="crescent-moon.png">
+          <img src="crescent-moon.png" alt="Crescent Moon spacecraft project" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>Space Architecture</span>
-            <h3>Dual Person Spacecraft</h3>
-            <p>Rotating artificial gravity spacecraft for NEO servicing.</p>
+            <h3>Dual Person Spacecraft: Crescent Moon</h3>
+            <p>DPS project for analog service near-Earth objects, architected through a Space Architecture Studio.</p>
           </div>
         </a>
 
         <a class="card image-card reveal" href="project.html?id=quantum-oscillator" data-transition="atom">
-          <img src="quantum-oscillator.png">
+          <img src="quantum-oscillator.png" alt="Quantum oscillator molecular model" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>Computational Physics</span>
-            <h3>3D Quantum Oscillator</h3>
-            <p>Quantum modeling of molecular symmetry.</p>
+            <h3>3D Quantum Oscillator Molecular Model</h3>
+            <p>Computational analysis using Mathematica to model 3D quantum atoms for group 6 hexafluorides.</p>
           </div>
         </a>
 
         <a class="card image-card reveal" href="project.html?id=ares" data-transition="mars">
-          <img src="ares.png">
+          <img src="ares.png" alt="Ares Martian habitat project" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>NASA RASC-AL</span>
-            <h3>Ares Mission</h3>
-            <p>Self-sustaining Martian habitat system.</p>
+            <h3>Ares Mission: Martian Habitat</h3>
+            <p>Columbia Space Initiative project designing a self-sufficient Martian habitat.</p>
           </div>
         </a>
 
         <a class="card image-card reveal" href="project.html?id=dawnism" data-transition="sunrise">
-          <img src="dawnism.png">
+          <img src="dawnism.png" alt="Dawnism systems research project" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>Systems Research</span>
             <h3>Dawnism</h3>
-            <p>Global systems framework for humanity.</p>
+            <p>Interdisciplinary research on climate change, global politics, healthcare, infrastructure, and society.</p>
           </div>
         </a>
 
         <a class="card image-card reveal" href="project.html?id=titan" data-transition="drone">
-          <img src="titan.png">
+          <img src="titan.png" alt="TITAN drone agriculture aerospace project" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>NASA Blue Skies</span>
-            <h3>TITAN</h3>
-            <p>Drone-based precision agriculture system.</p>
+            <h3>TITAN Project</h3>
+            <p>Aeronautical vehicle concept aimed at addressing agriculture challenges.</p>
           </div>
         </a>
 
         <a class="card image-card reveal" href="project.html?id=argon-plasma" data-transition="plasma">
-          <img src="argon-plasma.png">
+          <img src="argon-plasma.png" alt="Argon plasma experiment" />
           <div class="card-overlay"></div>
           <div class="card-content">
             <span>Plasma Physics</span>
-            <h3>Argon Plasma</h3>
-            <p>Controlled plasma diagnostics experiment.</p>
+            <h3>Manipulation of Argon Plasma</h3>
+            <p>Senior physics seminar project focused on argon plasma analysis and element identification.</p>
           </div>
         </a>
-
       </div>
 
-      <!-- TRANSITION LAYER -->
       <div id="pageTransition" class="page-transition">
         <div class="transition-object"></div>
       </div>
     </section>
 
-    <!-- RESEARCH -->
     <section id="research" class="section alt">
       <div class="section-head reveal">
         <p class="eyebrow">Current Work</p>
-        <h2>Research direction</h2>
+        <h2>Research and technical direction</h2>
       </div>
 
       <div class="timeline">
         <div class="timeline-item reveal">
-          <h3>Lower Mantle Minerals</h3>
-          <p>High-pressure materials modeling for planetary interiors.</p>
+          <h3>Lower Mantle Minerals Engineering</h3>
+          <p>Modeling high-pressure mineral behavior relevant to geophysics, condensed matter physics, and planetary interiors.</p>
         </div>
 
         <div class="timeline-item reveal">
-          <h3>Nano-Fabrication</h3>
-          <p>Micro/nanoscale manufacturing systems.</p>
+          <h3>Medical Devices Nano-Fabrication</h3>
+          <p>Exploring nanoscale fabrication concepts connected to biomedical and mechanical systems.</p>
         </div>
 
         <div class="timeline-item reveal">
-          <h3>Autonomous Vehicles</h3>
-          <p>Off-road self-driving systems.</p>
+          <h3>Self-Driving Off-Road Cars</h3>
+          <p>Research assistant work with dolaGon on autonomous off-road vehicle technology.</p>
         </div>
       </div>
     </section>
 
-    <!-- ABOUT -->
     <section id="about" class="section about reveal">
       <p class="eyebrow">About</p>
       <h2>My path</h2>
       <p>
-        Physics → Materials Science → Aerospace → Space systems engineering.
+        My academic route has taken me from physics and mathematics into materials science,
+        aerospace engineering, computation, and design. The unifying goal is simple:
+        build technologies that matter.
       </p>
 
       <div class="stats">
         <div><strong>Physics</strong><span>Foundation</span></div>
-        <div><strong>MSE</strong><span>Core</span></div>
-        <div><strong>Aerospace</strong><span>Direction</span></div>
-        <div><strong>Space</strong><span>Mission</span></div>
+        <div><strong>MSE</strong><span>Engineering core</span></div>
+        <div><strong>Aerospace</strong><span>Future direction</span></div>
+        <div><strong>Space</strong><span>Long-term mission</span></div>
       </div>
     </section>
-
   </main>
 
   <footer>
-    <p>© 2026 Jose Osa</p>
+    <p>© 2026 Jose Osa · Engineering Portfolio</p>
   </footer>
 
   <script src="script.js"></script>
