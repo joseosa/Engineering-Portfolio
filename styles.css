@@ -155,7 +155,7 @@ p {
   background: rgba(255,255,255,0.04);
 }
 
-/* HERO VIDEO — FEATHERED BLACK-BACKGROUND VIDEO */
+/* HERO VIDEO */
 
 .video-hero {
   width: 100%;
@@ -210,11 +210,6 @@ p {
   border: 0;
   border-radius: 0;
   box-shadow: none;
-
-  /*
-    This is the key fix:
-    the video itself is feathered so its rectangular edges disappear.
-  */
   -webkit-mask-image: radial-gradient(
     ellipse at center,
     black 42%,
@@ -372,7 +367,7 @@ footer {
   border-top: 1px solid var(--line);
 }
 
-/* CARD → PROJECT TRANSITIONS */
+/* CARD TO PROJECT TRANSITIONS */
 
 .page-transition {
   position: fixed;
@@ -927,7 +922,7 @@ footer {
   to { opacity: 0.75; transform: scale(1.15); }
 }
 
-/* ROCKET WIPE BACK TRANSITION */
+/* BACK TO PORTFOLIO ROCKET TRANSITION */
 
 .back {
   margin: 2rem 6vw 5rem;
@@ -936,121 +931,141 @@ footer {
 .back-transition-layer {
   position: fixed;
   inset: 0;
-  z-index: 99999;
+  z-index: 999999;
   pointer-events: none;
   opacity: 0;
   overflow: hidden;
   background: transparent;
-  transition: opacity 0.15s ease;
 }
 
 .back-transition-layer.active {
   opacity: 1;
 }
 
-.rocket-wipe::before {
+.back-transition-layer::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: #050816;
-  transform: translateX(-110%);
-  animation: pageWipe 1.05s ease forwards;
+  background: #000000;
+  transform: translateX(-115%);
+}
+
+.back-transition-layer.active::before {
+  animation: fixedPageWipe 1.25s ease forwards;
 }
 
 .wipe-rocket {
   position: absolute;
-  left: -160px;
+  left: -180px;
   top: 50%;
-  width: 120px;
-  height: 52px;
+  width: 140px;
+  height: 60px;
   transform: translateY(-50%);
-  z-index: 3;
-  animation: rocketSweep 1.05s ease forwards;
+  z-index: 4;
+}
+
+.back-transition-layer.active .wipe-rocket {
+  animation: fixedRocketSweep 1.25s ease forwards;
 }
 
 .rocket-body {
   position: absolute;
-  left: 35px;
-  top: 12px;
-  width: 70px;
-  height: 28px;
-  border-radius: 50% 12px 12px 50%;
+  left: 42px;
+  top: 14px;
+  width: 76px;
+  height: 30px;
+  border-radius: 50% 14px 14px 50%;
   background: linear-gradient(90deg, #ffffff, #78f0ff);
-  box-shadow: 0 0 24px rgba(120,240,255,0.9);
+  box-shadow: 0 0 26px rgba(120,240,255,0.95);
 }
 
 .rocket-body::after {
   content: "";
   position: absolute;
-  right: -16px;
-  top: 4px;
-  border-left: 20px solid #ffffff;
+  right: -18px;
+  top: 5px;
+  border-left: 22px solid #ffffff;
   border-top: 10px solid transparent;
   border-bottom: 10px solid transparent;
 }
 
 .rocket-window {
   position: absolute;
-  left: 78px;
-  top: 19px;
+  left: 88px;
+  top: 22px;
   width: 12px;
   height: 12px;
   border-radius: 50%;
-  background: #0b1026;
-  border: 2px solid rgba(255,255,255,0.9);
-  z-index: 4;
+  background: #050816;
+  border: 2px solid white;
+  z-index: 5;
 }
 
 .rocket-fin {
   position: absolute;
-  left: 42px;
-  width: 24px;
-  height: 12px;
+  left: 48px;
+  width: 26px;
+  height: 13px;
   background: #9b7cff;
 }
 
 .rocket-fin.left {
-  top: 4px;
+  top: 5px;
   transform: skewX(-25deg);
 }
 
 .rocket-fin.right {
-  bottom: 4px;
+  bottom: 5px;
   transform: skewX(25deg);
 }
 
 .rocket-flame {
   position: absolute;
-  left: -120px;
-  top: 14px;
-  width: 165px;
-  height: 24px;
+  left: -135px;
+  top: 17px;
+  width: 185px;
+  height: 26px;
   border-radius: 999px;
   background:
-    radial-gradient(circle at right, #ffffff 0 8%, #fff176 18%, #ff8a4c 42%, rgba(255,80,40,0.0) 75%);
+    radial-gradient(circle at right, white 0 8%, #fff176 18%, #ff8a4c 42%, rgba(255,80,40,0) 76%);
   filter: blur(2px);
-  animation: flamePulse 0.16s ease-in-out infinite alternate;
+  animation: fixedFlamePulse 0.12s ease-in-out infinite alternate;
 }
 
-@keyframes rocketSweep {
-  0% { left: -160px; }
-  100% { left: calc(100vw + 180px); }
+@keyframes fixedRocketSweep {
+  0% {
+    left: -180px;
+    transform: translateY(-50%);
+  }
+
+  100% {
+    left: calc(100vw + 220px);
+    transform: translateY(-50%);
+  }
 }
 
-@keyframes pageWipe {
-  0% { transform: translateX(-110%); }
-  38% { transform: translateX(-25%); }
-  100% { transform: translateX(0); }
+@keyframes fixedPageWipe {
+  0% {
+    transform: translateX(-115%);
+  }
+
+  45% {
+    transform: translateX(-28%);
+  }
+
+  100% {
+    transform: translateX(0);
+  }
 }
 
-@keyframes flamePulse {
+@keyframes fixedFlamePulse {
   from {
-    transform: scaleX(0.92);
-    opacity: 0.75;
+    transform: scaleX(0.9);
+    opacity: 0.7;
   }
 
   to {
-    transform: scaleX(1.12);
+    transform: scaleX(1.15);
     opacity: 1;
   }
 }
