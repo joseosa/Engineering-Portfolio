@@ -8,6 +8,10 @@
   --accent: #78f0ff;
   --accent2: #9b7cff;
   --shadow: 0 24px 80px rgba(0,0,0,0.45);
+
+  --sewanee: #6f2dbd;
+  --columbia: #9bddff;
+  --michigan: #ffcb05;
 }
 
 * {
@@ -33,7 +37,14 @@ body {
 #stars {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: 0;
+  pointer-events: none;
+}
+
+main,
+footer {
+  position: relative;
+  z-index: 1;
 }
 
 .nav {
@@ -355,11 +366,26 @@ p {
 
 .stats strong {
   display: block;
-  font-size: 1.6rem;
+  font-size: 1.9rem;
 }
 
 .stats span {
   color: var(--muted);
+}
+
+.stats div:nth-child(1) strong {
+  color: var(--sewanee);
+  text-shadow: 0 0 24px rgba(111, 45, 189, 0.45);
+}
+
+.stats div:nth-child(2) strong {
+  color: var(--columbia);
+  text-shadow: 0 0 24px rgba(155, 221, 255, 0.35);
+}
+
+.stats div:nth-child(3) strong {
+  color: var(--michigan);
+  text-shadow: 0 0 24px rgba(255, 203, 5, 0.32);
 }
 
 footer {
