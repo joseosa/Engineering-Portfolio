@@ -6,177 +6,299 @@
   <title>Jose Osa | Engineering Portfolio</title>
   <link rel="stylesheet" href="styles.css" />
 </head>
+<body class="page-loading">
 
-<body>
+  <div id="pageOverlay" class="page-overlay"></div>
   <canvas id="stars"></canvas>
 
-  <header class="nav">
+  <header class="nav" id="nav">
     <a href="index.html" class="logo">JOSE OSA</a>
     <nav>
       <a href="#projects">Projects</a>
       <a href="#research">Research</a>
       <a href="#about">About</a>
-      <a href="mailto:jmo2180@columbia.edu" class="pill">Contact</a>
+      <a href="mailto:joseosa@umich.edu" class="pill">Contact</a>
     </nav>
   </header>
 
   <main>
-    <section class="hero">
-      <div class="hero-text reveal">
-        <p class="eyebrow">Materials Science · Aerospace · Space Systems</p>
-        <h1>Engineering for humanity, from atoms to spacecraft.</h1>
-        <p>
-          I am Jose Osa, an engineering student bridging materials science,
-          physics, aerospace, and human-centered technology.
-        </p>
 
-        <div class="hero-buttons">
+    <!-- ═══════════════════ HERO ═══════════════════ -->
+    <section class="hero">
+      <div class="hero-text">
+        <p class="eyebrow fade-up" style="--d:0.1s">Physics · Materials Science · Aerospace Engineering</p>
+        <h1 class="hero-headline">
+          <span class="word fade-up" style="--d:0.2s">Engineering</span>
+          <span class="word fade-up" style="--d:0.32s">from the nanoscale</span>
+          <span class="word gradient-text fade-up" style="--d:0.44s">up to</span>
+          <span class="word fade-up" style="--d:0.56s">spacecraft.</span>
+        </h1>
+        <p class="hero-sub fade-up" style="--d:0.72s">
+          I'm Jose Osa — physicist turned materials engineer, building toward space systems. I've printed nanoscale structures for cochlear implants, modeled lower mantle mineral thermodynamics, and designed rotating spacecraft for asteroid servicing. Heading to Michigan for aerospace engineering.
+        </p>
+        <div class="hero-actions fade-up" style="--d:0.88s">
           <a href="#projects" class="btn primary">View Projects</a>
-          <a href="#research" class="btn secondary">Current Work</a>
+          <a href="#about" class="btn secondary">My Path</a>
         </div>
       </div>
 
-      <div class="video-hero reveal">
-        <video class="hero-video" autoplay muted loop playsinline preload="auto">
-          <source src="hero-animation.mp4" type="video/mp4" />
-        </video>
+      <div class="hero-canvas-wrap fade-up" style="--d:0.3s">
+        <canvas id="atomCanvas"></canvas>
+        <div class="canvas-glow"></div>
       </div>
     </section>
 
+    <!-- ═══════════════════ SCALE JOURNEY ═══════════════════ -->
+    <section class="scale-section">
+      <div class="scale-head sr">
+        <p class="eyebrow">The Scale I Work Across</p>
+        <h2>From quantum to orbital</h2>
+      </div>
+      <div class="scale-track">
+        <div class="scale-step sr" style="--sd:0s">
+          <div class="step-icon">⚛</div>
+          <div class="step-line"></div>
+          <div class="step-info">
+            <strong>Quantum</strong>
+            <span class="scale-size">10⁻¹⁰ m</span>
+            <p>3D oscillator solutions for group-6 hexafluoride molecules; wave functions and molecular symmetry</p>
+          </div>
+        </div>
+        <div class="scale-step sr" style="--sd:0.08s">
+          <div class="step-icon">◉</div>
+          <div class="step-line"></div>
+          <div class="step-info">
+            <strong>Atomic</strong>
+            <span class="scale-size">10⁻⁹ m</span>
+            <p>Langmuir probe diagnostics in argon plasma; laser-induced nucleation in Ni, Al, Cu thin films</p>
+          </div>
+        </div>
+        <div class="scale-step sr" style="--sd:0.16s">
+          <div class="step-icon">◈</div>
+          <div class="step-line"></div>
+          <div class="step-info">
+            <strong>Material</strong>
+            <span class="scale-size">10⁻⁶–10⁻³ m</span>
+            <p>Two-photon polymerization of IP-S micro-columns; BurnMan thermodynamics of lower mantle minerals</p>
+          </div>
+        </div>
+        <div class="scale-step sr" style="--sd:0.24s">
+          <div class="step-icon">⬡</div>
+          <div class="step-line"></div>
+          <div class="step-info">
+            <strong>System</strong>
+            <span class="scale-size">10⁰ m</span>
+            <p>Autonomous UTV teach-and-repeat navigation; TITAN precision-agriculture drone; Mars ISRU systems</p>
+          </div>
+        </div>
+        <div class="scale-step sr" style="--sd:0.32s">
+          <div class="step-icon">🛸</div>
+          <div class="step-line"></div>
+          <div class="step-info">
+            <strong>Mission</strong>
+            <span class="scale-size">10⁶ m</span>
+            <p>Crescent Moon rotating spacecraft for NEO servicing; Ares Mars precursor habitat — NASA RASC-AL</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════ PROJECTS ═══════════════════ -->
     <section id="projects" class="section">
-      <div class="section-head reveal">
+      <div class="section-head sr">
         <p class="eyebrow">Selected Portfolio</p>
         <h2>Engineering projects</h2>
       </div>
 
-      <div class="grid">
-        <a class="card image-card reveal" href="project.html?id=crescent-moon" data-transition="orbit">
-          <img src="crescent-moon.png" alt="Crescent Moon spacecraft project" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>Space Architecture</span>
+      <div class="bento-top">
+        <a class="bcard featured sr-card" href="project.html?id=crescent-moon" data-transition="orbit">
+          <img src="crescent-moon.png" alt="Crescent Moon spacecraft" />
+          <div class="bcard-overlay"></div>
+          <div class="bcard-body">
+            <span class="tag">Space Architecture</span>
             <h3>Dual Person Spacecraft: Crescent Moon</h3>
-            <p>DPS project for analog service near-Earth objects, architected through a Space Architecture Studio.</p>
+            <p>Two-person rotating spacecraft for NEO servicing — centrifugal gravity, 14–18 month missions.</p>
           </div>
+          <div class="bcard-glow"></div>
         </a>
 
-        <a class="card image-card reveal" href="project.html?id=quantum-oscillator" data-transition="atom">
-          <img src="quantum-oscillator.png" alt="Quantum oscillator molecular model" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>Computational Physics</span>
-            <h3>3D Quantum Oscillator Molecular Model</h3>
-            <p>Computational analysis using Mathematica to model 3D quantum atoms for group 6 hexafluorides.</p>
-          </div>
-        </a>
+        <div class="bento-stack">
+          <a class="bcard sr-card" href="project.html?id=ares" data-transition="mars">
+            <img src="ares.png" alt="Ares Martian habitat" />
+            <div class="bcard-overlay mars-tint"></div>
+            <div class="bcard-body">
+              <span class="tag">NASA RASC-AL</span>
+              <h3>Ares Mission: Martian Habitat</h3>
+              <p>Self-sufficient Mars precursor mission with ISRU, robotics, and deployable dome.</p>
+            </div>
+            <div class="bcard-glow"></div>
+          </a>
 
-        <a class="card image-card reveal" href="project.html?id=ares" data-transition="mars">
-          <img src="ares.png" alt="Ares Martian habitat project" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>NASA RASC-AL</span>
-            <h3>Ares Mission: Martian Habitat</h3>
-            <p>Columbia Space Initiative project designing a self-sufficient Martian habitat.</p>
-          </div>
-        </a>
+          <a class="bcard sr-card" href="project.html?id=quantum-oscillator" data-transition="atom">
+            <img src="quantum-oscillator.png" alt="Quantum oscillator" />
+            <div class="bcard-overlay violet-tint"></div>
+            <div class="bcard-body">
+              <span class="tag">Computational Physics</span>
+              <h3>3D Quantum Oscillator Molecular Model</h3>
+              <p>Analytical oscillator solution applied to group 6 hexafluorides.</p>
+            </div>
+            <div class="bcard-glow"></div>
+          </a>
+        </div>
+      </div>
 
-        <a class="card image-card reveal" href="project.html?id=dawnism" data-transition="sunrise">
-          <img src="dawnism.png" alt="Dawnism systems research project" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>Systems Research</span>
-            <h3>Dawnism</h3>
-            <p>Interdisciplinary research on climate change, global politics, healthcare, infrastructure, and society.</p>
-          </div>
-        </a>
-
-        <a class="card image-card reveal" href="project.html?id=titan" data-transition="drone">
-          <img src="titan.png" alt="TITAN drone agriculture aerospace project" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>NASA Blue Skies</span>
+      <div class="bento-bottom">
+        <a class="bcard sr-card" href="project.html?id=titan" data-transition="drone">
+          <img src="titan.png" alt="TITAN drone" />
+          <div class="bcard-overlay"></div>
+          <div class="bcard-body">
+            <span class="tag">NASA Blue Skies</span>
             <h3>TITAN Project</h3>
-            <p>Aeronautical vehicle concept aimed at addressing agriculture challenges.</p>
+            <p>Autonomous agriculture drone with targeted nanofertilizer deployment.</p>
           </div>
+          <div class="bcard-glow"></div>
         </a>
 
-        <a class="card image-card reveal" href="project.html?id=argon-plasma" data-transition="plasma">
-          <img src="argon-plasma.png" alt="Argon plasma experiment" />
-          <div class="card-overlay"></div>
-          <div class="card-content">
-            <span>Plasma Physics</span>
-            <h3>Manipulation of Argon Plasma</h3>
-            <p>Senior physics seminar project focused on argon plasma analysis and element identification.</p>
+        <a class="bcard sr-card" href="project.html?id=argon-plasma" data-transition="plasma">
+          <img src="argon-plasma.png" alt="Argon plasma" />
+          <div class="bcard-overlay plasma-tint"></div>
+          <div class="bcard-body">
+            <span class="tag">Plasma Physics</span>
+            <h3>Argon Plasma Manipulation</h3>
+            <p>Langmuir probe diagnostics and plasma striation analysis.</p>
           </div>
+          <div class="bcard-glow"></div>
+        </a>
+
+        <a class="bcard sr-card" href="project.html?id=laser-matter" data-transition="laser">
+          <img src="laser-matter.png" alt="Laser-Matter Interaction" />
+          <div class="bcard-overlay laser-tint"></div>
+          <div class="bcard-body">
+            <span class="tag">Laser Physics</span>
+            <h3>Laser–Matter Interaction</h3>
+            <p>Laser-induced nucleation in Ni, Al, Cu ultra-thin films — AFM imaging and physics-based growth model. Dr. James Im Research Group.</p>
+          </div>
+          <div class="bcard-glow"></div>
         </a>
       </div>
+    </section>
 
-      <div id="pageTransition" class="page-transition">
-        <div class="transition-object"></div>
+    <!-- ═══════════════════ RESEARCH ═══════════════════ -->
+    <section id="research" class="section alt-section">
+      <div class="section-head sr">
+        <p class="eyebrow">Research Experiences</p>
+        <h2>Labs, groups &amp; industry</h2>
+      </div>
+
+      <div class="research-grid">
+        <a class="rcard sr" href="research.html?id=mantle" data-transition="mantle" style="--sd:0s">
+          <img src="mantle.png" alt="Lower Mantle" class="rcard-img" />
+          <div class="rcard-num">01</div>
+          <div class="rcard-body">
+            <span class="tag">Computational Mineral Physics · Columbia</span>
+            <h3>Lower Mantle Minerals Engineering</h3>
+            <p>BurnMan simulations of lower mantle mineral thermodynamics — bulk modulus, thermal expansion, and pressure-temperature behavior. Wentzcovitch Group, Summer 2025.</p>
+          </div>
+          <div class="rcard-accent"></div>
+        </a>
+
+        <a class="rcard sr" href="research.html?id=nanofab" data-transition="nanoscale" style="--sd:0.1s">
+          <img src="nanofab.png" alt="Nanofabrication" class="rcard-img" />
+          <div class="rcard-num">02</div>
+          <div class="rcard-body">
+            <span class="tag">Nanofabrication · Biomedical · Columbia</span>
+            <h3>Medical Device Nano-Fabrication</h3>
+            <p>2PP lithography with the Nanoscribe printer at ASRC — fabricating and mechanically characterizing structures for cochlear implant development. Kysar Lab, 2025.</p>
+          </div>
+          <div class="rcard-accent"></div>
+        </a>
+
+        <a class="rcard sr" href="research.html?id=dolagon" data-transition="terrain" style="--sd:0.2s">
+          <img src="dolagon.webp" alt="dolaGon autonomous vehicle" class="rcard-img" />
+          <div class="rcard-num">03</div>
+          <div class="rcard-body">
+            <span class="tag">Autonomy · Industry · dolaGon</span>
+            <h3>Self-Driving Off-Road Vehicles</h3>
+            <p>Physics solution for emergency recall systems and Terrain Testing Coordinator for autonomous UTV development. dolaGon, Fall 2022.</p>
+          </div>
+          <div class="rcard-accent"></div>
+        </a>
       </div>
     </section>
 
-    <section id="research" class="section alt">
-      <div class="section-head reveal">
-        <p class="eyebrow">Current Work</p>
-        <h2>Research and technical direction</h2>
+    <!-- ═══════════════════ ABOUT ═══════════════════ -->
+    <section id="about" class="section about-section">
+      <div class="about-left sr">
+        <p class="eyebrow">About</p>
+        <h2>My path</h2>
+        <p>I started in physics and mathematics at Sewanee — grounded in the analytical mechanics and mathematical structure that make complex systems tractable. That foundation pulled me toward the question of how materials actually behave under extreme conditions: pressures and temperatures no lab can replicate, or manufacturing at scales a human hand can't reach.</p>
+        <p>At Columbia I've printed 100 μm micro-columns for cochlear implants using two-photon polymerization, computed thermodynamic equations of state for lower mantle minerals across the geotherm, designed rotating spacecraft for asteroid servicing, and led a NASA RASC-AL Mars habitat concept from architecture to subsystems. A Space Architecture Diploma from Different Systems added the systems-level lens. Every project is a step in the same direction: making the physics precise enough, and the engineering specific enough, to build things that work in environments that push both to their limits.</p>
+        <p>Michigan's aerospace engineering program is next — with a long-term focus on spacecraft materials, propulsion systems, and the structures and mechanisms that keep humans alive far from Earth.</p>
       </div>
 
-      <div class="timeline">
-        <div class="timeline-item reveal">
-          <h3>Lower Mantle Minerals Engineering</h3>
-          <p>Modeling high-pressure mineral behavior relevant to geophysics, condensed matter physics, and planetary interiors.</p>
+      <div class="about-right sr">
+        <div class="edu-timeline">
+          <div class="edu-node sewanee-node">
+            <div class="edu-badge">S</div>
+            <div class="edu-detail">
+              <strong>Sewanee: The University of the South</strong>
+              <span>BS Physics · Mathematics Minor</span>
+              <small>2021 – 2024</small>
+            </div>
+          </div>
+          <div class="edu-connector"></div>
+          <div class="edu-node columbia-node">
+            <div class="edu-badge">C</div>
+            <div class="edu-detail">
+              <strong>Columbia University</strong>
+              <span>Materials Science &amp; Engineering · Aerospace Minor</span>
+              <small>2024 – 2026</small>
+            </div>
+          </div>
+          <div class="edu-connector"></div>
+          <div class="edu-node diploma-node">
+            <div class="edu-badge">D</div>
+            <div class="edu-detail">
+              <strong>Different Systems</strong>
+              <span>Space Architecture Diploma · Different Systems</span>
+              <small>2025</small>
+            </div>
+          </div>
+          <div class="edu-connector"></div>
+          <div class="edu-node michigan-node">
+            <div class="edu-badge">M</div>
+            <div class="edu-detail">
+              <strong>University of Michigan</strong>
+              <span>MSE Aerospace Engineering</span>
+              <small>2026 – 2028</small>
+            </div>
+          </div>
         </div>
+      </div>
+    </section>
 
-        <div class="timeline-item reveal">
-          <h3>Medical Devices Nano-Fabrication</h3>
-          <p>Exploring nanoscale fabrication concepts connected to biomedical and mechanical systems.</p>
-        </div>
-
-        <div class="timeline-item reveal">
-          <h3>Self-Driving Off-Road Cars</h3>
-          <p>Research assistant work with dolaGon on autonomous off-road vehicle technology.</p>
+    <!-- ═══════════════════ CTA ═══════════════════ -->
+    <section class="cta-section sr">
+      <div class="cta-nebula"></div>
+      <div class="cta-content">
+        <p class="eyebrow">Let's connect</p>
+        <h2>Working at the edge of materials or space?</h2>
+        <p>I'm actively looking for research and internship opportunities in aerospace engineering, spacecraft systems, and advanced materials — starting Summer 2026 at Michigan.</p>
+        <div class="cta-actions">
+          <a href="mailto:joseosa@umich.edu" class="btn primary large">joseosa@umich.edu</a>
+          <a href="mailto:jose.maria.osa.01@gmail.com" class="btn secondary">jose.maria.osa.01@gmail.com</a>
         </div>
       </div>
     </section>
 
-    <section id="about" class="section about reveal">
-      <p class="eyebrow">About</p>
-      <h2>My path</h2>
-      <p>
-        My path began in physics and mathematics, where I built the analytical foundation for modeling
-        natural systems. At Columbia, I moved into materials science and aerospace, studying how
-        microstructure, manufacturing, mechanics, and design shape engineered performance. I am now
-        continuing that trajectory toward aerospace engineering, with a long-term focus on space systems,
-        spacecraft technology, and engineering that connects fundamental science to human-scale missions.
-      </p>
-
-      <div class="stats education-cards">
-        <div class="education-card sewanee-card">
-          <strong>S</strong>
-          <span>Sewanee: The University of the South<br>Physics · Mathematics Minor</span>
-        </div>
-
-        <div class="education-card columbia-card">
-          <strong>C</strong>
-          <span>Columbia University<br>Materials Science & Engineering · Aerospace Minor</span>
-        </div>
-
-        <div class="education-card michigan-card">
-          <strong>M</strong>
-          <span>University of Michigan<br>Aerospace Engineering</span>
-        </div>
-
-        <div class="education-card direction-card">
-          <strong>→</strong>
-          <span>Direction<br>Materials · Aerospace · Space Systems</span>
-        </div>
-      </div>
-    </section>
   </main>
 
   <footer>
-    <p>© 2026 Jose Osa · Engineering Portfolio</p>
+    <div class="footer-inner">
+      <span>© 2026 Jose Osa</span>
+      <span>Materials Engineering · Aerospace · Space Systems</span>
+      <span>New York, NY</span>
+    </div>
   </footer>
 
   <script src="script.js"></script>

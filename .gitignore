@@ -1,0 +1,21 @@
+.claude/
+
+# Bulk-extracted unused mantle slides (only specific gallery images are kept)
+mantle--*.png
+mantle-pv-[1-9].png
+mantle-pv-[1-9][0-9].png
+mantle-ppv-[1-9].png
+mantle-ppv-[1-9][0-9].png
+mantle-fp-[1-9].png
+mantle-fp-[1-9][0-9].png
+mantle-db-1.png
+mantle-db-2.png
+mantle-db-3.png
+mantle-db-5.png
+mantle-db-6.png
+mantle-db-7.png
+mantle-db-8.png
+mantle-db-9.png
+mantle-db-1[1-9].png
+mantle-db-2[0-9].png
+mantle-db-30.png
