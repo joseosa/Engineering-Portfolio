@@ -500,7 +500,34 @@ const research = {
     ],
     impact: "dolaGon placed me inside real autonomous vehicle development at the earliest stage — physics-level safety analysis to field logistics for testing on snow. The dual engineering-and-coordination role reflects what early-stage autonomy actually demands, and working on a teach-and-repeat off-road autonomy system in 2022 directly shaped my understanding of perception-constrained navigation outside the lab.",
     visualTitle: "Teach-and-Repeat Autonomy Pipeline",
-    visualText: "dolaGon's two-phase system: an operator manually drives the route once to record it, then the vehicle replays the path fully autonomously. Camera vision and LiDAR monitor for obstacles in real time — if a hazard appears, the vehicle halts and alerts the operator before continuing. The DBW kit handles throttle, braking, and steering entirely by wire, with IP67+ ruggedized electronics for operation in snow and mud."
+    visualText: "dolaGon's two-phase system: an operator manually drives the route once to record it, then the vehicle replays the path fully autonomously. Camera vision and LiDAR monitor for obstacles in real time — if a hazard appears, the vehicle halts and alerts the operator before continuing. The DBW kit handles throttle, braking, and steering entirely by wire, with IP67+ ruggedized electronics for operation in snow and mud.",
+    galleryHeader: {
+      eyebrow: "Field & Platform",
+      title: "dolaGon in Action",
+      intro: "The autonomous UTV platform across real-world environments — ski terrain, ranch operations, and extreme winter field testing — alongside the DBW kit electronics that make it work."
+    },
+    gallery: [
+      {
+        label: "Ski Terrain",
+        images: [
+          { src: "dolagon-snow-trail.jpg", title: "Aerial — autonomous UTV with skiers on mountain slope", caption: "Drone shot of the dolaGon Polaris Ranger running a recorded ski route autonomously while two skiers follow. Colorado backcountry, winter field test." }
+        ]
+      },
+      {
+        label: "Field Testing",
+        images: [
+          { src: "dolagon-utv-field.jpg", title: "UTV in blizzard conditions — sensor suite on roof", caption: "Can-Am Defender test vehicle with the autonomy sensor stack (camera + LiDAR) mounted on the roof cage, during extreme winter field validation." },
+          { src: "dolagon-action.jpg", title: "Ranch use case — dolaGon UTV at hay bale operation", caption: "dolaGon UTV at a Colorado ranch during field testing, demonstrating the barn-to-pasture cargo transport use case." }
+        ]
+      },
+      {
+        label: "The System",
+        images: [
+          { src: "dolagon-utv-snow2.jpg", title: "DBW kit electronics — compute and harness assembly", caption: "The dolaGon autonomous compute module and wiring harness installed in the vehicle cabin. OEM-grade connectors and IP67+ rated housings for all-weather operation." },
+          { src: "dolagon-utv-closeup.jpg", title: "dolaGon Autonomous control interface — cockpit view", caption: "Interior shot of the dolaGon control unit embedded in the UTV dashboard, showing the branded autonomy module and driver interface." }
+        ]
+      }
+    ]
   }
 };
 
