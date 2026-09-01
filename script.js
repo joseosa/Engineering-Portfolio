@@ -70,7 +70,7 @@ const projects = {
     title: "The Isotropic 3D Quantum Oscillator as a Molecular Model",
     image: "quantum-oscillator.png",
     visualType: "qosc-viz",
-    summary: "Published physics paper deriving the 3D isotropic quantum oscillator analytically and validating it as a molecular model for group 6 hexafluorides — WF₆, MoF₆, CrF₆ — by matching radial distribution peaks to measured bond lengths. Co-authored with Dr. Douglas A. Barlow, Sewanee.",
+    summary: "Pending-publication paper deriving the 3D isotropic quantum oscillator analytically and validating it as a molecular model for group 6 hexafluorides — WF₆, MoF₆, CrF₆ — by matching radial distribution peaks to measured bond lengths. Co-authored with Dr. Douglas A. Barlow, Sewanee.",
     overview: "This paper derives and applies the three-dimensional isotropic quantum harmonic oscillator as a molecular model for group 6 hexafluorides (CrF₆, MoF₆, WF₆) — highly symmetric molecules with Oh octahedral geometry. Beginning from the time-independent Schrödinger equation, the radial component is separated in spherical coordinates and shown to satisfy the associated Laguerre equation, yielding energy eigenvalues E = ℏω(2n + l + 3/2) and wavefunctions indexed by principal quantum number n and angular momentum l. The objective is to determine whether a single oscillator state can reproduce known X-F bond lengths without a full many-electron treatment.",
     challenge: "Full quantum-mechanical treatment of multi-electron transition metal fluoride molecules — accounting for electron correlation, spin-orbit coupling, and crystal field splitting — is computationally and analytically intractable without numerical methods. The challenge is to show that a simpler, analytically soluble model captures the essential structural feature: the characteristic X-F bond length arising from the radial probability distribution of the outer electrons. Selecting the correct oscillator state and thermal regime requires physical justification, not just curve-fitting.",
     solution: "The Schrödinger equation is separated in spherical coordinates; the radial equation transforms into the associated Laguerre equation with solutions yielding a discrete shell structure. The paper evaluates the radial distribution function D(r) and probability density |Ψ|² for oscillator states up to Ψ₃₂₀ and compares the distribution peak against measured bond lengths — WF₆ at 1.832 Å, with MoF₆ and CrF₆ at comparable values. Best agreement is found under the Ψ₃₂₀ state at millikelvin effective temperatures, where thermal averaging sharpens the radial distribution, and the model peak coincides with the measured W-F bond length to within experimental precision.",
@@ -88,7 +88,7 @@ const projects = {
     visualText: "Figure 1 shows the Ψ₃₂₀ probability density of the 3D oscillator alongside the group 6 hexafluoride octahedral geometry. Figure 2 plots the radial distribution function D(r) for WF₆, with the peak at 1.832 Å matching the known W-F bond length at an effective temperature of ~11.5 mK.",
     download: { label: "Download Paper (PDF)", href: "quantum-oscillator-paper.pdf" },
     galleryHeader: {
-      eyebrow: "Published Paper",
+      eyebrow: "Pending Publication",
       title: "Figures & Results",
       intro: "Paper cover and key figures: probability density and radial distribution function for the 3D oscillator model."
     },
