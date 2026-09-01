@@ -1544,8 +1544,13 @@ footer {
   .hero { min-height: auto; padding-bottom: 4rem; }
   .hero-headline { font-size: clamp(2.8rem, 10vw, 4rem); }
 
-  /* Scale: single column on small screens so cards aren't squeezed */
+  /* Scale: single column, compact cards on mobile */
   .scale-track { grid-template-columns: 1fr; }
+  .scale-step { padding: 1.2rem 1rem; }
+  .step-icon { width: 56px; height: 56px; font-size: 1.4rem; }
+
+  /* About bio: slightly smaller on mobile for readability */
+  .about-left p { font-size: 0.9rem; line-height: 1.75; }
 
   /* Reduce section vertical padding on mobile */
   .section { padding: 3.5rem 5vw; }

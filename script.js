@@ -570,7 +570,8 @@ function initStarBackground() {
   function resize() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    stars = Array.from({ length: 180 }, () => ({
+    const count = window.innerWidth <= 680 ? 60 : 180;
+    stars = Array.from({ length: count }, () => ({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       r: Math.random() * 1.4 + 0.15,
