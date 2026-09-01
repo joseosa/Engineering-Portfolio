@@ -70,8 +70,7 @@ const projects = {
     tag: "Computational Physics",
     title: "The Isotropic 3D Quantum Oscillator as a Molecular Model",
     image: "quantum-oscillator.png",
-    visualType: "image",
-    diagram: "qosc-figure1-probability-density.png",
+    visualType: "qosc-viz",
     summary: "Published physics paper deriving the 3D isotropic quantum oscillator analytically and validating it as a molecular model for group 6 hexafluorides — WF₆, MoF₆, CrF₆ — by matching radial distribution peaks to measured bond lengths. Co-authored with Dr. Douglas A. Barlow, Sewanee.",
     overview: "This paper derives and applies the three-dimensional isotropic quantum harmonic oscillator as a molecular model for group 6 hexafluorides (CrF₆, MoF₆, WF₆) — highly symmetric molecules with Oh octahedral geometry. Beginning from the time-independent Schrödinger equation, the radial component is separated in spherical coordinates and shown to satisfy the associated Laguerre equation, yielding energy eigenvalues E = ℏω(2n + l + 3/2) and wavefunctions indexed by principal quantum number n and angular momentum l. The objective is to determine whether a single oscillator state can reproduce known X-F bond lengths without a full many-electron treatment.",
     challenge: "Full quantum-mechanical treatment of multi-electron transition metal fluoride molecules — accounting for electron correlation, spin-orbit coupling, and crystal field splitting — is computationally and analytically intractable without numerical methods. The challenge is to show that a simpler, analytically soluble model captures the essential structural feature: the characteristic X-F bond length arising from the radial probability distribution of the outer electrons. Selecting the correct oscillator state and thermal regime requires physical justification, not just curve-fitting.",
@@ -2122,6 +2121,228 @@ function populateProjectPage() {
       <text x="487" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Mars precursor mission</text>
       <text x="487" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">pre-position for crewed</text>
       <text x="487" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">500-sol surface stay</text>
+    </svg>`;
+  }
+
+  if (p.visualType === "qosc-viz") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes orbPulse { 0%,100%{opacity:0.8} 50%{opacity:1} }
+          @keyframes ringPulse { 0%,100%{opacity:0.55} 50%{opacity:0.88} }
+          @keyframes wPulse { 0%,100%{opacity:0.88} 50%{opacity:1} }
+        </style>
+        <radialGradient id="qbg" cx="38%" cy="38%" r="70%">
+          <stop offset="0%" stop-color="#020c20"/>
+          <stop offset="100%" stop-color="#000306"/>
+        </radialGradient>
+        <radialGradient id="topLobe" cx="145" cy="93" r="68" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.9"/>
+          <stop offset="55%" stop-color="#005f80" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#001830" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="botLobe" cx="145" cy="167" r="68" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00e5ff" stop-opacity="0.9"/>
+          <stop offset="55%" stop-color="#005f80" stop-opacity="0.55"/>
+          <stop offset="100%" stop-color="#001830" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="ringL" cx="103" cy="130" r="32" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00b8d4" stop-opacity="0.78"/>
+          <stop offset="100%" stop-color="#003344" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="ringR" cx="187" cy="130" r="32" gradientUnits="userSpaceOnUse">
+          <stop offset="0%" stop-color="#00b8d4" stop-opacity="0.78"/>
+          <stop offset="100%" stop-color="#003344" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="wGrad" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stop-color="#ffe082"/>
+          <stop offset="100%" stop-color="#bf6000"/>
+        </radialGradient>
+        <filter id="qglow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="qsoft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2.5" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="qblur" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="9"/>
+        </filter>
+      </defs>
+
+      <!-- Background -->
+      <rect width="560" height="320" fill="url(#qbg)"/>
+
+      <!-- Faint axes guide -->
+      <line x1="0" y1="130" x2="288" y2="130" stroke="#0a1530" stroke-width="0.5"/>
+      <line x1="145" y1="20" x2="145" y2="238" stroke="#0a1530" stroke-width="0.5"/>
+
+      <!-- Scene title -->
+      <text x="145" y="13" text-anchor="middle" fill="#00e5ff" font-size="8.5" font-weight="700" font-family="sans-serif">Ψ₃₂₀ ORBITAL — WF₆</text>
+      <text x="145" y="23" text-anchor="middle" fill="#446" font-size="6.5" font-family="monospace">n=3, l=2, m=0 · Oh octahedral symmetry</text>
+
+      <!-- Orbital halo glows -->
+      <ellipse cx="145" cy="93"  rx="44" ry="52" fill="#00e5ff" opacity="0.1" filter="url(#qblur)"/>
+      <ellipse cx="145" cy="167" rx="44" ry="52" fill="#00e5ff" opacity="0.1" filter="url(#qblur)"/>
+      <ellipse cx="145" cy="130" rx="58" ry="18" fill="#00b8d4" opacity="0.08" filter="url(#qblur)"/>
+
+      <!-- Bottom lobe -->
+      <path d="M 145,130 C 184,138 186,184 145,207 C 104,184 106,138 145,130"
+            fill="url(#botLobe)" style="animation:orbPulse 3s ease-in-out infinite"/>
+
+      <!-- Top lobe -->
+      <path d="M 145,130 C 184,122 186,76 145,53 C 104,76 106,122 145,130"
+            fill="url(#topLobe)" style="animation:orbPulse 3s ease-in-out infinite"/>
+
+      <!-- Equatorial ring sections (toroidal ring of d_z² in xy-plane) -->
+      <ellipse cx="103" cy="130" rx="28" ry="13" fill="url(#ringL)" style="animation:ringPulse 3s ease-in-out infinite" filter="url(#qsoft)"/>
+      <ellipse cx="187" cy="130" rx="28" ry="13" fill="url(#ringR)" style="animation:ringPulse 3s ease-in-out infinite" filter="url(#qsoft)"/>
+
+      <!-- Bond lines -->
+      <line x1="145" y1="130" x2="145" y2="62"  stroke="#ffffff" stroke-width="1"   opacity="0.45"/>
+      <line x1="145" y1="130" x2="145" y2="198"  stroke="#ffffff" stroke-width="1"   opacity="0.45"/>
+      <line x1="145" y1="130" x2="76"  y2="130"  stroke="#ffffff" stroke-width="1"   opacity="0.45"/>
+      <line x1="145" y1="130" x2="214" y2="130"  stroke="#ffffff" stroke-width="1"   opacity="0.45"/>
+      <line x1="145" y1="130" x2="172" y2="107"  stroke="#ffffff" stroke-width="1"   opacity="0.35" stroke-dasharray="3,2"/>
+      <line x1="145" y1="130" x2="118" y2="153"  stroke="#ffffff" stroke-width="1"   opacity="0.25" stroke-dasharray="3,2"/>
+
+      <!-- F back (faintest, going away) -->
+      <circle cx="118" cy="153" r="7" fill="#546e7a" stroke="#78909c" stroke-width="0.8" opacity="0.55"/>
+      <text x="118" y="156.5" text-anchor="middle" fill="#90a4ae" font-size="5" font-family="sans-serif">F</text>
+
+      <!-- F axial (at tips of lobes — key insight) -->
+      <circle cx="145" cy="59" r="9" fill="#b0bec5" stroke="#eceff1" stroke-width="1.2" filter="url(#qsoft)"/>
+      <text x="145" y="62.5" text-anchor="middle" fill="#263238" font-size="5.5" font-weight="700" font-family="sans-serif">F</text>
+      <circle cx="145" cy="198" r="9" fill="#b0bec5" stroke="#eceff1" stroke-width="1.2" filter="url(#qsoft)"/>
+      <text x="145" y="201.5" text-anchor="middle" fill="#263238" font-size="5.5" font-weight="700" font-family="sans-serif">F</text>
+
+      <!-- F equatorial (in-plane) -->
+      <circle cx="76"  cy="130" r="9" fill="#b0bec5" stroke="#eceff1" stroke-width="1.2" filter="url(#qsoft)"/>
+      <text x="76"  y="133.5" text-anchor="middle" fill="#263238" font-size="5.5" font-weight="700" font-family="sans-serif">F</text>
+      <circle cx="214" cy="130" r="9" fill="#b0bec5" stroke="#eceff1" stroke-width="1.2" filter="url(#qsoft)"/>
+      <text x="214" y="133.5" text-anchor="middle" fill="#263238" font-size="5.5" font-weight="700" font-family="sans-serif">F</text>
+
+      <!-- F front (projected, equatorial) -->
+      <circle cx="172" cy="107" r="8" fill="#cfd8dc" stroke="#eceff1" stroke-width="1" filter="url(#qsoft)"/>
+      <text x="172" y="110.5" text-anchor="middle" fill="#263238" font-size="5.5" font-weight="700" font-family="sans-serif">F</text>
+
+      <!-- W atom at center -->
+      <circle cx="145" cy="130" r="14" fill="url(#wGrad)" stroke="#ffd54f" stroke-width="1.5" filter="url(#qsoft)" style="animation:wPulse 3s ease-in-out infinite"/>
+      <text x="145" y="134" text-anchor="middle" fill="#1a0800" font-size="9" font-weight="700" font-family="sans-serif">W</text>
+
+      <!-- Bond length bracket (W surface → axial F) -->
+      <line x1="163" y1="62" x2="163" y2="116" stroke="#69f0ae" stroke-width="0.9"/>
+      <line x1="159" y1="62"  x2="167" y2="62"  stroke="#69f0ae" stroke-width="0.9"/>
+      <line x1="159" y1="116" x2="167" y2="116" stroke="#69f0ae" stroke-width="0.9"/>
+      <text x="170" y="92"  fill="#69f0ae" font-size="5.5" font-family="monospace">1.832 Å</text>
+      <text x="170" y="100" fill="#69f0ae" font-size="5.5" font-family="monospace">W-F bond</text>
+
+      <!-- Region labels -->
+      <text x="145" y="40" text-anchor="middle" fill="#4dd0e1" font-size="6.5" font-family="monospace">+z lobe</text>
+      <text x="145" y="220" text-anchor="middle" fill="#4dd0e1" font-size="6.5" font-family="monospace">−z lobe</text>
+      <text x="72"  y="118" text-anchor="middle" fill="#4dd0e1" font-size="6" font-family="monospace">ring</text>
+      <text x="218" y="118" text-anchor="middle" fill="#4dd0e1" font-size="6" font-family="monospace">ring</text>
+
+      <!-- === D(r) RADIAL DISTRIBUTION PLOT === -->
+      <rect x="299" y="22" width="148" height="164" rx="6" fill="#030c14" stroke="#0077aa" stroke-width="0.9"/>
+      <text x="373" y="36" text-anchor="middle" fill="#4dd0e1" font-size="7" font-weight="700" font-family="sans-serif">D(r) — RADIAL DISTRIBUTION</text>
+
+      <!-- Axes -->
+      <line x1="318" y1="46" x2="318" y2="162" stroke="#1a2a3a" stroke-width="1"/>
+      <path d="M315,46 L318,41 L321,46" fill="#2a3a4a"/>
+      <text x="323" y="43" fill="#445" font-size="5.5" font-family="monospace">D(r)</text>
+      <line x1="313" y1="162" x2="441" y2="162" stroke="#1a2a3a" stroke-width="1"/>
+      <path d="M436,159 L441,162 L436,165" fill="#2a3a4a"/>
+      <text x="440" y="172" fill="#445" font-size="5.5" font-family="monospace">r (Å)</text>
+
+      <!-- X-axis ticks: r=1→x=358, r=2→x=398, r=3→x=438 (scale 40px/Å) -->
+      <line x1="358" y1="160" x2="358" y2="165" stroke="#334" stroke-width="0.8"/>
+      <text x="358" y="172" text-anchor="middle" fill="#445" font-size="5" font-family="monospace">1</text>
+      <line x1="398" y1="160" x2="398" y2="165" stroke="#334" stroke-width="0.8"/>
+      <text x="398" y="172" text-anchor="middle" fill="#445" font-size="5" font-family="monospace">2</text>
+      <line x1="438" y1="160" x2="438" y2="165" stroke="#334" stroke-width="0.8"/>
+      <text x="438" y="172" text-anchor="middle" fill="#445" font-size="5" font-family="monospace">3</text>
+
+      <!-- D(r) curve: single peak at r=1.832Å → x=318+(1.832×40)=391 -->
+      <path d="M318,162 C333,162 348,160 362,148 C376,136 382,88 391,55 C400,45 408,70 416,110 C424,140 432,158 441,162"
+            fill="none" stroke="#69f0ae" stroke-width="2" filter="url(#qsoft)"/>
+      <path d="M318,162 C333,162 348,160 362,148 C376,136 382,88 391,55 C400,45 408,70 416,110 C424,140 432,158 441,162 Z"
+            fill="#69f0ae" opacity="0.07"/>
+
+      <!-- Peak dashed crosshairs -->
+      <line x1="391" y1="55" x2="391" y2="162" stroke="#ffcc44" stroke-width="1" stroke-dasharray="3,2"/>
+      <line x1="318" y1="55" x2="391" y2="55" stroke="#ffcc44" stroke-width="1" stroke-dasharray="3,2"/>
+      <circle cx="391" cy="55" r="3.5" fill="#ffcc44" filter="url(#qsoft)"/>
+
+      <!-- Peak labels -->
+      <text x="391" y="175" text-anchor="middle" fill="#ffcc44" font-size="5.5" font-family="monospace">1.832 Å</text>
+      <text x="358" y="47" fill="#ffcc44" font-size="5.5" font-family="monospace">WF₆ bond</text>
+      <text x="358" y="55" fill="#ffcc44" font-size="5.5" font-family="monospace">length ✓</text>
+
+      <!-- === ENERGY LEVEL DIAGRAM === -->
+      <rect x="453" y="22" width="102" height="164" rx="6" fill="#04080e" stroke="#7733bb" stroke-width="0.9"/>
+      <text x="504" y="36" text-anchor="middle" fill="#aa77ee" font-size="7" font-weight="700" font-family="sans-serif">ENERGY LEVELS</text>
+
+      <!-- Level n=0: y=155 -->
+      <line x1="468" y1="155" x2="534" y2="155" stroke="#3a3055" stroke-width="1.2"/>
+      <text x="464" y="158" text-anchor="end" fill="#444" font-size="5.5" font-family="monospace">n=0</text>
+      <text x="538" y="158" fill="#444" font-size="5" font-family="monospace">1×</text>
+
+      <!-- Level n=1: y=117 -->
+      <line x1="468" y1="117" x2="534" y2="117" stroke="#3a3055" stroke-width="1.2"/>
+      <text x="464" y="120" text-anchor="end" fill="#555" font-size="5.5" font-family="monospace">n=1</text>
+      <text x="538" y="120" fill="#555" font-size="5" font-family="monospace">3×</text>
+
+      <!-- Level n=2: y=79 -->
+      <line x1="468" y1="79" x2="534" y2="79" stroke="#5a4080" stroke-width="1.2"/>
+      <text x="464" y="82" text-anchor="end" fill="#666" font-size="5.5" font-family="monospace">n=2</text>
+      <text x="538" y="82" fill="#666" font-size="5" font-family="monospace">6×</text>
+
+      <!-- Level n=3: y=41 — highlighted -->
+      <rect x="466" y="36" width="70" height="10" rx="2" fill="#3a1260" opacity="0.6"/>
+      <line x1="468" y1="41" x2="534" y2="41" stroke="#e040fb" stroke-width="2.2" filter="url(#qsoft)"/>
+      <text x="464" y="44" text-anchor="end" fill="#e040fb" font-size="5.5" font-weight="700" font-family="monospace">n=3</text>
+      <text x="538" y="44" fill="#e040fb" font-size="5" font-weight="700" font-family="monospace">10×</text>
+      <text x="501" y="33" text-anchor="middle" fill="#e040fb" font-size="5.5" font-family="monospace">← Ψ₃₂₀</text>
+
+      <!-- ℏω bracket between n=2 and n=3 -->
+      <line x1="542" y1="41" x2="542" y2="79" stroke="#555" stroke-width="0.8"/>
+      <path d="M539,41 L542,36 L545,41" fill="#555"/>
+      <path d="M539,79 L542,84 L545,79" fill="#555"/>
+      <text x="548" y="63" fill="#555" font-size="5.5" font-family="monospace">ℏω</text>
+
+      <!-- Degeneracy label -->
+      <text x="501" y="174" text-anchor="middle" fill="#333" font-size="5" font-family="monospace">degeneracy</text>
+
+      <!-- Energy formula -->
+      <text x="501" y="182" text-anchor="middle" fill="#555" font-size="5.5" font-family="monospace">E=(n+³⁄₂)ℏω</text>
+
+      <!-- === BOTTOM INFO BOXES === -->
+      <rect x="4"   y="236" width="178" height="80" rx="5" fill="#020c14" stroke="#0077aa" stroke-width="0.8"/>
+      <text x="93"  y="251" text-anchor="middle" fill="#4dd0e1" font-size="7.5" font-weight="700" font-family="sans-serif">Ψ₃₂₀ WAVE FUNCTION</text>
+      <text x="93"  y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">3D isotropic harmonic oscillator</text>
+      <text x="93"  y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">n=3, l=2, m=0 · d-orbital geometry</text>
+      <text x="93"  y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">two axial lobes + equatorial ring</text>
+      <text x="93"  y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">analytical Schrödinger solution</text>
+      <text x="93"  y="310" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">co-authored · Dr. D.A. Barlow · 2024</text>
+
+      <rect x="188" y="236" width="178" height="80" rx="5" fill="#030e08" stroke="#00897b" stroke-width="0.8"/>
+      <text x="277" y="251" text-anchor="middle" fill="#69f0ae" font-size="7.5" font-weight="700" font-family="sans-serif">WF₆ BOND MATCH</text>
+      <text x="277" y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">D(r) peak → r = 1.832 Å</text>
+      <text x="277" y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">matches measured W-F bond length</text>
+      <text x="277" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">CrF₆, MoF₆, WF₆ all validated</text>
+      <text x="277" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">effective temperature T ≈ 11.5 mK</text>
+      <text x="277" y="310" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Oh symmetry · 6 equivalent bonds</text>
+
+      <rect x="372" y="236" width="184" height="80" rx="5" fill="#080510" stroke="#7733bb" stroke-width="0.8"/>
+      <text x="464" y="251" text-anchor="middle" fill="#aa77ee" font-size="7.5" font-weight="700" font-family="sans-serif">QUANTUM MODEL</text>
+      <text x="464" y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">E_n = (n + 3/2)ℏω · equal spacing</text>
+      <text x="464" y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">n=3 state: degeneracy 10</text>
+      <text x="464" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">radial wavefunction R_nl · Y_lm</text>
+      <text x="464" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">spherical coordinate separation</text>
+      <text x="464" y="310" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">published paper · Sewanee · 2024</text>
     </svg>`;
   }
 
