@@ -110,8 +110,7 @@ const projects = {
     tag: "NASA RASC-AL",
     title: "ARES: Autonomous Red-Planet Experimental Shelter",
     image: "ares.png",
-    diagram: "ares-diagram.png",
-    visualType: "image",
+    visualType: "ares-conops",
     summary: "A Mars precursor mission demonstrating deployable habitat construction, robotic assembly, and ISRU support systems.",
     overview: "ARES is a human-Mars precursor campaign concept designed to validate infrastructure needed for sustained habitation on Mars. The mission demonstrates a deployable pressurized dome, 3D-printed regolith interior, oxygen generation, water extraction, robotic assembly, and nuclear power.",
     challenge: "Sustained human presence on Mars demands near-complete independence from Earth resupply: the mass penalties of propellant and consumables make frequent logistics flights economically and operationally unviable. Mars's thin CO₂ atmosphere (~0.6% of Earth's surface pressure), average surface temperature of −60°C, and unshielded radiation environment impose strict simultaneous requirements on pressurized structure, thermal management, power, radiation shielding, and crew consumables. Each of these subsystems — oxygen generation, water extraction, nuclear power, robotic assembly, pressurized habitat — must be validated autonomously before a crewed landing is attempted.",
@@ -1862,6 +1861,269 @@ function populateProjectPage() {
         <text x="467" y="290" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">hexacopter · electrostatic nozzles</text>
         <text x="467" y="300" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">nanofertilizer · targeted only</text>
       </svg>`;
+  }
+
+  if (p.visualType === "ares-conops") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 340" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes shipDrift {
+            0%,100%{transform:translate(0,0)} 50%{transform:translate(6px,-4px)}
+          }
+          @keyframes engineGlow {
+            0%,100%{opacity:0.5} 50%{opacity:1}
+          }
+          @keyframes roverRoll {
+            0%{transform:translateX(0)} 100%{transform:translateX(52px)}
+          }
+          @keyframes dustDrift {
+            0%{transform:translateX(0);opacity:0} 30%{opacity:0.6} 100%{transform:translateX(40px);opacity:0}
+          }
+          @keyframes kiloFlicker {
+            0%,100%{opacity:0.7} 50%{opacity:1}
+          }
+          @keyframes starTwinkle {
+            0%,100%{opacity:0.4} 50%{opacity:1}
+          }
+        </style>
+        <radialGradient id="marsBg" cx="50%" cy="0%" r="80%">
+          <stop offset="0%" stop-color="#1a0a05"/>
+          <stop offset="100%" stop-color="#050208"/>
+        </radialGradient>
+        <radialGradient id="marsGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="70%" stop-color="#7a2a12"/>
+          <stop offset="100%" stop-color="#c0451a"/>
+        </radialGradient>
+        <radialGradient id="marsSurface" cx="50%" cy="0%" r="100%">
+          <stop offset="0%" stop-color="#3d1508"/>
+          <stop offset="100%" stop-color="#1c0804"/>
+        </radialGradient>
+        <radialGradient id="kiloGlow" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#ffe082" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#ff8f00" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#555"/>
+        </marker>
+      </defs>
+
+      <!-- Space background -->
+      <rect width="560" height="340" fill="url(#marsBg)"/>
+
+      <!-- Stars -->
+      <circle cx="18" cy="12" r="0.8" fill="#fff" style="animation:starTwinkle 3.1s 0.2s infinite"/>
+      <circle cx="54" cy="8"  r="0.6" fill="#fff" style="animation:starTwinkle 2.8s 0.7s infinite"/>
+      <circle cx="92" cy="20" r="0.9" fill="#fff" style="animation:starTwinkle 3.5s 1.1s infinite"/>
+      <circle cx="130" cy="6" r="0.6" fill="#fff" style="animation:starTwinkle 2.5s 0.4s infinite"/>
+      <circle cx="170" cy="15" r="0.8" fill="#fff" style="animation:starTwinkle 3.2s 0.9s infinite"/>
+      <circle cx="210" cy="9" r="0.7" fill="#fff" style="animation:starTwinkle 2.7s 1.5s infinite"/>
+      <circle cx="30" cy="35" r="0.6" fill="#aaa" style="animation:starTwinkle 3.8s 0.3s infinite"/>
+      <circle cx="78" cy="42" r="0.5" fill="#ccc" style="animation:starTwinkle 2.9s 1.8s infinite"/>
+      <circle cx="115" cy="32" r="0.7" fill="#fff" style="animation:starTwinkle 3.3s 0.6s infinite"/>
+      <circle cx="155" cy="44" r="0.5" fill="#aaa" style="animation:starTwinkle 2.6s 1.2s infinite"/>
+      <circle cx="245" cy="18" r="0.6" fill="#fff" style="animation:starTwinkle 3.1s 0.5s infinite"/>
+      <circle cx="280" cy="7"  r="0.8" fill="#fff" style="animation:starTwinkle 2.4s 1.3s infinite"/>
+      <circle cx="300" cy="28" r="0.5" fill="#ccc" style="animation:starTwinkle 3.6s 0.8s infinite"/>
+      <circle cx="330" cy="12" r="0.7" fill="#fff" style="animation:starTwinkle 2.9s 1.6s infinite"/>
+
+      <!-- Mars planet (upper right) -->
+      <circle cx="498" cy="52" r="72" fill="url(#marsGlow)"/>
+      <!-- Atmosphere glow -->
+      <circle cx="498" cy="52" r="76" fill="none" stroke="#c0451a" stroke-width="6" opacity="0.3"/>
+      <!-- Surface features -->
+      <ellipse cx="475" cy="38" rx="18" ry="8" fill="#5a1f0a" opacity="0.6"/>
+      <ellipse cx="510" cy="62" rx="12" ry="5" fill="#5a1f0a" opacity="0.5"/>
+      <ellipse cx="490" cy="75" rx="22" ry="7" fill="#8b3015" opacity="0.4"/>
+      <text x="498" y="56" text-anchor="middle" fill="#ffa07a" font-size="8" font-family="sans-serif" opacity="0.9">MARS</text>
+
+      <!-- Transit arc (dotted) -->
+      <path d="M 162 55 Q 320 -10 435 40" fill="none" stroke="#555" stroke-width="1" stroke-dasharray="4,4" opacity="0.7"/>
+
+      <!-- Spacecraft (upper left, animated drift) -->
+      <g transform="translate(80,50)" style="animation:shipDrift 6s ease-in-out infinite">
+        <!-- Main body -->
+        <rect x="-28" y="-9" width="56" height="18" rx="4" fill="#1a2035" stroke="#5bc8f4" stroke-width="1.2"/>
+        <!-- Solar panel left -->
+        <rect x="-50" y="-18" width="20" height="36" rx="2" fill="#0d1929" stroke="#5bc8f4" stroke-width="0.8"/>
+        <line x1="-50" y1="-6" x2="-30" y2="-6" stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <line x1="-50" y1="0"  x2="-30" y2="0"  stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <line x1="-50" y1="6"  x2="-30" y2="6"  stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <!-- Solar panel right -->
+        <rect x="30" y="-18" width="20" height="36" rx="2" fill="#0d1929" stroke="#5bc8f4" stroke-width="0.8"/>
+        <line x1="30" y1="-6" x2="50" y2="-6" stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <line x1="30" y1="0"  x2="50" y2="0"  stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <line x1="30" y1="6"  x2="50" y2="6"  stroke="#5bc8f4" stroke-width="0.5" opacity="0.5"/>
+        <!-- Engine glow -->
+        <circle cx="-28" cy="0" r="6" fill="#5bc8f4" opacity="0.2" style="animation:engineGlow 1.5s ease-in-out infinite"/>
+        <circle cx="-28" cy="0" r="3" fill="#5bc8f4" opacity="0.6" style="animation:engineGlow 1.5s ease-in-out infinite"/>
+        <!-- Label -->
+        <text x="0" y="3.5" text-anchor="middle" fill="#5bc8f4" font-size="5.5" font-family="monospace">ARES TRANSIT</text>
+      </g>
+
+      <!-- ── TIMELINE STRIP ── -->
+      <rect x="4" y="108" width="552" height="54" rx="6" fill="#0a0614" opacity="0.9"/>
+      <!-- Timeline line -->
+      <line x1="40" y1="135" x2="520" y2="135" stroke="#333" stroke-width="2"/>
+
+      <!-- Phase nodes & labels — 6 phases at x=40,132,224,316,408,500 -->
+      <!-- P0: Pre-launch -->
+      <circle cx="40"  cy="135" r="8" fill="#5bc8f4" filter="url(#glow)"/>
+      <text x="40"  y="124" text-anchor="middle" fill="#5bc8f4" font-size="7" font-weight="700" font-family="sans-serif">P0</text>
+      <text x="40"  y="152" text-anchor="middle" fill="#5bc8f4" font-size="6" font-family="monospace">PRE-LAUNCH</text>
+      <text x="40"  y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2029</text>
+
+      <!-- P1: Transit -->
+      <circle cx="132" cy="135" r="8" fill="#f47c5b" filter="url(#glow)"/>
+      <text x="132" y="124" text-anchor="middle" fill="#f47c5b" font-size="7" font-weight="700" font-family="sans-serif">P1</text>
+      <text x="132" y="152" text-anchor="middle" fill="#f47c5b" font-size="6" font-family="monospace">TRANSIT</text>
+      <text x="132" y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2030</text>
+
+      <!-- P2: EDL -->
+      <circle cx="224" cy="135" r="8" fill="#ffd166" filter="url(#glow)"/>
+      <text x="224" y="124" text-anchor="middle" fill="#ffd166" font-size="7" font-weight="700" font-family="sans-serif">P2</text>
+      <text x="224" y="152" text-anchor="middle" fill="#ffd166" font-size="6" font-family="monospace">EDL</text>
+      <text x="224" y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2030</text>
+
+      <!-- P3: Surface ops -->
+      <circle cx="316" cy="135" r="8" fill="#e86c5b" filter="url(#glow)"/>
+      <text x="316" y="124" text-anchor="middle" fill="#e86c5b" font-size="7" font-weight="700" font-family="sans-serif">P3</text>
+      <text x="316" y="152" text-anchor="middle" fill="#e86c5b" font-size="6" font-family="monospace">SURFACE OPS</text>
+      <text x="316" y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2030–31</text>
+
+      <!-- P4: ISRU & Habitat -->
+      <circle cx="408" cy="135" r="8" fill="#c0562a" filter="url(#glow)"/>
+      <text x="408" y="124" text-anchor="middle" fill="#c0562a" font-size="7" font-weight="700" font-family="sans-serif">P4</text>
+      <text x="408" y="152" text-anchor="middle" fill="#c0562a" font-size="6" font-family="monospace">ISRU + HABITAT</text>
+      <text x="408" y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2031–32</text>
+
+      <!-- P5: Full Ops -->
+      <circle cx="500" cy="135" r="8" fill="#69f0ae" filter="url(#glow)"/>
+      <text x="500" y="124" text-anchor="middle" fill="#69f0ae" font-size="7" font-weight="700" font-family="sans-serif">P5</text>
+      <text x="500" y="152" text-anchor="middle" fill="#69f0ae" font-size="6" font-family="monospace">FULL OPS</text>
+      <text x="500" y="160" text-anchor="middle" fill="#555"    font-size="5.5" font-family="monospace">2032+</text>
+
+      <!-- ── MARS SURFACE SCENE ── -->
+      <!-- Sky gradient between timeline and surface -->
+      <rect x="0" y="168" width="560" height="20" fill="#1a0a05" opacity="0.4"/>
+
+      <!-- Terrain layers (wavy fills) -->
+      <path d="M0,190 Q70,185 140,192 Q210,199 280,190 Q350,181 420,190 Q490,199 560,188 L560,340 L0,340 Z" fill="url(#marsSurface)"/>
+      <path d="M0,205 Q90,200 180,208 Q270,216 360,205 Q450,194 560,206 L560,340 L0,340 Z" fill="#150604" opacity="0.8"/>
+
+      <!-- ── SURFACE STRUCTURES ── -->
+
+      <!-- STARSHIP (far right, parked) -->
+      <g transform="translate(490,175)">
+        <rect x="-7" y="-52" width="14" height="60" rx="4" fill="#2a2a3a" stroke="#778" stroke-width="0.8"/>
+        <!-- Nose -->
+        <path d="M-7,-52 Q0,-68 7,-52 Z" fill="#2a2a3a" stroke="#778" stroke-width="0.8"/>
+        <!-- Fins -->
+        <path d="M-7,-10 L-16,8 L-7,6 Z" fill="#222233" stroke="#778" stroke-width="0.6"/>
+        <path d="M7,-10 L16,8 L7,6 Z" fill="#222233" stroke="#778" stroke-width="0.6"/>
+        <text x="0" y="16" text-anchor="middle" fill="#778" font-size="5" font-family="monospace">STARSHIP</text>
+      </g>
+
+      <!-- Kilopower reactor (right side) -->
+      <g transform="translate(430,195)">
+        <rect x="-8" y="-30" width="16" height="32" rx="2" fill="#1a1a2a" stroke="#ffe082" stroke-width="0.8"/>
+        <!-- Fins -->
+        <rect x="-14" y="-28" width="5" height="22" rx="1" fill="#141420" stroke="#ffe082" stroke-width="0.6"/>
+        <rect x="9" y="-28" width="5" height="22" rx="1" fill="#141420" stroke="#ffe082" stroke-width="0.6"/>
+        <!-- Glow -->
+        <circle cx="0" cy="-14" r="10" fill="url(#kiloGlow)" style="animation:kiloFlicker 2s ease-in-out infinite"/>
+        <text x="0" y="10" text-anchor="middle" fill="#ffe082" font-size="5" font-family="monospace">KILO</text>
+        <text x="0" y="17" text-anchor="middle" fill="#ffe082" font-size="5" font-family="monospace">POWER</text>
+      </g>
+
+      <!-- AERODOME habitat dome (center) -->
+      <g transform="translate(250,205)">
+        <!-- Base ring -->
+        <rect x="-55" y="-5" width="110" height="12" rx="2" fill="#1a1530" stroke="#8b80d4" stroke-width="0.8"/>
+        <!-- Dome shell -->
+        <path d="M-55,0 Q-55,-60 0,-68 Q55,-60 55,0 Z" fill="#0d0a22" stroke="#8b80d4" stroke-width="1.2"/>
+        <!-- Dome lattice -->
+        <line x1="0" y1="-68" x2="-55" y2="0" stroke="#8b80d4" stroke-width="0.4" opacity="0.5"/>
+        <line x1="0" y1="-68" x2="-28" y2="-5" stroke="#8b80d4" stroke-width="0.4" opacity="0.5"/>
+        <line x1="0" y1="-68" x2="0" y2="-5" stroke="#8b80d4" stroke-width="0.4" opacity="0.5"/>
+        <line x1="0" y1="-68" x2="28" y2="-5" stroke="#8b80d4" stroke-width="0.4" opacity="0.5"/>
+        <line x1="0" y1="-68" x2="55" y2="0" stroke="#8b80d4" stroke-width="0.4" opacity="0.5"/>
+        <ellipse cx="0" cy="-34" rx="55" ry="10" fill="none" stroke="#8b80d4" stroke-width="0.4" opacity="0.4"/>
+        <!-- Window -->
+        <circle cx="0" cy="-32" r="8" fill="#0a0818" stroke="#b39ddb" stroke-width="0.8" opacity="0.8"/>
+        <circle cx="0" cy="-32" r="4" fill="#1a1040" opacity="0.6"/>
+        <!-- Label -->
+        <text x="0" y="16" text-anchor="middle" fill="#b39ddb" font-size="6.5" font-family="sans-serif" font-weight="700">AERODOME</text>
+      </g>
+
+      <!-- CABIN habitat module (left of dome) -->
+      <g transform="translate(140,208)">
+        <rect x="-30" y="-28" width="60" height="35" rx="3" fill="#101828" stroke="#5bc8f4" stroke-width="0.9"/>
+        <!-- Windows -->
+        <rect x="-18" y="-20" width="10" height="8" rx="1" fill="#071520" stroke="#5bc8f4" stroke-width="0.6"/>
+        <rect x="8"  y="-20" width="10" height="8" rx="1" fill="#071520" stroke="#5bc8f4" stroke-width="0.6"/>
+        <!-- Door -->
+        <rect x="-5" y="-10" width="10" height="17" rx="1" fill="#071520" stroke="#5bc8f4" stroke-width="0.5"/>
+        <!-- Airlock -->
+        <rect x="30" y="-15" width="14" height="22" rx="3" fill="#0c1520" stroke="#5bc8f4" stroke-width="0.6"/>
+        <text x="0" y="18" text-anchor="middle" fill="#5bc8f4" font-size="6" font-family="monospace">CABIN</text>
+      </g>
+
+      <!-- RASSOF rover (animated roll, between cabin and dome) -->
+      <g style="animation:roverRoll 8s linear infinite" transform="translate(185,208)">
+        <!-- Body -->
+        <rect x="-18" y="-14" width="36" height="16" rx="2" fill="#1a1530" stroke="#ffd166" stroke-width="0.8"/>
+        <!-- Mast -->
+        <rect x="-2" y="-26" width="4" height="14" fill="#1a1530" stroke="#ffd166" stroke-width="0.6"/>
+        <circle cx="0" cy="-28" r="4" fill="#0d0a22" stroke="#ffd166" stroke-width="0.6"/>
+        <!-- Solar panel top -->
+        <rect x="-20" y="-18" width="40" height="4" rx="1" fill="#0a0518" stroke="#ffd166" stroke-width="0.5"/>
+        <!-- Wheels -->
+        <circle cx="-14" cy="4" r="5" fill="#0d0a18" stroke="#ffd166" stroke-width="0.8"/>
+        <circle cx="0"   cy="4" r="5" fill="#0d0a18" stroke="#ffd166" stroke-width="0.8"/>
+        <circle cx="14"  cy="4" r="5" fill="#0d0a18" stroke="#ffd166" stroke-width="0.8"/>
+        <text x="0" y="-1" text-anchor="middle" fill="#ffd166" font-size="4.5" font-family="monospace">RASSOF</text>
+      </g>
+
+      <!-- Dust drift particles -->
+      <circle cx="80" cy="215" r="1.5" fill="#c0562a" opacity="0.5" style="animation:dustDrift 5s 0.5s ease-out infinite"/>
+      <circle cx="85" cy="218" r="1" fill="#c0562a" opacity="0.4" style="animation:dustDrift 5s 1.2s ease-out infinite"/>
+      <circle cx="370" cy="220" r="1.5" fill="#c0562a" opacity="0.5" style="animation:dustDrift 4s 2.1s ease-out infinite"/>
+      <circle cx="375" cy="223" r="1" fill="#a04020" opacity="0.4" style="animation:dustDrift 4s 0.8s ease-out infinite"/>
+
+      <!-- ── BOTTOM INFO BOXES ── -->
+      <rect x="4"   y="275" width="132" height="60" rx="5" fill="#060e1e" stroke="#5bc8f4" stroke-width="0.8"/>
+      <text x="70"  y="290" text-anchor="middle" fill="#5bc8f4" font-size="7.5" font-weight="700" font-family="sans-serif">CREW &amp; HABITAT</text>
+      <text x="70"  y="302" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">AERODOME inflatable</text>
+      <text x="70"  y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">dome · CABIN module</text>
+      <text x="70"  y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">2-crew · 500 sol mission</text>
+      <text x="70"  y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">ECLSS · radiation shielding</text>
+
+      <rect x="142" y="275" width="132" height="60" rx="5" fill="#0a0808" stroke="#ffd166" stroke-width="0.8"/>
+      <text x="208" y="290" text-anchor="middle" fill="#ffd166" font-size="7.5" font-weight="700" font-family="sans-serif">ISRU &amp; POWER</text>
+      <text x="208" y="302" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">CO₂→O₂ Sabatier MOXIE</text>
+      <text x="208" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">regolith water extraction</text>
+      <text x="208" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Kilopower fission 10 kW</text>
+      <text x="208" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">+ 20 kW solar array</text>
+
+      <rect x="280" y="275" width="132" height="60" rx="5" fill="#080614" stroke="#8b80d4" stroke-width="0.8"/>
+      <text x="346" y="290" text-anchor="middle" fill="#b39ddb" font-size="7.5" font-weight="700" font-family="sans-serif">ROBOTICS</text>
+      <text x="346" y="302" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">RASSOF 6-wheel rover</text>
+      <text x="346" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">autonomous construction</text>
+      <text x="346" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">regolith 3D printing</text>
+      <text x="346" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">robotic arm assembly</text>
+
+      <rect x="418" y="275" width="138" height="60" rx="5" fill="#060908" stroke="#69f0ae" stroke-width="0.8"/>
+      <text x="487" y="290" text-anchor="middle" fill="#69f0ae" font-size="7.5" font-weight="700" font-family="sans-serif">MISSION GOALS</text>
+      <text x="487" y="302" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">NASA RASC-AL finalist</text>
+      <text x="487" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Mars precursor mission</text>
+      <text x="487" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">pre-position for crewed</text>
+      <text x="487" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">500-sol surface stay</text>
+    </svg>`;
   }
 
   if (p.visualType === "plasma") {
