@@ -6,8 +6,7 @@ const projects = {
     tag: "Space Architecture",
     title: "Dual Person Spacecraft: Crescent Moon",
     image: "crescent-moon.png",
-    diagram: "crescent-arm-at-neo.png",
-    visualType: "image",
+    visualType: "crescent-viz",
     summary: "A two-person deep-space spacecraft concept for servicing NEO infrastructure, featuring centrifugal artificial gravity, a zero-g arm room for direct physical interaction with external machinery, and modular cylindrical habitat design. Columbia University Space Architecture.",
     overview: "Crescent Moon is set in a near-future solar system where automated infrastructure — mining equipment, communication relays, research facilities, energy nodes — has been deployed across NEOs, Lagrangian points, and Martian orbit. The project asks a specific architectural question: how do two astronauts remain physically capable of servicing and repairing this infrastructure during 14–18 month deep-space missions? The answer is a rotating spacecraft that generates centrifugal artificial gravity during cruise, reorients 90° for linear thrust phases, and carries a dedicated zero-gravity Arm Room from which the crew directly manipulates NEO-surface machinery.",
     challenge: "Long-duration deep-space habitation imposes simultaneous, often competing constraints: the rotating habitat must generate meaningful centrifugal gravity while maintaining structural mass balance along the rotation axis; consumables ducts, pipes, and vents must loop through every module without obstructing circulation; the pressurized cylinder must be long enough to minimize the gravity gradient across an upright human body; and the crew of two must be able to operate, sleep, exercise, and work in close quarters for over a year without psychological degradation. The Arm Room presents an additional challenge — it must function at zero-g when the rest of the spacecraft is rotating, requiring it to operate outside the rotating envelope during NEO approach.",
@@ -2121,6 +2120,246 @@ function populateProjectPage() {
       <text x="487" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Mars precursor mission</text>
       <text x="487" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">pre-position for crewed</text>
       <text x="487" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">500-sol surface stay</text>
+    </svg>`;
+  }
+
+  if (p.visualType === "crescent-viz") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 330" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes spinCM  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+          @keyframes spinUp  { from{transform:rotate(0deg)} to{transform:rotate(360deg)} }
+          @keyframes rcsPulse { 0%,100%{opacity:0} 35%,65%{opacity:0.9} }
+          @keyframes plumePulse { 0%,100%{opacity:0.55} 50%{opacity:1} }
+          @keyframes velBlink  { 0%,100%{opacity:0.5} 50%{opacity:1} }
+        </style>
+        <radialGradient id="cmbg" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#04091c"/>
+          <stop offset="100%" stop-color="#010208"/>
+        </radialGradient>
+        <radialGradient id="neoGrad" cx="38%" cy="32%" r="65%">
+          <stop offset="0%" stop-color="#3d3020"/>
+          <stop offset="100%" stop-color="#151008"/>
+        </radialGradient>
+        <linearGradient id="plumeGrad" x1="397" y1="0" x2="350" y2="0" gradientUnits="userSpaceOnUse">
+          <stop offset="0%"   stop-color="#88ddff" stop-opacity="0.95"/>
+          <stop offset="55%"  stop-color="#4488cc" stop-opacity="0.45"/>
+          <stop offset="100%" stop-color="#1133aa" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="cmglow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="cmsoft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <marker id="cmarr" markerWidth="7" markerHeight="7" refX="5" refY="3.5" orient="auto">
+          <path d="M0,0 L7,3.5 L0,7 Z" fill="#555"/>
+        </marker>
+        <marker id="garr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+          <path d="M0,0 L6,3 L0,6 Z" fill="#5bc8f4" opacity="0.85"/>
+        </marker>
+      </defs>
+
+      <!-- Background -->
+      <rect width="560" height="330" fill="url(#cmbg)"/>
+
+      <!-- Stars -->
+      <circle cx="22"  cy="12" r="0.7" fill="#fff" opacity="0.55"/>
+      <circle cx="58"  cy="7"  r="0.9" fill="#fff" opacity="0.4"/>
+      <circle cx="108" cy="20" r="0.6" fill="#ccc" opacity="0.4"/>
+      <circle cx="158" cy="9"  r="0.8" fill="#fff" opacity="0.5"/>
+      <circle cx="220" cy="17" r="0.6" fill="#fff" opacity="0.35"/>
+      <circle cx="265" cy="8"  r="0.7" fill="#ccc" opacity="0.4"/>
+      <circle cx="312" cy="23" r="0.6" fill="#fff" opacity="0.35"/>
+      <circle cx="355" cy="7"  r="0.9" fill="#fff" opacity="0.3"/>
+      <circle cx="412" cy="18" r="0.7" fill="#fff" opacity="0.45"/>
+      <circle cx="455" cy="10" r="0.6" fill="#ccc" opacity="0.4"/>
+      <circle cx="508" cy="20" r="0.8" fill="#fff" opacity="0.4"/>
+      <circle cx="542" cy="7"  r="0.6" fill="#fff" opacity="0.5"/>
+      <circle cx="32"  cy="190" r="0.5" fill="#aaa" opacity="0.3"/>
+      <circle cx="180" cy="200" r="0.6" fill="#ccc" opacity="0.3"/>
+      <circle cx="425" cy="195" r="0.5" fill="#aaa" opacity="0.3"/>
+
+      <!-- Phase separators -->
+      <line x1="187" y1="22" x2="187" y2="233" stroke="#181e35" stroke-width="1.5"/>
+      <line x1="374" y1="22" x2="374" y2="233" stroke="#181e35" stroke-width="1.5"/>
+
+      <!-- Phase header chips -->
+      <rect x="8"   y="22" width="176" height="18" rx="4" fill="#04091e" stroke="#5bc8f4" stroke-width="0.9"/>
+      <text x="96"  y="34" text-anchor="middle" fill="#5bc8f4" font-size="9" font-weight="700" font-family="sans-serif">CRUISE</text>
+
+      <rect x="192" y="22" width="178" height="18" rx="4" fill="#120e02" stroke="#ffd166" stroke-width="0.9"/>
+      <text x="281" y="34" text-anchor="middle" fill="#ffd166" font-size="9" font-weight="700" font-family="sans-serif">PROXIMITY OPS</text>
+
+      <rect x="379" y="22" width="176" height="18" rx="4" fill="#04100a" stroke="#69f0ae" stroke-width="0.9"/>
+      <text x="467" y="34" text-anchor="middle" fill="#69f0ae" font-size="9" font-weight="700" font-family="sans-serif">DEPART + RE-SPIN</text>
+
+      <!-- ══════════════ PHASE 1: CRUISE ══════════════ -->
+
+      <!-- Rotation ring trace -->
+      <circle cx="96" cy="118" r="56" fill="none" stroke="#5bc8f4" stroke-width="0.9" stroke-dasharray="3,5" opacity="0.22"/>
+
+      <!-- g_eff label (static, outside ring) -->
+      <text x="96" y="53" text-anchor="middle" fill="#5bc8f4" font-size="6.5" font-family="monospace" opacity="0.8">← g_eff · · · g_eff →</text>
+      <text x="96" y="62" text-anchor="middle" fill="#888"    font-size="5.5" font-family="monospace">centrifugal (outward)</text>
+
+      <!-- Spinning spacecraft group -->
+      <g transform="translate(96,118)">
+        <g style="animation:spinCM 8s linear infinite; transform-origin:0px 0px">
+          <!-- Boom -->
+          <line x1="-56" y1="0" x2="56" y2="0" stroke="#4466aa" stroke-width="2.2"/>
+          <!-- Left habitat module -->
+          <rect x="-72" y="-10" width="18" height="20" rx="3" fill="#101828" stroke="#5bc8f4" stroke-width="1.3"/>
+          <!-- Right habitat module -->
+          <rect x="54"  y="-10" width="18" height="20" rx="3" fill="#101828" stroke="#5bc8f4" stroke-width="1.3"/>
+          <!-- Central hub -->
+          <circle cx="0" cy="0" r="9"  fill="#141c30" stroke="#5bc8f4" stroke-width="1.3"/>
+          <circle cx="0" cy="0" r="4"  fill="#1c2840"/>
+          <!-- Solar panels (perpendicular to boom, at hub) -->
+          <rect x="-25" y="-35" width="50" height="24" rx="2" fill="#060d1a" stroke="#5bc8f4" stroke-width="0.8"/>
+          <line x1="-8"  y1="-35" x2="-8"  y2="-11" stroke="#5bc8f4" stroke-width="0.4" opacity="0.5"/>
+          <line x1="8"   y1="-35" x2="8"   y2="-11" stroke="#5bc8f4" stroke-width="0.4" opacity="0.5"/>
+          <rect x="-25" y="11"  width="50" height="24" rx="2" fill="#060d1a" stroke="#5bc8f4" stroke-width="0.8"/>
+          <line x1="-8"  y1="11"  x2="-8"  y2="35"  stroke="#5bc8f4" stroke-width="0.4" opacity="0.5"/>
+          <line x1="8"   y1="11"  x2="8"   y2="35"  stroke="#5bc8f4" stroke-width="0.4" opacity="0.5"/>
+          <!-- Centrifugal gravity arrows (rotate with craft = physically correct) -->
+          <line x1="72" y1="0" x2="88" y2="0" stroke="#5bc8f4" stroke-width="1.3" opacity="0.85" marker-end="url(#garr)"/>
+          <line x1="-72" y1="0" x2="-88" y2="0" stroke="#5bc8f4" stroke-width="1.3" opacity="0.85" marker-end="url(#garr)"/>
+        </g>
+      </g>
+
+      <!-- Cruise info labels -->
+      <text x="96" y="190" text-anchor="middle" fill="#5bc8f4" font-size="7"   font-family="monospace">1 rev/min · r = 14 m</text>
+      <text x="96" y="200" text-anchor="middle" fill="#5bc8f4" font-size="7"   font-family="monospace">g_eff ≈ 0.38g (Mars-equiv.)</text>
+      <text x="96" y="213" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">crew sleep · eat · exercise</text>
+      <text x="96" y="223" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">14–18 month mission duration</text>
+
+      <!-- Phase 1→2 transition arrow -->
+      <line x1="165" y1="118" x2="182" y2="118" stroke="#445" stroke-width="1.3" marker-end="url(#cmarr)"/>
+      <text x="173" y="112" text-anchor="middle" fill="#556" font-size="5.5" font-family="monospace">DE-SPIN</text>
+
+      <!-- ══════════════ PHASE 2: PROXIMITY OPS ══════════════ -->
+
+      <!-- NEO asteroid -->
+      <path d="M346,92 L364,86 L382,94 L387,110 L378,128 L360,134 L342,127 L332,112 L334,98 Z"
+            fill="url(#neoGrad)" stroke="#554433" stroke-width="1.5"/>
+      <!-- Craters -->
+      <circle cx="364" cy="105" r="7"   fill="none" stroke="#332211" stroke-width="0.9" opacity="0.65"/>
+      <circle cx="374" cy="120" r="4.5" fill="none" stroke="#332211" stroke-width="0.8" opacity="0.55"/>
+      <circle cx="352" cy="118" r="3"   fill="none" stroke="#332211" stroke-width="0.7" opacity="0.45"/>
+      <!-- NEO label -->
+      <text x="359" y="148" text-anchor="middle" fill="#886655" font-size="6.5" font-family="monospace">NEO ASTEROID</text>
+
+      <!-- De-spun spacecraft (smaller scale, static) -->
+      <g transform="translate(242,112)">
+        <!-- Boom -->
+        <line x1="-44" y1="0" x2="44" y2="0" stroke="#4466aa" stroke-width="2"/>
+        <!-- Left module -->
+        <rect x="-57" y="-9" width="15" height="18" rx="2" fill="#101828" stroke="#ffd166" stroke-width="1.2"/>
+        <!-- Right module -->
+        <rect x="42" y="-9" width="15" height="18" rx="2" fill="#101828" stroke="#ffd166" stroke-width="1.2"/>
+        <!-- Hub -->
+        <circle cx="0" cy="0" r="7" fill="#141c30" stroke="#ffd166" stroke-width="1.2"/>
+        <!-- Solar panels -->
+        <rect x="-18" y="-28" width="36" height="18" rx="2" fill="#060d1a" stroke="#ffd166" stroke-width="0.8"/>
+        <line x1="-5" y1="-28" x2="-5" y2="-10" stroke="#ffd166" stroke-width="0.4" opacity="0.5"/>
+        <line x1="5"  y1="-28" x2="5"  y2="-10" stroke="#ffd166" stroke-width="0.4" opacity="0.5"/>
+        <rect x="-18" y="10"  width="36" height="18" rx="2" fill="#060d1a" stroke="#ffd166" stroke-width="0.8"/>
+        <line x1="-5" y1="10" x2="-5" y2="28" stroke="#ffd166" stroke-width="0.4" opacity="0.5"/>
+        <line x1="5"  y1="10" x2="5"  y2="28" stroke="#ffd166" stroke-width="0.4" opacity="0.5"/>
+        <!-- RCS plumes (station-keeping) -->
+        <path d="M-57,-9 L-72,-6 L-57,-1" fill="#ff9900" style="animation:rcsPulse 2.8s 0.2s ease-in-out infinite"/>
+        <path d="M-57,9  L-72,6  L-57,1"  fill="#ff9900" style="animation:rcsPulse 2.8s 1.6s ease-in-out infinite"/>
+        <!-- Robotic arm reaching right toward NEO -->
+        <line x1="57" y1="0"  x2="76" y2="-9"  stroke="#cccc88" stroke-width="1.5"/>
+        <line x1="76" y1="-9" x2="92" y2="2"   stroke="#cccc88" stroke-width="1.5"/>
+        <circle cx="93" cy="2" r="3.5" fill="#ffd166" stroke="#ffee88" stroke-width="0.9" filter="url(#cmsoft)"/>
+        <!-- DE-SPUN label above -->
+        <text x="0" y="-42" text-anchor="middle" fill="#ffd166" font-size="6" font-family="monospace">DESPUN · v_rel &lt; 1 m/s</text>
+      </g>
+
+      <!-- Phase 2 labels -->
+      <text x="281" y="190" text-anchor="middle" fill="#ffd166" font-size="7"   font-family="monospace">robotic arm + crew EVA</text>
+      <text x="281" y="200" text-anchor="middle" fill="#ffd166" font-size="7"   font-family="monospace">RCS station-keeping only</text>
+      <text x="281" y="213" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">inspection · sample collection</text>
+      <text x="281" y="223" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">Δv budget ≤ 50 m/s proximity</text>
+
+      <!-- Phase 2→3 transition arrow -->
+      <line x1="350" y1="118" x2="368" y2="118" stroke="#445" stroke-width="1.3" marker-end="url(#cmarr)"/>
+      <text x="359" y="112" text-anchor="middle" fill="#556" font-size="5.5" font-family="monospace">DEPART</text>
+
+      <!-- ══════════════ PHASE 3: DEPART + RE-SPIN ══════════════ -->
+
+      <!-- Receding NEO (small, upper-left of panel) -->
+      <path d="M396,65 L407,59 L418,65 L420,77 L413,85 L400,85 L390,77 Z"
+            fill="#2a2218" stroke="#443322" stroke-width="1" opacity="0.55"/>
+      <text x="405" y="97" text-anchor="middle" fill="#554433" font-size="5.5" font-family="monospace" opacity="0.7">receding</text>
+
+      <!-- Engine plume (pointing left = thrust rightward = departing) -->
+      <path d="M397,118 L360,106 L350,118 L360,130 Z" fill="url(#plumeGrad)" style="animation:plumePulse 1.1s ease-in-out infinite"/>
+      <ellipse cx="397" cy="118" rx="6" ry="5" fill="#aaddff" opacity="0.5" filter="url(#cmsoft)" style="animation:plumePulse 1.1s ease-in-out infinite"/>
+
+      <!-- Spinning-up spacecraft (slightly slower = still accelerating) -->
+      <g transform="translate(467,118)">
+        <g style="animation:spinUp 11s linear infinite; transform-origin:0px 0px">
+          <!-- Boom -->
+          <line x1="-56" y1="0" x2="56" y2="0" stroke="#4466aa" stroke-width="2.2"/>
+          <!-- Left module -->
+          <rect x="-72" y="-10" width="18" height="20" rx="3" fill="#101828" stroke="#69f0ae" stroke-width="1.3"/>
+          <!-- Right module -->
+          <rect x="54"  y="-10" width="18" height="20" rx="3" fill="#101828" stroke="#69f0ae" stroke-width="1.3"/>
+          <!-- Hub -->
+          <circle cx="0" cy="0" r="9"  fill="#141c30" stroke="#69f0ae" stroke-width="1.3"/>
+          <circle cx="0" cy="0" r="4"  fill="#1c2840"/>
+          <!-- Solar panels -->
+          <rect x="-25" y="-35" width="50" height="24" rx="2" fill="#060d1a" stroke="#69f0ae" stroke-width="0.8"/>
+          <line x1="-8"  y1="-35" x2="-8"  y2="-11" stroke="#69f0ae" stroke-width="0.4" opacity="0.5"/>
+          <line x1="8"   y1="-35" x2="8"   y2="-11" stroke="#69f0ae" stroke-width="0.4" opacity="0.5"/>
+          <rect x="-25" y="11"  width="50" height="24" rx="2" fill="#060d1a" stroke="#69f0ae" stroke-width="0.8"/>
+          <line x1="-8"  y1="11"  x2="-8"  y2="35"  stroke="#69f0ae" stroke-width="0.4" opacity="0.5"/>
+          <line x1="8"   y1="11"  x2="8"   y2="35"  stroke="#69f0ae" stroke-width="0.4" opacity="0.5"/>
+        </g>
+      </g>
+
+      <!-- Re-spin ring (faint) -->
+      <circle cx="467" cy="118" r="56" fill="none" stroke="#69f0ae" stroke-width="0.8" stroke-dasharray="3,5" opacity="0.18"/>
+      <!-- Spinning-up label -->
+      <text x="467" y="54" text-anchor="middle" fill="#69f0ae" font-size="6.5" font-family="monospace" opacity="0.85">↻ spinning up</text>
+      <text x="467" y="63" text-anchor="middle" fill="#888"    font-size="5.5" font-family="monospace">0 → 1 rev/min</text>
+
+      <!-- Depart labels -->
+      <text x="467" y="190" text-anchor="middle" fill="#69f0ae" font-size="7"   font-family="monospace">main engine burn · spin-up</text>
+      <text x="467" y="200" text-anchor="middle" fill="#69f0ae" font-size="7"   font-family="monospace">gravity restored en route</text>
+      <text x="467" y="213" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">return transfer orbit initiated</text>
+      <text x="467" y="223" text-anchor="middle" fill="#556"    font-size="6.5" font-family="monospace">crew health maintained in transit</text>
+
+      <!-- ══════════════ BOTTOM INFO BOXES ══════════════ -->
+      <rect x="4"   y="237" width="178" height="88" rx="5" fill="#03070e" stroke="#5bc8f4" stroke-width="0.8"/>
+      <text x="93"  y="252" text-anchor="middle" fill="#5bc8f4" font-size="7.5" font-weight="700" font-family="sans-serif">CENTRIFUGAL GRAVITY</text>
+      <text x="93"  y="264" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">g_eff = ω²r · 1 rpm · r = 14 m</text>
+      <text x="93"  y="273" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">0.38g Mars-equivalent gravity</text>
+      <text x="93"  y="282" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">crew sleep · eat · daily exercise</text>
+      <text x="93"  y="291" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">de-spin: attitude control thrusters</text>
+      <text x="93"  y="317" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Columbia University · Space Architecture</text>
+
+      <rect x="188" y="237" width="178" height="88" rx="5" fill="#0e0a02" stroke="#ffd166" stroke-width="0.8"/>
+      <text x="277" y="252" text-anchor="middle" fill="#ffd166" font-size="7.5" font-weight="700" font-family="sans-serif">NEO SERVICING</text>
+      <text x="277" y="264" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">proximity: v_rel &lt; 1 m/s</text>
+      <text x="277" y="273" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">robotic arm + 2-person EVA</text>
+      <text x="277" y="282" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">RCS station-keeping only</text>
+      <text x="277" y="291" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">inspection · sample return</text>
+      <text x="277" y="317" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">14–18 month total mission</text>
+
+      <rect x="372" y="237" width="184" height="88" rx="5" fill="#04100a" stroke="#69f0ae" stroke-width="0.8"/>
+      <text x="464" y="252" text-anchor="middle" fill="#69f0ae" font-size="7.5" font-weight="700" font-family="sans-serif">RETURN TRAJECTORY</text>
+      <text x="464" y="264" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">departure burn: Δv ≈ 0.5–1 km/s</text>
+      <text x="464" y="273" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">spin-up: 0 → 1 rpm over ~2 hours</text>
+      <text x="464" y="282" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">crew gravity restored for transit</text>
+      <text x="464" y="291" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">bi-prop main engine · Isp ~320 s</text>
+      <text x="464" y="317" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">NASA RASC-AL · two-person crew</text>
     </svg>`;
   }
 
