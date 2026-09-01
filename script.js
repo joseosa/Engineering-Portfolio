@@ -105,7 +105,7 @@ const projects = {
   },
 
   ares: {
-    tag: "NASA RASC-AL",
+    tag: "NASA RASC-AL Finalist",
     title: "ARES: Autonomous Red-Planet Experimental Shelter",
     image: "ares.png",
     visualType: "ares-conops",
@@ -123,7 +123,7 @@ const projects = {
       "Aqua Factorem water extraction",
       "Kilopower nuclear power system"
     ],
-    impact: "ARES is a full-stack Mars mission architecture — integrating orbital prospecting, entry-descent-landing, autonomous robotic deployment, ISRU-based consumables, nuclear power, and habitat design into a single internally consistent concept. Developed for NASA's RASC-AL 2025 competition at Columbia University, the project demonstrates the systems-level reasoning required to turn a planetary exploration goal into a phased, risk-managed mission campaign.",
+    impact: "ARES is a full-stack Mars mission architecture — integrating orbital prospecting, entry-descent-landing, autonomous robotic deployment, ISRU-based consumables, nuclear power, and habitat design into a single internally consistent concept. A NASA RASC-AL 2025 Finalist at Columbia University, the project demonstrates the systems-level reasoning required to turn a planetary exploration goal into a phased, risk-managed mission campaign.",
     visualTitle: "Mars mission architecture — six-phase ConOps",
     visualText: "The ARES concept of operations runs from Phase 0 (orbital prospecting, 2035) through Phases 1–5: launch, transit, EDL, autonomous surface deployment, ISRU activation, and habitat demonstration. Each phase feeds directly into the next, with robotic precursors reducing risk before any crew commitment.",
     galleryHeader: {
