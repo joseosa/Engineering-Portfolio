@@ -1532,12 +1532,12 @@ footer {
   /* Nav: hide section links so logo + Resume + Contact fit */
   .nav nav { gap: 0.7rem; }
   .nav nav a[href*="linkedin"] { display: none !important; }
-  .nav nav a[href="index.html#projects"],
-  .nav nav a[href*="#projects"] { display: none; }
-  .nav nav a[href="index.html#research"],
-  .nav nav a[href*="#research"] { display: none; }
-  .nav nav a[href="index.html#about"],
-  .nav nav a[href*="#about"] { display: none; }
+  .nav nav a[href="#projects"],
+  .nav nav a[href="index.html#projects"] { display: none !important; }
+  .nav nav a[href="#research"],
+  .nav nav a[href="index.html#research"] { display: none !important; }
+  .nav nav a[href="#about"],
+  .nav nav a[href="index.html#about"] { display: none !important; }
 
   /* Hero: hide canvas on small screens so headline shows immediately */
   .hero-canvas-wrap { display: none; }
