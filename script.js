@@ -269,6 +269,7 @@ const projects = {
     impact: "TITAN applies aerospace-grade autonomous systems — drone navigation, multi-vehicle coordination, machine learning pipelines, and precision actuator control — to a concrete environmental problem. The project demonstrates how aerospace engineering capabilities transfer directly to agriculture and climate resilience, and reflects the cross-domain systems thinking needed for next-generation autonomous platforms.",
     visualTitle: "AURAS and CLOUD — autonomous two-drone system",
     visualText: "AURAS conducts autonomous mapping passes; CLOUD follows the resulting health maps with electrostatic nanofertilizer nozzles targeting only the areas that need treatment. The ML pipeline and closed-loop coordination between platforms are the system's core innovation.",
+    download: { label: "Download Full Proposal (PDF)", href: "blue-skies-proposal.pdf" },
     galleryHeader: {
       eyebrow: "Project Documentation",
       title: "TITAN Image Library",
