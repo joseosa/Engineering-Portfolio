@@ -1544,6 +1544,9 @@ footer {
   .hero { min-height: auto; padding-bottom: 4rem; }
   .hero-headline { font-size: clamp(2.8rem, 10vw, 4rem); }
 
+  /* Scale: single column on small screens so cards aren't squeezed */
+  .scale-track { grid-template-columns: 1fr; }
+
   /* Reduce section vertical padding on mobile */
   .section { padding: 3.5rem 5vw; }
   .scale-section { padding: 3.5rem 5vw; }
