@@ -2688,7 +2688,7 @@ function populateProjectPage() {
       <rect x="8" y="8" width="296" height="215" rx="5" fill="none" stroke="#1a2a40" stroke-width="0.8"/>
 
       <!-- SUBSTRATE (Silicon/Glass base) -->
-      <rect x="10" y="172" width="292" height="48" fill="url(#substrGrad)" rx="0 0 4 4"/>
+      <rect x="10" y="172" width="292" height="48" fill="url(#substrGrad)" rx="4"/>
       <!-- Substrate grain texture lines -->
       <line x1="10" y1="178" x2="302" y2="178" stroke="#1e2840" stroke-width="0.4" opacity="0.5"/>
       <line x1="10" y1="186" x2="302" y2="186" stroke="#1e2840" stroke-width="0.4" opacity="0.4"/>
@@ -3285,12 +3285,186 @@ function populateResearchPage() {
   gen.innerHTML = "";
 
   if (r.visualType === "mantle-viz" || r.visualType === "mantle-prop-viz") {
-    gen.innerHTML = '<div class="mantle-prop-visual" id="mantlePropViz" style="width:100%;height:100%;position:relative;"></div>';
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes ppvPulse { 0%,100%{opacity:0.75} 50%{opacity:1} }
+          @keyframes cmPulse  { 0%,100%{opacity:0.5}  50%{opacity:0.9} }
+        </style>
+        <radialGradient id="innerCoreGrad" cx="25%" cy="25%" r="75%">
+          <stop offset="0%" stop-color="#ff9944"/>
+          <stop offset="100%" stop-color="#cc4400"/>
+        </radialGradient>
+        <radialGradient id="outerCoreGrad" cx="25%" cy="25%" r="75%">
+          <stop offset="0%" stop-color="#cc3300"/>
+          <stop offset="100%" stop-color="#881100"/>
+        </radialGradient>
+        <linearGradient id="lowerMantleGrad" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0%" stop-color="#2a1848"/>
+          <stop offset="100%" stop-color="#3d2565"/>
+        </linearGradient>
+        <filter id="ppvGlowF" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="cmbGlow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
 
-    (function() {
-      var container = document.getElementById("mantlePropViz");
-      if (!container) return;
+      <!-- Background -->
+      <rect width="560" height="320" fill="#030610"/>
 
+      <!-- ═══ LEFT: EARTH CROSS-SECTION (quarter-circle, center 8,218) ═══ -->
+      <rect x="8" y="8" width="290" height="212" rx="5" fill="none" stroke="#1a2a40" stroke-width="0.8"/>
+
+      <!-- Layers drawn largest-to-smallest so inner layers overpaint outer -->
+      <!-- CRUST (r=210, 0–35 km) -->
+      <path d="M 8,8 A 210,210 0 0,1 218,218 L 8,218 Z" fill="#7a5535"/>
+      <!-- UPPER MANTLE + TRANSITION ZONE (r=207→194, 35–660 km) -->
+      <path d="M 8,11 A 207,207 0 0,1 215,218 L 8,218 Z" fill="#2d5a2a"/>
+      <path d="M 8,24 A 194,194 0 0,1 202,218 L 8,218 Z" fill="#3a3a88"/>
+      <!-- LOWER MANTLE (r=185, 660–2700 km) — research region -->
+      <path d="M 8,33 A 185,185 0 0,1 193,218 L 8,218 Z" fill="url(#lowerMantleGrad)"/>
+      <!-- D″ LAYER glow behind (r=126, 2700–2890 km) -->
+      <path d="M 8,92 A 126,126 0 0,1 134,218 L 8,218 Z" fill="#8833ee" opacity="0.45" filter="url(#ppvGlowF)" style="animation:ppvPulse 2.5s ease-in-out infinite"/>
+      <!-- D″ LAYER solid -->
+      <path d="M 8,92 A 126,126 0 0,1 134,218 L 8,218 Z" fill="#9944ff" style="animation:ppvPulse 2.5s ease-in-out infinite"/>
+      <!-- OUTER CORE (r=110) -->
+      <path d="M 8,108 A 110,110 0 0,1 118,218 L 8,218 Z" fill="url(#outerCoreGrad)"/>
+      <!-- INNER CORE (r=42) -->
+      <path d="M 8,176 A 42,42 0 0,1 50,218 L 8,218 Z" fill="url(#innerCoreGrad)"/>
+
+      <!-- Layer boundary arcs -->
+      <path d="M 8,8   A 210,210 0 0,1 218,218" fill="none" stroke="#9a7a55" stroke-width="1.2" opacity="0.7"/>
+      <path d="M 8,33  A 185,185 0 0,1 193,218" fill="none" stroke="#223060" stroke-width="0.6" opacity="0.5"/>
+      <!-- D″ boundaries highlighted -->
+      <path d="M 8,92  A 126,126 0 0,1 134,218" fill="none" stroke="#cc88ff" stroke-width="1.4" opacity="0.9" style="animation:ppvPulse 2.5s ease-in-out infinite"/>
+      <!-- CMB -->
+      <path d="M 8,108 A 110,110 0 0,1 118,218" fill="none" stroke="#cc4400" stroke-width="1.2" opacity="0.8" filter="url(#cmbGlow)"/>
+
+      <!-- Panel title -->
+      <text x="154" y="22" text-anchor="middle" fill="#334466" font-size="6" font-family="monospace" letter-spacing="0.5">EARTH INTERIOR · CROSS-SECTION</text>
+      <!-- Crust label -->
+      <text x="22" y="19" fill="#9a7a55" font-size="5" font-family="monospace">CRUST  0 km</text>
+      <!-- 660 km depth marker -->
+      <circle cx="8" cy="33" r="1.5" fill="#6644aa" opacity="0.8"/>
+      <text x="11" y="36" fill="#6644aa" font-size="5" font-family="monospace">660 km</text>
+      <!-- Upper mantle callout -->
+      <line x1="38" y1="29" x2="88" y2="40" stroke="#2d5a2a" stroke-width="0.6" stroke-dasharray="2,2" opacity="0.7"/>
+      <text x="90" y="38" fill="#2d5a2a" font-size="5" font-family="monospace">UPPER MANTLE  35–660 km</text>
+      <!-- Lower mantle callout -->
+      <line x1="108" y1="88" x2="155" y2="72" stroke="#6644aa" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <text x="157" y="70" fill="#8866cc" font-size="6" font-family="monospace">LOWER MANTLE</text>
+      <text x="157" y="79" fill="#5a4088" font-size="5" font-family="monospace">660–2700 km · 23–125 GPa</text>
+      <text x="157" y="87" fill="#5a4088" font-size="5" font-family="monospace">Pv + fp dominant</text>
+      <!-- D″ callout (highlighted — research focus) -->
+      <line x1="86" y1="128" x2="148" y2="115" stroke="#cc88ff" stroke-width="1" stroke-dasharray="2,2"/>
+      <text x="150" y="113" fill="#cc88ff" font-size="7" font-family="monospace" font-weight="bold" style="animation:ppvPulse 2.5s ease-in-out infinite">D″  LAYER</text>
+      <text x="150" y="122" fill="#aa66dd" font-size="5.5" font-family="monospace">2700–2890 km · 125–136 GPa</text>
+      <text x="150" y="131" fill="#aa66dd" font-size="5.5" font-family="monospace">POST-PEROVSKITE (Ppv)</text>
+      <text x="150" y="140" fill="#8844bb" font-size="5" font-family="monospace">← research focus</text>
+      <!-- CMB callout -->
+      <line x1="64" y1="160" x2="125" y2="150" stroke="#884400" stroke-width="0.7" stroke-dasharray="2,2"/>
+      <text x="127" y="148" fill="#cc6600" font-size="5.5" font-family="monospace">CORE–MANTLE BOUNDARY</text>
+      <text x="127" y="157" fill="#884400" font-size="5" font-family="monospace">2890 km · 136 GPa</text>
+      <!-- Outer core label -->
+      <text x="38" y="174" fill="#aa3300" font-size="5" font-family="monospace">OUTER CORE</text>
+      <text x="38" y="182" fill="#773300" font-size="4.5" font-family="monospace">liquid Fe-Ni</text>
+      <!-- Inner core label -->
+      <text x="14" y="207" fill="#ff7722" font-size="4.5" font-family="monospace">INNER CORE</text>
+
+      <!-- ═══ RIGHT: DEPTH-PRESSURE STUDY REGION ═══ -->
+      <rect x="305" y="8" width="247" height="212" rx="5" fill="#040912" stroke="#1a2a40" stroke-width="0.8"/>
+      <text x="428" y="22" text-anchor="middle" fill="#3366aa" font-size="6.5" font-family="monospace" letter-spacing="0.5">LOWER MANTLE · STUDY REGION</text>
+      <line x1="310" y1="26" x2="547" y2="26" stroke="#1a2a40" stroke-width="0.5"/>
+
+      <!-- Vertical depth bar (x=395-428, y=32-207) = 660–2890 km in 175px -->
+      <!-- Bridgmanite + fp region (660–2700 km → y=32 to y=192) -->
+      <rect x="395" y="32"  width="33" height="160" rx="1" fill="#2a1848"/>
+      <rect x="395" y="32"  width="33" height="160" rx="1" fill="none" stroke="#3a2568" stroke-width="0.6"/>
+      <!-- D″ / Ppv region (2700–2890 km → y=192 to y=207) -->
+      <rect x="395" y="192" width="33" height="15"  rx="1" fill="#9933ee" style="animation:ppvPulse 2.5s ease-in-out infinite"/>
+      <rect x="395" y="192" width="33" height="15"  fill="none" stroke="#cc88ff" stroke-width="0.9"/>
+
+      <!-- Phase boundary at 125 GPa / 2700 km -->
+      <line x1="388" y1="192" x2="436" y2="192" stroke="#cc88ff" stroke-width="1.5" stroke-dasharray="3,2" style="animation:ppvPulse 2.5s ease-in-out infinite"/>
+      <!-- CMB at 136 GPa / 2890 km -->
+      <line x1="388" y1="207" x2="436" y2="207" stroke="#cc4400" stroke-width="1.5"/>
+
+      <!-- Benchmark pressure markers -->
+      <!-- 23 GPa (top of lower mantle) -->
+      <polygon points="387,32 392,29 392,35" fill="#4a9eff" opacity="0.8"/>
+      <text x="386" y="36"  text-anchor="end" fill="#4a9eff" font-size="5" font-family="monospace">23 GPa</text>
+      <!-- 80 GPa benchmark (depth ~1784 km → y=120) -->
+      <line x1="388" y1="120" x2="430" y2="120" stroke="#4a9eff" stroke-width="0.7" stroke-dasharray="2,2" opacity="0.6"/>
+      <polygon points="387,120 392,117 392,123" fill="#4a9eff" opacity="0.7"/>
+      <text x="386" y="124" text-anchor="end" fill="#4a9eff" font-size="5" font-family="monospace">80 GPa</text>
+      <!-- 125 GPa (Ppv boundary) -->
+      <text x="386" y="196" text-anchor="end" fill="#cc88ff" font-size="5" font-family="monospace">125 GPa</text>
+      <!-- 136 GPa (CMB) -->
+      <polygon points="387,207 392,204 392,210" fill="#cc4400" opacity="0.8"/>
+      <text x="386" y="211" text-anchor="end" fill="#884400" font-size="5" font-family="monospace">136 GPa</text>
+
+      <!-- Depth labels right of bar -->
+      <text x="432" y="36"  fill="#3a5a7a" font-size="5" font-family="monospace">660 km</text>
+      <text x="432" y="124" fill="#3a5a7a" font-size="5" font-family="monospace">~1800 km</text>
+      <text x="432" y="196" fill="#cc88ff" font-size="5" font-family="monospace">2700 km ← Pv→Ppv</text>
+      <text x="432" y="210" fill="#cc4400" font-size="5" font-family="monospace">2890 km · CMB</text>
+
+      <!-- Mineral phase labels (left of bar, x=310-390) -->
+      <!-- Bridgmanite (Pv) -->
+      <text x="312" y="76"  fill="#7755cc" font-size="6" font-family="monospace">BRIDGMANITE (Pv)</text>
+      <text x="312" y="85"  fill="#5a4088" font-size="5" font-family="monospace">(Mg,Al)SiO₃</text>
+      <text x="312" y="93"  fill="#5a4088" font-size="5" font-family="monospace">most abundant</text>
+      <text x="312" y="101" fill="#5a4088" font-size="5" font-family="monospace">mineral in Earth</text>
+      <line x1="390" y1="90" x2="384" y2="90" stroke="#6644aa" stroke-width="0.6" stroke-dasharray="2,2"/>
+      <!-- Ferropericlase (fp) -->
+      <text x="312" y="132" fill="#5566bb" font-size="6" font-family="monospace">FERROPERICLASE (fp)</text>
+      <text x="312" y="141" fill="#445088" font-size="5" font-family="monospace">(Mg,Fe)O</text>
+      <text x="312" y="149" fill="#445088" font-size="5" font-family="monospace">~20% lower mantle</text>
+      <line x1="390" y1="140" x2="384" y2="140" stroke="#5566bb" stroke-width="0.6" stroke-dasharray="2,2"/>
+      <!-- Post-perovskite (Ppv) -->
+      <text x="312" y="199" fill="#cc88ff" font-size="6" font-family="monospace" style="animation:ppvPulse 2.5s ease-in-out infinite">POST-PEROVSKITE (Ppv)</text>
+      <text x="312" y="208" fill="#aa66dd" font-size="5" font-family="monospace">(Mg,Al)SiO₃ · D″ only</text>
+      <line x1="390" y1="200" x2="384" y2="200" stroke="#cc88ff" stroke-width="0.7" stroke-dasharray="2,2"/>
+
+      <!-- ═══ BOTTOM INFO BOXES ═══ -->
+      <!-- Box 1: MINERAL PHASES -->
+      <rect x="8"   y="228" width="176" height="85" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="96"  y="240" text-anchor="middle" fill="#6644aa" font-size="6.5" font-family="monospace" letter-spacing="0.5">MINERAL PHASES</text>
+      <line x1="14" y1="244" x2="178" y2="244" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="16"  y="254" fill="#3a5a7a" font-size="6" font-family="monospace">Pv · (Mg,Al)SiO₃ · bridgmanite</text>
+      <text x="16"  y="264" fill="#3a5a7a" font-size="6" font-family="monospace">Ppv · post-perovskite · D″ only</text>
+      <text x="16"  y="274" fill="#3a5a7a" font-size="6" font-family="monospace">fp · (Mg,Fe)O · ferropericlase</text>
+      <text x="16"  y="284" fill="#3a5a7a" font-size="6" font-family="monospace">Pv→Ppv phase boundary ~125 GPa</text>
+      <text x="16"  y="294" fill="#3a5a7a" font-size="6" font-family="monospace">Clapeyron slope ~+10 MPa/K</text>
+      <text x="16"  y="305" fill="#3a5a7a" font-size="6" font-family="monospace">Al content · x = 0.125</text>
+      <!-- Box 2: EOS MODELS -->
+      <rect x="192" y="228" width="176" height="85" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="280" y="240" text-anchor="middle" fill="#3366aa" font-size="6.5" font-family="monospace" letter-spacing="0.5">EOS MODELS · BURNMAN</text>
+      <line x1="198" y1="244" x2="362" y2="244" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="200" y="254" fill="#3a5a7a" font-size="6" font-family="monospace">BM + MGD · Birch-Murnaghan EoS</text>
+      <text x="200" y="264" fill="#3a5a7a" font-size="6" font-family="monospace">QHA first-principles ground truth</text>
+      <text x="200" y="274" fill="#3a5a7a" font-size="6" font-family="monospace">SLB24 best reproduces QHA data</text>
+      <text x="200" y="284" fill="#3a5a7a" font-size="6" font-family="monospace">SLB05 · MBR+07 also benchmarked</text>
+      <text x="200" y="294" fill="#3a5a7a" font-size="6" font-family="monospace">properties: V, G, KT, KS, α, Cp, γ</text>
+      <text x="200" y="305" fill="#3a5a7a" font-size="6" font-family="monospace">benchmarks: 20 · 80 · 140 GPa</text>
+      <!-- Box 3: SEISMIC CONTEXT -->
+      <rect x="376" y="228" width="176" height="85" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="464" y="240" text-anchor="middle" fill="#4a8a5a" font-size="6.5" font-family="monospace" letter-spacing="0.5">SEISMIC CONTEXT</text>
+      <line x1="382" y1="244" x2="546" y2="244" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="384" y="254" fill="#3a5a7a" font-size="6" font-family="monospace">D″ detected via seismic velocity</text>
+      <text x="384" y="264" fill="#3a5a7a" font-size="6" font-family="monospace">discontinuity at CMB (S-waves)</text>
+      <text x="384" y="274" fill="#3a5a7a" font-size="6" font-family="monospace">EoS tables: wave speed ↔ T, P</text>
+      <text x="384" y="284" fill="#3a5a7a" font-size="6" font-family="monospace">MINERALS DB · Moore Foundation</text>
+      <text x="384" y="294" fill="#3a5a7a" font-size="6" font-family="monospace">Dr. Wentzcovitch · Columbia LDEO</text>
+      <text x="384" y="305" fill="#3a5a7a" font-size="6" font-family="monospace">2025 Bridgman Award recipient</text>
+    </svg>`;
+// REPLACED BELOW — old JS animation handler removed
+  if (false) { var _dummy_=0;
       var svgNS = "http://www.w3.org/2000/svg";
       var W = 420, H = 300;
       var padL = 52, padR = 20, padT = 24, padB = 44;
@@ -3539,7 +3713,7 @@ function populateResearchPage() {
         }
       }
       setTimeout(runAnim, 500);
-    })();
+    } // end if(false) stub — old animation code neutralized
   }
 
   if (r.visualType === "nanoscale-viz") {
