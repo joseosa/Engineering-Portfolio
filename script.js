@@ -1765,6 +1765,24 @@ function initProjectGallery(groups, header) {
     render();
   });
 
+  // Touch swipe support for mobile
+  let touchStartX = null;
+  const swipeTarget = img.closest(".gallery-img-wrap") || img.parentElement;
+  swipeTarget.addEventListener("touchstart", e => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+  swipeTarget.addEventListener("touchend", e => {
+    if (touchStartX === null) return;
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    touchStartX = null;
+    if (Math.abs(dx) < 40) return; // ignore small taps
+    const len = groups[activeGroup].images.length;
+    activeImg = dx < 0
+      ? (activeImg + 1) % len
+      : (activeImg - 1 + len) % len;
+    render();
+  }, { passive: true });
+
   render();
 }
 
