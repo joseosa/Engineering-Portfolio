@@ -126,6 +126,7 @@ const projects = {
     impact: "ARES is a full-stack Mars mission architecture — integrating orbital prospecting, entry-descent-landing, autonomous robotic deployment, ISRU-based consumables, nuclear power, and habitat design into a single internally consistent concept. A NASA RASC-AL 2025 Finalist at Columbia University, the project demonstrates the systems-level reasoning required to turn a planetary exploration goal into a phased, risk-managed mission campaign.",
     visualTitle: "Mars mission architecture — six-phase ConOps",
     visualText: "The ARES concept of operations runs from Phase 0 (orbital prospecting, 2035) through Phases 1–5: launch, transit, EDL, autonomous surface deployment, ISRU activation, and habitat demonstration. Each phase feeds directly into the next, with robotic precursors reducing risk before any crew commitment.",
+    download: { label: "Download Full Proposal (PDF)", href: "ares-proposal.pdf" },
     galleryHeader: {
       eyebrow: "Mission Documentation",
       title: "ARES Image Library",
