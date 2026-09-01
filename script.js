@@ -299,8 +299,7 @@ const projects = {
     tag: "Plasma Physics",
     title: "Manipulation of Argon Plasma Under Controlled Environments",
     image: "argon-plasma.png",
-    diagram: "plasma-discharge-photo.jpg",
-    visualType: "image",
+    visualType: "plasma-viz",
     summary: "Argon glow discharge experiment measuring striation formation, Langmuir probe I-V characteristics, and plasma response to pressure, voltage, and electrode geometry at 30–90 mTorr.",
     overview: "This experiment produces and diagnostically characterizes argon glow discharges in the pressure range of 30–90 mTorr using a sealed borosilicate glass tube with a mobile anode and cathode assembly. The central phenomenon is Townsend breakdown and the formation of stable plasma striations — banded luminous regions arising from ionization oscillations along the discharge column — whose spatial extent responds systematically to pressure and electrode separation. Measuring current-voltage characteristics, current-pressure curves, and electrode-distance dependencies connects the observable discharge structure to the underlying transport physics.",
     challenge: "Plasma occupies a regime where classical electrical, fluid, and kinetic descriptions must be reconciled simultaneously: ionization, recombination, and particle transport interact across length scales from the Debye sheath to the tube diameter. The primary diagnostic challenge is extracting electron density and temperature from Langmuir probe I-V curves — the probe perturbs the plasma locally, and distinguishing the electron retardation and saturation regimes requires careful interpretation. Reproducing Paschen's law breakdown behavior and Child-Langmuir sheath current from bench measurements demanded precise, independent control of pressure, geometry, and voltage.",
@@ -2123,6 +2122,212 @@ function populateProjectPage() {
       <text x="487" y="311" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Mars precursor mission</text>
       <text x="487" y="320" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">pre-position for crewed</text>
       <text x="487" y="329" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">500-sol surface stay</text>
+    </svg>`;
+  }
+
+  if (p.visualType === "plasma-viz") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 325" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes striaDrift {
+            0%{transform:translateX(50px)} 100%{transform:translateX(400px)}
+          }
+          @keyframes catGlow {
+            0%,100%{opacity:0.55} 50%{opacity:0.9}
+          }
+          @keyframes discFlicker {
+            0%,100%{opacity:0.82} 44%{opacity:1} 47%{opacity:0.65} 50%{opacity:1}
+          }
+          @keyframes probeGlow {
+            0%,100%{opacity:0.4} 50%{opacity:0.85}
+          }
+        </style>
+        <radialGradient id="pbg" cx="50%" cy="50%" r="70%">
+          <stop offset="0%" stop-color="#0e0420"/>
+          <stop offset="100%" stop-color="#030108"/>
+        </radialGradient>
+        <radialGradient id="pFill" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#5a1890"/>
+          <stop offset="100%" stop-color="#18053a"/>
+        </radialGradient>
+        <radialGradient id="cathFill" cx="0%" cy="50%" r="100%">
+          <stop offset="0%" stop-color="#4477dd" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#18053a" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="striaGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%" stop-color="#e040fb" stop-opacity="0.9"/>
+          <stop offset="60%" stop-color="#9c27b0" stop-opacity="0.5"/>
+          <stop offset="100%" stop-color="#6a0080" stop-opacity="0"/>
+        </radialGradient>
+        <filter id="pglow" x="-30%" y="-30%" width="160%" height="160%">
+          <feGaussianBlur stdDeviation="3" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="psoft" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <clipPath id="tubeClip">
+          <rect x="65" y="91" width="320" height="72" rx="5"/>
+        </clipPath>
+      </defs>
+
+      <!-- Background -->
+      <rect width="560" height="325" fill="url(#pbg)"/>
+
+      <!-- Stars -->
+      <circle cx="15"  cy="10" r="0.7" fill="#fff" opacity="0.5"/>
+      <circle cx="50"  cy="6"  r="0.9" fill="#fff" opacity="0.4"/>
+      <circle cx="490" cy="8"  r="0.7" fill="#fff" opacity="0.5"/>
+      <circle cx="530" cy="15" r="0.8" fill="#fff" opacity="0.3"/>
+      <circle cx="20"  cy="40" r="0.6" fill="#ccc" opacity="0.4"/>
+      <circle cx="545" cy="40" r="0.6" fill="#ccc" opacity="0.4"/>
+
+      <!-- === DISCHARGE TUBE SCENE === -->
+
+      <!-- Cathode electrode -->
+      <rect x="28" y="82" width="38" height="90" rx="4" fill="#141228" stroke="#6677bb" stroke-width="1.2"/>
+      <line x1="47" y1="82" x2="47" y2="42" stroke="#6677bb" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <circle cx="47" cy="34" r="12" fill="#0c0820" stroke="#6677bb" stroke-width="1.2"/>
+      <text x="47" y="39" text-anchor="middle" fill="#8899cc" font-size="14" font-weight="700" font-family="sans-serif">−</text>
+      <text x="47" y="184" text-anchor="middle" fill="#6677bb" font-size="6" font-family="monospace">CATHODE</text>
+
+      <!-- Anode electrode -->
+      <rect x="384" y="82" width="38" height="90" rx="4" fill="#141228" stroke="#dd8822" stroke-width="1.2"/>
+      <line x1="403" y1="82" x2="403" y2="42" stroke="#dd8822" stroke-width="1.2" stroke-dasharray="3,2"/>
+      <circle cx="403" cy="34" r="12" fill="#0c0820" stroke="#dd8822" stroke-width="1.2"/>
+      <text x="403" y="39" text-anchor="middle" fill="#ffaa44" font-size="14" font-weight="700" font-family="sans-serif">+</text>
+      <text x="403" y="184" text-anchor="middle" fill="#dd8822" font-size="6" font-family="monospace">ANODE</text>
+
+      <!-- Glass tube body -->
+      <rect x="63" y="88" width="324" height="78" rx="8" fill="#0e0428" stroke="#6655aa" stroke-width="1.8" opacity="0.95"/>
+      <!-- Outer glow -->
+      <rect x="63" y="88" width="324" height="78" rx="8" fill="none" stroke="#8866cc" stroke-width="5" opacity="0.08"/>
+
+      <!-- Plasma base fill -->
+      <rect x="65" y="90" width="320" height="74" rx="6" fill="url(#pFill)" style="animation:discFlicker 4s ease-in-out infinite" clip-path="url(#tubeClip)"/>
+
+      <!-- Cathode glow (blue-white near cathode) -->
+      <rect x="65" y="90" width="90" height="74" fill="url(#cathFill)" style="animation:catGlow 2.2s ease-in-out infinite" clip-path="url(#tubeClip)"/>
+
+      <!-- Cathode dark space (Faraday dark space) -->
+      <rect x="115" y="91" width="22" height="72" fill="#080220" opacity="0.7" clip-path="url(#tubeClip)"/>
+
+      <!-- Animated striations (positive column) -->
+      <g clip-path="url(#tubeClip)">
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 0s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 0.37s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 0.74s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 1.11s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 1.48s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 1.85s linear infinite" filter="url(#psoft)"/>
+        <ellipse cx="0" cy="127" rx="11" ry="34" fill="url(#striaGrad)" style="animation:striaDrift 2.6s 2.22s linear infinite" filter="url(#psoft)"/>
+      </g>
+
+      <!-- Glass highlight (top edge) -->
+      <rect x="65" y="90" width="320" height="5" rx="2" fill="white" opacity="0.05"/>
+      <!-- Glass outline (front) -->
+      <rect x="63" y="88" width="324" height="78" rx="8" fill="none" stroke="#7766bb" stroke-width="1.5"/>
+
+      <!-- Region labels -->
+      <text x="90"  y="78" text-anchor="middle" fill="#88aaff" font-size="6" font-family="monospace">CATHODE GLOW</text>
+      <text x="227" y="78" text-anchor="middle" fill="#cc88ff" font-size="6.5" font-family="monospace">POSITIVE COLUMN — striations</text>
+      <text x="370" y="78" text-anchor="middle" fill="#ffaa66" font-size="6" font-family="monospace">ANODE GLOW</text>
+
+      <!-- === LANGMUIR PROBE === -->
+      <!-- Probe shaft from top -->
+      <line x1="210" y1="18" x2="210" y2="88" stroke="#bbb" stroke-width="1.5"/>
+      <!-- Insulator feedthrough at glass wall -->
+      <rect x="205" y="85" width="10" height="9" rx="2" fill="#221840" stroke="#aaa" stroke-width="0.8"/>
+      <!-- Probe wire (horizontal tip inside plasma) -->
+      <line x1="195" y1="113" x2="225" y2="113" stroke="#ddd" stroke-width="1.4"/>
+      <!-- Stem from insulator to tip -->
+      <line x1="210" y1="94" x2="210" y2="113" stroke="#ccc" stroke-width="1.2"/>
+      <!-- Probe tip glow -->
+      <circle cx="210" cy="113" r="5" fill="#e040fb" opacity="0.5" filter="url(#psoft)" style="animation:probeGlow 2s ease-in-out infinite"/>
+      <circle cx="210" cy="113" r="2" fill="#f8a8ff" opacity="0.9"/>
+      <!-- Probe label -->
+      <text x="228" y="15" fill="#aaa" font-size="6.5" font-family="monospace">LANGMUIR PROBE</text>
+      <text x="228" y="24" fill="#888" font-size="5.5" font-family="monospace">measures Te, ne, Vp</text>
+      <!-- Wire up to ammeter symbol -->
+      <line x1="210" y1="18" x2="210" y2="10" stroke="#aaa" stroke-width="1" stroke-dasharray="2,2"/>
+
+      <!-- Parameter readouts -->
+      <rect x="8"   y="196" width="96" height="30" rx="4" fill="#0c0820" stroke="#5533aa" stroke-width="0.8"/>
+      <text x="56"  y="209" text-anchor="middle" fill="#9966dd" font-size="6" font-family="monospace">PRESSURE</text>
+      <text x="56"  y="221" text-anchor="middle" fill="#cc99ff" font-size="8.5" font-family="monospace">42 mTorr</text>
+
+      <rect x="112" y="196" width="96" height="30" rx="4" fill="#0c0820" stroke="#aa5500" stroke-width="0.8"/>
+      <text x="160" y="209" text-anchor="middle" fill="#cc8822" font-size="6" font-family="monospace">DISCHARGE V</text>
+      <text x="160" y="221" text-anchor="middle" fill="#ffbb44" font-size="8.5" font-family="monospace">320 V</text>
+
+      <rect x="216" y="196" width="96" height="30" rx="4" fill="#0c0820" stroke="#226644" stroke-width="0.8"/>
+      <text x="264" y="209" text-anchor="middle" fill="#44aa77" font-size="6" font-family="monospace">GAS</text>
+      <text x="264" y="221" text-anchor="middle" fill="#66ddaa" font-size="8.5" font-family="monospace">Argon (Ar)</text>
+
+      <!-- === I-V CHARACTERISTIC PANEL === -->
+      <rect x="440" y="22" width="116" height="160" rx="6" fill="#060312" stroke="#8844cc" stroke-width="0.9"/>
+      <text x="498" y="36" text-anchor="middle" fill="#aa77ee" font-size="7" font-weight="700" font-family="sans-serif">I-V CHARACTERISTIC</text>
+
+      <!-- Y-axis -->
+      <line x1="462" y1="46" x2="462" y2="162" stroke="#333" stroke-width="1"/>
+      <path d="M459,46 L462,41 L465,46" fill="#444"/>
+      <text x="467" y="43" fill="#555" font-size="5.5" font-family="monospace">I</text>
+      <!-- X-axis -->
+      <line x1="452" y1="128" x2="549" y2="128" stroke="#333" stroke-width="1"/>
+      <path d="M544,125 L549,128 L544,131" fill="#444"/>
+      <text x="546" y="139" fill="#555" font-size="5.5" font-family="monospace">V</text>
+      <!-- Zero marker -->
+      <text x="458" y="131" text-anchor="end" fill="#444" font-size="5" font-family="monospace">0</text>
+
+      <!-- I-V curve: ion sat → exponential → Vp knee → electron sat -->
+      <path d="M452,140 L476,140 C486,140 488,133 491,124 C495,112 502,76 510,65 L549,60"
+            fill="none" stroke="#e040fb" stroke-width="2" filter="url(#psoft)"/>
+
+      <!-- Vf marker (floating potential, where I=0) -->
+      <line x1="483" y1="125" x2="483" y2="133" stroke="#88aaff" stroke-width="1"/>
+      <text x="483" y="142" text-anchor="middle" fill="#88aaff" font-size="5.5" font-family="monospace">Vf</text>
+
+      <!-- Vp marker (plasma potential, knee) -->
+      <line x1="510" y1="125" x2="510" y2="133" stroke="#69f0ae" stroke-width="1"/>
+      <text x="510" y="142" text-anchor="middle" fill="#69f0ae" font-size="5.5" font-family="monospace">Vp</text>
+
+      <!-- Te slope indicator -->
+      <line x1="491" y1="118" x2="506" y2="76" stroke="#ffcc44" stroke-width="0.8" stroke-dasharray="2,2"/>
+      <text x="514" y="96" fill="#ffcc44" font-size="6" font-family="monospace">Te</text>
+
+      <!-- Region labels on curve -->
+      <text x="462" y="155" fill="#6677bb" font-size="5" font-family="monospace">ion sat.</text>
+      <text x="520" y="56" fill="#dd88ff" font-size="5" font-family="monospace">e⁻ sat.</text>
+
+      <!-- === BOTTOM INFO BOXES === -->
+      <rect x="4"   y="236" width="178" height="84" rx="5" fill="#060312" stroke="#8844cc" stroke-width="0.8"/>
+      <text x="93"  y="251" text-anchor="middle" fill="#bb88ff" font-size="7.5" font-weight="700" font-family="sans-serif">STRIATIONS</text>
+      <text x="93"  y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">periodic ionization wave structures</text>
+      <text x="93"  y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">argon glow discharge · 30–90 mTorr</text>
+      <text x="93"  y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">spacing ∝ 1/pressure</text>
+      <text x="93"  y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">voltage &amp; geometry controlled</text>
+      <text x="93"  y="299" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Columbia University · 2024</text>
+      <text x="93"  y="314" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Faraday dark space visible at left</text>
+
+      <rect x="188" y="236" width="178" height="84" rx="5" fill="#06030e" stroke="#cc44aa" stroke-width="0.8"/>
+      <text x="277" y="251" text-anchor="middle" fill="#ee88dd" font-size="7.5" font-weight="700" font-family="sans-serif">LANGMUIR PROBE</text>
+      <text x="277" y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">I-V characteristic analysis</text>
+      <text x="277" y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Te ≈ 3–5 eV electron temperature</text>
+      <text x="277" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">ne ~ 10⁹ cm⁻³ electron density</text>
+      <text x="277" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Vp: plasma potential · Vf: floating</text>
+      <text x="277" y="299" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">orbital motion limited (OML) theory</text>
+      <text x="277" y="314" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">ion/electron saturation currents</text>
+
+      <rect x="372" y="236" width="184" height="84" rx="5" fill="#060e08" stroke="#44cc88" stroke-width="0.8"/>
+      <text x="464" y="251" text-anchor="middle" fill="#66ddaa" font-size="7.5" font-weight="700" font-family="sans-serif">PLASMA PARAMETERS</text>
+      <text x="464" y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">gas: Ar · DC glow discharge regime</text>
+      <text x="464" y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">pressure: 30–90 mTorr sweep</text>
+      <text x="464" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">discharge voltage: 200–400 V</text>
+      <text x="464" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Paschen curve: breakdown voltage</text>
+      <text x="464" y="299" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Debye length λD ~ 0.1–1 mm</text>
+      <text x="464" y="314" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">parallel plate &amp; cylindrical geometry</text>
     </svg>`;
   }
 
