@@ -254,8 +254,7 @@ const projects = {
     tag: "NASA Blue Skies",
     title: "TITAN: Terrain Imaging for Targeted Application of Nanofertilizers",
     image: "titan.png",
-    diagram: "titan-diagram.png",
-    visualType: "titan",
+    visualType: "titan-system-viz",
     summary: "A two-drone precision agriculture system combining autonomous multispectral mapping and ML-driven targeted nanofertilizer deployment — submitted to NASA's Blue Skies competition, Columbia University.",
     overview: "TITAN proposes a closed-loop two-drone precision agriculture system designed to replace broadcast fertilization with targeted, data-driven application. AURAS — an autonomous GPS-navigated mapping platform with multispectral imaging and LiDAR — conducts high-speed field surveys and feeds raw imagery through a two-stage ML pipeline. CLOUD, a hexacopter equipped with electrostatic atomization nozzles, then deploys iron-chelated nanofertilizer precisely along dynamically generated routes derived from AURAS's health maps. The system is fully autonomous and self-coordinating between platforms.",
     challenge: "Conventional fertilization applies nutrients uniformly across entire fields without accounting for spatial variability in crop health — generating fertilizer runoff into watersheds, N₂O greenhouse gas emissions from soil over-saturation, and unnecessary input costs at scale. Precision agriculture solutions already exist but carry high adoption barriers: specialized equipment, operational complexity, and the need for agronomic expertise. A viable system must integrate real-time aerial sensing, ML-based health classification, and targeted application in a form that does not require specialized operator knowledge.",
@@ -1649,16 +1648,220 @@ function populateProjectPage() {
       </div>`;
   }
 
-  if (p.visualType === "titan") {
+  if (p.visualType === "titan-system-viz") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
     gen.innerHTML = `
-      <div class="drone-overlay">
-        <div class="mini-drone">
-          <span></span><span></span><span></span><span></span>
-        </div>
-        <div class="fertilizer-drops">
-          <i></i><i></i><i></i><i></i><i></i>
-        </div>
-      </div>`;
+      <svg viewBox="0 0 560 310" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:100%;display:block;border-radius:12px">
+        <defs>
+          <style>
+            @keyframes auraScan  { 0%{transform:translate(25px,78px)} 50%{transform:translate(152px,78px)} 100%{transform:translate(25px,78px)} }
+            @keyframes scanFade  { 0%,100%{opacity:0.08} 50%{opacity:0.65} }
+            @keyframes cloudDrift{ 0%{transform:translate(420px,62px)} 33%{transform:translate(462px,62px)} 66%{transform:translate(498px,62px)} 100%{transform:translate(420px,62px)} }
+            @keyframes sprayDrop { 0%{opacity:0;transform:translateY(0)} 30%{opacity:0.9} 100%{opacity:0;transform:translateY(28px)} }
+            @keyframes mlGlow    { 0%,100%{opacity:0.55} 50%{opacity:1} }
+            @keyframes pArrow    { 0%,100%{opacity:0.35} 50%{opacity:1} }
+          </style>
+          <marker id="ag" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#666"/></marker>
+          <marker id="ap" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0 0,6 3,0 6" fill="#9c6bde"/></marker>
+        </defs>
+
+        <!-- Background -->
+        <rect width="560" height="310" fill="#060d18"/>
+
+        <!-- Phase boxes -->
+        <rect x="4"   y="4" width="178" height="255" rx="8" fill="#07101c" stroke="#4fc3f7" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.75"/>
+        <rect x="192" y="4" width="176" height="255" rx="8" fill="#0b0818" stroke="#9c6bde" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.75"/>
+        <rect x="378" y="4" width="178" height="255" rx="8" fill="#070f07" stroke="#69f0ae" stroke-width="1.2" stroke-dasharray="5,3" opacity="0.75"/>
+
+        <!-- Phase labels -->
+        <text x="93"  y="20" text-anchor="middle" fill="#4fc3f7" font-size="7"  letter-spacing="2" font-family="monospace">PHASE 1</text>
+        <text x="93"  y="33" text-anchor="middle" fill="#fff"    font-size="11" font-weight="700"  font-family="sans-serif">AURAS SCAN</text>
+        <text x="280" y="20" text-anchor="middle" fill="#b39ddb" font-size="7"  letter-spacing="2" font-family="monospace">PHASE 2</text>
+        <text x="280" y="33" text-anchor="middle" fill="#fff"    font-size="11" font-weight="700"  font-family="sans-serif">ML ANALYSIS</text>
+        <text x="467" y="20" text-anchor="middle" fill="#69f0ae" font-size="7"  letter-spacing="2" font-family="monospace">PHASE 3</text>
+        <text x="467" y="33" text-anchor="middle" fill="#fff"    font-size="11" font-weight="700"  font-family="sans-serif">CLOUD DEPLOY</text>
+
+        <!-- ── PHASE 1: AURAS ── -->
+        <!-- Scan lines (static, fade in sequence suggesting active sweep) -->
+        <line x1="28"  y1="90" x2="28"  y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 0s    infinite"/>
+        <line x1="55"  y1="90" x2="55"  y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 0.5s   infinite"/>
+        <line x1="82"  y1="90" x2="82"  y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 1.0s   infinite"/>
+        <line x1="109" y1="90" x2="109" y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 1.5s   infinite"/>
+        <line x1="136" y1="90" x2="136" y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 2.0s   infinite"/>
+        <line x1="162" y1="90" x2="162" y2="183" stroke="#4fc3f7" stroke-width="0.9" style="animation:scanFade 4.5s ease-in-out 2.5s   infinite"/>
+
+        <!-- AURAS fixed-wing drone (animated left-right sweep) -->
+        <g style="animation:auraScan 4.5s ease-in-out infinite">
+          <rect x="-17" y="-4"  width="34" height="8"  rx="4" fill="#4fc3f7"/>
+          <rect x="-5"  y="-19" width="10" height="38" rx="2" fill="#4fc3f7" opacity="0.6"/>
+          <rect x="-16" y="-9"  width="4"  height="18" rx="2" fill="#4fc3f7" opacity="0.5"/>
+          <circle cx="17" cy="0" r="4" fill="#a0e8ff"/>
+          <circle cx="0"  cy="6" r="3"  fill="#003860"/>
+          <circle cx="0"  cy="6" r="1.3" fill="#4fc3f7" opacity="0.9"/>
+        </g>
+
+        <!-- Sensor line -->
+        <text x="93" y="120" text-anchor="middle" fill="#4fc3f7" font-size="7" font-family="monospace" opacity="0.85">multispectral · LiDAR · GPS</text>
+
+        <!-- Field under AURAS -->
+        <rect x="14" y="185" width="160" height="62" rx="4" fill="#091608"/>
+        <rect x="14" y="185" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="14" y="199" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="14" y="213" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="14" y="227" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="14" y="241" width="160" height="6"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <text x="94" y="257" text-anchor="middle" fill="#4fc3f7" font-size="6.5" font-family="monospace" opacity="0.65">raw imagery captured</text>
+
+        <!-- ── PHASE 2: ML PIPELINE ── -->
+        <!-- INPUT box -->
+        <rect x="197" y="46" width="50" height="34" rx="4" fill="#130726" stroke="#9c6bde" stroke-width="1"/>
+        <text x="222" y="62" text-anchor="middle" fill="#c59bf8" font-size="7.5" font-weight="700" font-family="sans-serif">INPUT</text>
+        <text x="222" y="73" text-anchor="middle" fill="#9c6bde"  font-size="6.5" font-family="monospace">imagery</text>
+
+        <!-- Arrow INPUT→YOLO -->
+        <line x1="248" y1="63" x2="257" y2="63" stroke="#9c6bde" stroke-width="1.2" style="animation:pArrow 1.6s ease-in-out 0s infinite" marker-end="url(#ap)"/>
+
+        <!-- YOLO/R-CNN box -->
+        <rect x="259" y="46" width="60" height="34" rx="4" fill="#130726" stroke="#9c6bde" stroke-width="1" style="animation:mlGlow 2s ease-in-out 0s infinite"/>
+        <text x="289" y="60" text-anchor="middle" fill="#fff"    font-size="7"   font-weight="700" font-family="sans-serif">YOLO/R-CNN</text>
+        <text x="289" y="70" text-anchor="middle" fill="#9c6bde" font-size="6"   font-family="monospace">region detect</text>
+        <text x="289" y="79" text-anchor="middle" fill="#9c6bde" font-size="6"   font-family="monospace">bounding boxes</text>
+
+        <!-- Arrow YOLO→ViT -->
+        <line x1="320" y1="63" x2="329" y2="63" stroke="#9c6bde" stroke-width="1.2" style="animation:pArrow 1.6s ease-in-out 0.4s infinite" marker-end="url(#ap)"/>
+
+        <!-- ViT box -->
+        <rect x="331" y="46" width="38" height="34" rx="4" fill="#130726" stroke="#c59bf8" stroke-width="1" style="animation:mlGlow 2s ease-in-out 0.8s infinite"/>
+        <text x="350" y="61" text-anchor="middle" fill="#fff"    font-size="8"   font-weight="700" font-family="sans-serif">ViT</text>
+        <text x="350" y="71" text-anchor="middle" fill="#c59bf8" font-size="6"   font-family="monospace">per-pixel</text>
+        <text x="350" y="80" text-anchor="middle" fill="#c59bf8" font-size="6"   font-family="monospace">classify</text>
+
+        <!-- Down arrow to health map -->
+        <line x1="280" y1="81" x2="280" y2="94" stroke="#9c6bde" stroke-width="1.2" style="animation:pArrow 1.6s ease-in-out 0.8s infinite" marker-end="url(#ap)"/>
+
+        <!-- HEALTH MAP label -->
+        <text x="280" y="107" text-anchor="middle" fill="#c59bf8" font-size="8" font-weight="700" font-family="monospace">CROP HEALTH MAP</text>
+
+        <!-- Health map grid: 9 cols × 3 rows, cell 18×13, origin x=197 y=110 -->
+        <!-- Row 0 -->
+        <rect x="197" y="110" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="216" y="110" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="235" y="110" width="17" height="12" rx="1" fill="#b5891a"/>
+        <rect x="254" y="110" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="273" y="110" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="292" y="110" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="311" y="110" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="330" y="110" width="17" height="12" rx="1" fill="#b5891a"/>
+        <rect x="349" y="110" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <!-- Row 1 -->
+        <rect x="197" y="124" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="216" y="124" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="235" y="124" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="254" y="124" width="17" height="12" rx="1" fill="#b5891a"/>
+        <rect x="273" y="124" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="292" y="124" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="311" y="124" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="330" y="124" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="349" y="124" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <!-- Row 2 -->
+        <rect x="197" y="138" width="17" height="12" rx="1" fill="#b5891a"/>
+        <rect x="216" y="138" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="235" y="138" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="254" y="138" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="273" y="138" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="292" y="138" width="17" height="12" rx="1" fill="#c0341a"/>
+        <rect x="311" y="138" width="17" height="12" rx="1" fill="#1d6b1d"/>
+        <rect x="330" y="138" width="17" height="12" rx="1" fill="#b5891a"/>
+        <rect x="349" y="138" width="17" height="12" rx="1" fill="#1d6b1d"/>
+
+        <!-- Legend -->
+        <rect x="200" y="160" width="9" height="8" rx="1" fill="#1d6b1d"/>
+        <text x="212" y="168" fill="#777" font-size="6.5" font-family="monospace">healthy</text>
+        <rect x="248" y="160" width="9" height="8" rx="1" fill="#b5891a"/>
+        <text x="260" y="168" fill="#777" font-size="6.5" font-family="monospace">stressed</text>
+        <rect x="302" y="160" width="9" height="8" rx="1" fill="#c0341a"/>
+        <text x="314" y="168" fill="#777" font-size="6.5" font-family="monospace">critical</text>
+
+        <!-- Closed-loop note -->
+        <text x="280" y="190" text-anchor="middle" fill="#9c6bde" font-size="7" font-family="monospace" opacity="0.9">closed-loop: health map</text>
+        <text x="280" y="201" text-anchor="middle" fill="#9c6bde" font-size="7" font-family="monospace" opacity="0.9">drives CLOUD routes directly</text>
+
+        <!-- ── PHASE 3: CLOUD DEPLOY ── -->
+        <!-- CLOUD hexacopter top-view (animated drift between targeted zones) -->
+        <g style="animation:cloudDrift 5s ease-in-out infinite">
+          <circle cx="0" cy="0" r="11" fill="#142010" stroke="#69f0ae" stroke-width="1.5"/>
+          <!-- 6 arms at 0,60,120,180,240,300 deg -->
+          <line x1="11" y1="0"    x2="21" y2="0"    stroke="#69f0ae" stroke-width="1.2"/>
+          <line x1="5.5" y1="9.5" x2="10.5" y2="18.2" stroke="#69f0ae" stroke-width="1.2"/>
+          <line x1="-5.5" y1="9.5" x2="-10.5" y2="18.2" stroke="#69f0ae" stroke-width="1.2"/>
+          <line x1="-11" y1="0"   x2="-21" y2="0"   stroke="#69f0ae" stroke-width="1.2"/>
+          <line x1="-5.5" y1="-9.5" x2="-10.5" y2="-18.2" stroke="#69f0ae" stroke-width="1.2"/>
+          <line x1="5.5" y1="-9.5"  x2="10.5" y2="-18.2"  stroke="#69f0ae" stroke-width="1.2"/>
+          <!-- Rotors -->
+          <circle cx="21"   cy="0"    r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <circle cx="10.5" cy="18.2" r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <circle cx="-10.5" cy="18.2" r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <circle cx="-21"  cy="0"    r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <circle cx="-10.5" cy="-18.2" r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <circle cx="10.5" cy="-18.2"  r="5" fill="#091509" stroke="#69f0ae" stroke-width="0.8"/>
+          <!-- Label -->
+          <text x="0" y="4" text-anchor="middle" fill="#69f0ae" font-size="6" font-family="monospace">CLOUD</text>
+          <!-- Nozzle -->
+          <circle cx="0" cy="13" r="2.5" fill="#051505"/>
+          <circle cx="0" cy="13" r="1"   fill="#69f0ae" opacity="0.8"/>
+        </g>
+
+        <!-- Field under CLOUD -->
+        <rect x="384" y="185" width="160" height="62" rx="4" fill="#091608"/>
+        <rect x="384" y="185" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="384" y="199" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="384" y="213" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="384" y="227" width="160" height="8"  rx="1" fill="#0d2209" opacity="0.9"/>
+        <rect x="384" y="241" width="160" height="6"  rx="1" fill="#0d2209" opacity="0.9"/>
+
+        <!-- Targeted highlight zones (matching stressed/critical cells) -->
+        <rect x="404" y="185" width="18" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+        <rect x="440" y="185" width="36" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+        <rect x="386" y="199" width="36" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+        <rect x="476" y="199" width="18" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+        <rect x="386" y="213" width="18" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+        <rect x="440" y="213" width="36" height="12" rx="1" fill="#1a3a10" stroke="#69f0ae" stroke-width="0.8" opacity="0.9"/>
+
+        <!-- Spray drops (fall onto targeted zones) -->
+        <circle cx="413" cy="185" r="1.8" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0s    infinite"/>
+        <circle cx="449" cy="185" r="1.8" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.25s infinite"/>
+        <circle cx="466" cy="185" r="1.5" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.5s  infinite"/>
+        <circle cx="395" cy="199" r="1.8" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.1s  infinite"/>
+        <circle cx="413" cy="199" r="1.5" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.65s infinite"/>
+        <circle cx="485" cy="199" r="1.5" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.8s  infinite"/>
+        <circle cx="395" cy="213" r="1.5" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.35s infinite"/>
+        <circle cx="458" cy="213" r="1.8" fill="#69f0ae" style="animation:sprayDrop 1.4s ease-in 0.9s  infinite"/>
+
+        <!-- Efficiency stat -->
+        <rect x="389" y="232" width="150" height="22" rx="3" fill="#091a09" stroke="#69f0ae" stroke-width="0.8"/>
+        <text x="464" y="245" text-anchor="middle" fill="#69f0ae" font-size="8" font-weight="700" font-family="sans-serif">&gt;80% fertilizer reduction</text>
+        <text x="464" y="250" text-anchor="middle" fill="#777"    font-size="5.5" font-family="monospace">vs. broadcast application</text>
+
+        <!-- ── INTER-PHASE ARROWS ── -->
+        <line x1="183" y1="145" x2="191" y2="145" stroke="#555" stroke-width="1.5" style="animation:pArrow 2s ease-in-out 0s   infinite" marker-end="url(#ag)"/>
+        <line x1="369" y1="145" x2="377" y2="145" stroke="#555" stroke-width="1.5" style="animation:pArrow 2s ease-in-out 0.5s infinite" marker-end="url(#ag)"/>
+
+        <!-- ── BOTTOM INFO BOXES ── -->
+        <rect x="4"   y="264" width="178" height="42" rx="6" fill="#060e1e" stroke="#4fc3f7" stroke-width="0.8"/>
+        <text x="93"  y="279" text-anchor="middle" fill="#4fc3f7" font-size="8" font-weight="700" font-family="sans-serif">AURAS</text>
+        <text x="93"  y="290" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">fixed-wing · GPS · multispectral</text>
+        <text x="93"  y="300" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">LiDAR · autonomous mapping</text>
+
+        <rect x="192" y="264" width="176" height="42" rx="6" fill="#080614" stroke="#9c6bde" stroke-width="0.8"/>
+        <text x="280" y="279" text-anchor="middle" fill="#b39ddb" font-size="8" font-weight="700" font-family="sans-serif">ML PIPELINE</text>
+        <text x="280" y="290" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">YOLO/R-CNN + ViT classifier</text>
+        <text x="280" y="300" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">per-pixel crop health scoring</text>
+
+        <rect x="378" y="264" width="178" height="42" rx="6" fill="#060e06" stroke="#69f0ae" stroke-width="0.8"/>
+        <text x="467" y="279" text-anchor="middle" fill="#69f0ae" font-size="8" font-weight="700" font-family="sans-serif">CLOUD</text>
+        <text x="467" y="290" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">hexacopter · electrostatic nozzles</text>
+        <text x="467" y="300" text-anchor="middle" fill="#666"    font-size="6.5" font-family="monospace">nanofertilizer · targeted only</text>
+      </svg>`;
   }
 
   if (p.visualType === "plasma") {

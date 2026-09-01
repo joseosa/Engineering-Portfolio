@@ -926,6 +926,16 @@ footer {
   overflow: hidden;
 }
 
+/* Full-stage SVG visualizations */
+.visual-stage.titan-system-viz .generated-visual,
+.visual-stage.dolagon-system-viz .generated-visual,
+.visual-stage.nanoscale-viz .generated-visual {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  inset: 0;
+}
+
 .diagram-image {
   width: min(90%, 860px);
   max-height: 80%;
