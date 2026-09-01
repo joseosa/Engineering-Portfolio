@@ -1448,7 +1448,12 @@ footer {
 
 @media (max-width: 900px) {
   .bento-top { grid-template-columns: 1fr; }
-  .bcard.featured { min-height: 460px; }
+  .bcard,
+  .bcard.featured,
+  .bento-stack .bcard,
+  .bento-bottom .bcard { height: 240px; min-height: 240px; overflow: hidden; }
+  .bcard-body { position: absolute; bottom: 0; left: 0; right: 0; }
+  .bcard.featured .bcard-body h3 { font-size: 1.2rem; }
   .bento-bottom { grid-template-columns: 1fr; }
   .research-grid { grid-template-columns: 1fr; }
   .case-grid, .visual-showcase { grid-template-columns: 1fr; }
