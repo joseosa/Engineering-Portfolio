@@ -177,8 +177,7 @@ const projects = {
     tag: "Thin Film Physics",
     title: "Nucleation Growth Stage Characterization of Ultra-Thin Metal Films via Laser Shocking and AFM Imaging",
     image: "laser-matter.png",
-    visualType: "image",
-    diagram: "Ni_#1_#4_6-29mJ.jpg",
+    visualType: "laser-viz",
     summary: "A mechanistic framework for laser-induced nucleation and growth in Ni, Al, and Cu ultra-thin films — connecting small-scale physics to aerospace materials reliability. Dr. James Im Research Group, Columbia University.",
     overview: "This project investigates laser-induced nucleation and growth phenomena in ultra-thin metallic films of Ni, Al, and Cu using controlled pulsed laser exposure and high-resolution atomic force microscopy (AFM). Ultra-thin films provide a simplified, high-observability platform for isolating nucleation kinetics under extreme thermal gradients. By quantifying island density, grain morphology, and surface evolution as a function of laser parameters, we develop a physics-based model describing nucleation rate and growth dynamics under rapid thermal cycling.",
     challenge: "Nucleation under rapid laser-driven thermal cycling involves competing timescales — from photon absorption and electron-phonon coupling through melt initiation and solidification. The challenge was to capture and quantify distinct nucleation stage transitions (pre-melting → lateral growth → fully melted and nucleated) across three material systems and a range of fluence conditions, while developing an experimental pipeline sensitive enough to reveal microstructure at the nanometer scale.",
@@ -2582,6 +2581,307 @@ function populateProjectPage() {
       <text x="464" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">radial wavefunction R_nl · Y_lm</text>
       <text x="464" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">spherical coordinate separation</text>
       <text x="464" y="310" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">published paper · Sewanee · 2024</text>
+    </svg>`;
+  }
+
+  if (p.visualType === "laser-viz") {
+    gen.style.cssText = "position:absolute;inset:0;width:100%;height:100%";
+    gen.innerHTML = `<svg viewBox="0 0 560 320" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" style="display:block">
+      <defs>
+        <style>
+          @keyframes laserPulse { 0%,100%{opacity:0.55} 50%{opacity:1} }
+          @keyframes meltGlow   { 0%,100%{opacity:0.6;r:28} 50%{opacity:1;r:33} }
+          @keyframes islandForm { 0%,100%{opacity:0.7} 60%{opacity:1} }
+          @keyframes afmScan    { 0%,100%{transform:translateX(0)} 50%{transform:translateX(-22px)} }
+          @keyframes dotPulse   { 0%,100%{opacity:0.55} 50%{opacity:0.9} }
+        </style>
+        <!-- Background -->
+        <linearGradient id="lmbg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#03060f"/>
+          <stop offset="100%" stop-color="#060d1a"/>
+        </linearGradient>
+        <!-- Substrate gradient -->
+        <linearGradient id="substrGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#2a3045"/>
+          <stop offset="100%" stop-color="#141825"/>
+        </linearGradient>
+        <!-- Ni film gradient (metallic silver) -->
+        <linearGradient id="filmGrad" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#b0c4d8"/>
+          <stop offset="60%" stop-color="#6a8aa8"/>
+          <stop offset="100%" stop-color="#3a5068"/>
+        </linearGradient>
+        <!-- Laser beam gradient (bright core, fading edges) -->
+        <linearGradient id="laserBeam" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#ff4400" stop-opacity="0"/>
+          <stop offset="40%"  stop-color="#ff6600" stop-opacity="0.35"/>
+          <stop offset="50%"  stop-color="#ff9900" stop-opacity="0.9"/>
+          <stop offset="60%"  stop-color="#ff6600" stop-opacity="0.35"/>
+          <stop offset="100%" stop-color="#ff4400" stop-opacity="0"/>
+        </linearGradient>
+        <!-- Laser beam vertical fade -->
+        <linearGradient id="laserFade" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%"   stop-color="white" stop-opacity="0"/>
+          <stop offset="60%"  stop-color="white" stop-opacity="0.6"/>
+          <stop offset="100%" stop-color="white" stop-opacity="1"/>
+        </linearGradient>
+        <!-- Melt zone glow -->
+        <radialGradient id="meltGrad" cx="50%" cy="50%" r="50%">
+          <stop offset="0%"   stop-color="#fff8e0" stop-opacity="1"/>
+          <stop offset="40%"  stop-color="#ffcc44" stop-opacity="0.8"/>
+          <stop offset="100%" stop-color="#ff6600" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Island glow (solidified metal) -->
+        <radialGradient id="islandGlow" cx="50%" cy="35%" r="60%">
+          <stop offset="0%"   stop-color="#d0e8ff"/>
+          <stop offset="100%" stop-color="#4a6a88"/>
+        </radialGradient>
+        <!-- AFM panel background -->
+        <linearGradient id="afmBg" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0%" stop-color="#030912"/>
+          <stop offset="100%" stop-color="#060f20"/>
+        </linearGradient>
+        <!-- AFM island radial glow -->
+        <radialGradient id="afmIsland" cx="50%" cy="40%" r="55%">
+          <stop offset="0%"   stop-color="#88d4ff" stop-opacity="1"/>
+          <stop offset="50%"  stop-color="#2288cc" stop-opacity="0.7"/>
+          <stop offset="100%" stop-color="#082244" stop-opacity="0"/>
+        </radialGradient>
+        <radialGradient id="afmIslandLg" cx="50%" cy="40%" r="55%">
+          <stop offset="0%"   stop-color="#aaeeff" stop-opacity="1"/>
+          <stop offset="50%"  stop-color="#44aadd" stop-opacity="0.75"/>
+          <stop offset="100%" stop-color="#082244" stop-opacity="0"/>
+        </radialGradient>
+        <!-- Glow filter -->
+        <filter id="lmglow" x="-60%" y="-60%" width="220%" height="220%">
+          <feGaussianBlur stdDeviation="3.5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="laserGlowF" x="-80%" y="-20%" width="260%" height="140%">
+          <feGaussianBlur stdDeviation="5" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <filter id="softglow" x="-40%" y="-40%" width="180%" height="180%">
+          <feGaussianBlur stdDeviation="2" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+
+      <!-- Background -->
+      <rect width="560" height="320" fill="url(#lmbg)"/>
+
+      <!-- Stars -->
+      <g opacity="0.18">
+        <circle cx="22"  cy="18"  r="0.7" fill="white"/>
+        <circle cx="55"  cy="8"   r="0.5" fill="white"/>
+        <circle cx="90"  cy="25"  r="0.6" fill="white"/>
+        <circle cx="140" cy="12"  r="0.8" fill="white"/>
+        <circle cx="185" cy="5"   r="0.5" fill="white"/>
+        <circle cx="215" cy="28"  r="0.7" fill="white"/>
+        <circle cx="260" cy="15"  r="0.6" fill="white"/>
+        <circle cx="45"  cy="42"  r="0.5" fill="white"/>
+        <circle cx="230" cy="48"  r="0.7" fill="white"/>
+      </g>
+
+      <!-- ═══ LEFT: CROSS-SECTION SCENE ═══ -->
+      <!-- Panel border -->
+      <rect x="8" y="8" width="296" height="215" rx="5" fill="none" stroke="#1a2a40" stroke-width="0.8"/>
+
+      <!-- SUBSTRATE (Silicon/Glass base) -->
+      <rect x="10" y="172" width="292" height="48" fill="url(#substrGrad)" rx="0 0 4 4"/>
+      <!-- Substrate grain texture lines -->
+      <line x1="10" y1="178" x2="302" y2="178" stroke="#1e2840" stroke-width="0.4" opacity="0.5"/>
+      <line x1="10" y1="186" x2="302" y2="186" stroke="#1e2840" stroke-width="0.4" opacity="0.4"/>
+      <line x1="10" y1="195" x2="302" y2="195" stroke="#1e2840" stroke-width="0.4" opacity="0.3"/>
+
+      <!-- Ni FILM LAYER (~20 nm represented) -->
+      <rect x="10" y="160" width="292" height="12" fill="url(#filmGrad)"/>
+      <!-- Film sheen line -->
+      <line x1="10" y1="161" x2="302" y2="161" stroke="#c8ddf0" stroke-width="0.6" opacity="0.5"/>
+
+      <!-- LASER BEAM ASSEMBLY (hits film at x=118) -->
+      <!-- Outer glow wings -->
+      <polygon points="118,22 88,160 148,160" fill="#ff6600" opacity="0.06" style="animation:laserPulse 1.2s ease-in-out infinite"/>
+      <polygon points="118,22 98,160 138,160" fill="#ff8800" opacity="0.14" style="animation:laserPulse 1.2s ease-in-out infinite"/>
+      <!-- Main beam column -->
+      <rect x="112" y="22" width="12" height="138" fill="url(#laserBeam)" style="animation:laserPulse 1.2s ease-in-out infinite"/>
+      <!-- Bright core -->
+      <rect x="115" y="22" width="6"  height="138" fill="url(#laserFade)" opacity="0.7" style="animation:laserPulse 1.2s ease-in-out infinite" filter="url(#laserGlowF)"/>
+      <!-- Laser source head -->
+      <rect x="103" y="14" width="30" height="10" rx="2" fill="#1a2535" stroke="#4488cc" stroke-width="0.8"/>
+      <rect x="108" y="16" width="20" height="6"  rx="1" fill="#223050"/>
+      <text x="118" y="12" text-anchor="middle" fill="#6699cc" font-size="6" font-family="monospace" letter-spacing="0.5">PULSED LASER</text>
+
+      <!-- MELT ZONE (ellipse at film surface) -->
+      <ellipse cx="118" cy="160" rx="33" ry="7" fill="url(#meltGrad)" opacity="0.85" style="animation:meltGlow 1.2s ease-in-out infinite" filter="url(#lmglow)"/>
+      <!-- Hot zone rim -->
+      <ellipse cx="118" cy="160" rx="34" ry="8" fill="none" stroke="#ffcc44" stroke-width="0.6" opacity="0.5" style="animation:laserPulse 1.2s ease-in-out infinite"/>
+
+      <!-- NUCLEATION ISLANDS (bumps on film surface, away from melt zone) -->
+      <!-- Left cluster — solidified islands -->
+      <g style="animation:islandForm 2.5s ease-in-out infinite">
+        <ellipse cx="40"  cy="157" rx="9"  ry="4.5" fill="url(#islandGlow)" filter="url(#softglow)"/>
+        <ellipse cx="61"  cy="156" rx="7"  ry="3.5" fill="url(#islandGlow)" filter="url(#softglow)"/>
+        <ellipse cx="79"  cy="158" rx="5"  ry="2.5" fill="url(#islandGlow)" opacity="0.85"/>
+        <ellipse cx="40"  cy="157" rx="9"  ry="4.5" fill="none" stroke="#88aacc" stroke-width="0.4" opacity="0.5"/>
+        <ellipse cx="61"  cy="156" rx="7"  ry="3.5" fill="none" stroke="#88aacc" stroke-width="0.4" opacity="0.5"/>
+      </g>
+      <!-- Smaller forming islands near melt boundary (right side of melt) -->
+      <g style="animation:islandForm 2.5s ease-in-out infinite 0.4s">
+        <ellipse cx="162" cy="158" rx="4"  ry="2"   fill="url(#islandGlow)" opacity="0.7"/>
+        <ellipse cx="175" cy="157" rx="6"  ry="3"   fill="url(#islandGlow)" opacity="0.8"/>
+        <ellipse cx="190" cy="157" rx="8"  ry="4"   fill="url(#islandGlow)" filter="url(#softglow)"/>
+        <ellipse cx="208" cy="157" rx="10" ry="5"   fill="url(#islandGlow)" filter="url(#softglow)"/>
+        <ellipse cx="226" cy="158" rx="7"  ry="3.5" fill="url(#islandGlow)" opacity="0.85"/>
+        <ellipse cx="208" cy="157" rx="10" ry="5"   fill="none" stroke="#88aacc" stroke-width="0.4" opacity="0.5"/>
+        <ellipse cx="190" cy="157" rx="8"  ry="4"   fill="none" stroke="#88aacc" stroke-width="0.4" opacity="0.4"/>
+      </g>
+
+      <!-- AFM PROBE (scanning right side, above islands) -->
+      <g style="animation:afmScan 4s ease-in-out infinite; transform-origin:270px 130px">
+        <!-- Cantilever chip base -->
+        <rect x="255" y="120" width="38" height="14" rx="2" fill="#0f1825" stroke="#3366aa" stroke-width="0.9"/>
+        <rect x="261" y="123" width="26" height="8"  rx="1" fill="#162035"/>
+        <!-- Cantilever beam (angled down toward surface) -->
+        <line x1="255" y1="127" x2="205" y2="144" stroke="#5588bb" stroke-width="1.4"/>
+        <line x1="255" y1="128" x2="205" y2="145" stroke="#88aacc" stroke-width="0.5" opacity="0.4"/>
+        <!-- Tip pyramid -->
+        <polygon points="205,144 211,144 208,158" fill="#aabbd0"/>
+        <polygon points="205,144 211,144 208,158" fill="none" stroke="#5588bb" stroke-width="0.5"/>
+        <!-- Laser reflection dot (optical detection) -->
+        <circle cx="270" cy="118" r="2.5" fill="#ff4444" opacity="0.8" style="animation:dotPulse 1.5s ease-in-out infinite"/>
+        <circle cx="270" cy="118" r="1.2" fill="#ffaaaa"/>
+      </g>
+
+      <!-- ANNOTATIONS / LABELS -->
+      <!-- Substrate label -->
+      <text x="156" y="196" text-anchor="middle" fill="#4a6080" font-size="6.5" font-family="monospace">SUBSTRATE  ·  Si / Glass</text>
+      <!-- Film label with bracket -->
+      <line x1="303" y1="160" x2="310" y2="160" stroke="#5588bb" stroke-width="0.6"/>
+      <line x1="303" y1="172" x2="310" y2="172" stroke="#5588bb" stroke-width="0.6"/>
+      <line x1="310" y1="160" x2="310" y2="172" stroke="#5588bb" stroke-width="0.6"/>
+      <!-- Laser label -->
+      <text x="82"  y="70"  fill="#ff8844" font-size="6" font-family="monospace" text-anchor="middle">29 mJ · ns pulse</text>
+      <line x1="100" y1="72" x2="111" y2="85" stroke="#ff6600" stroke-width="0.5" opacity="0.5"/>
+      <!-- Melt zone label -->
+      <text x="118" y="148" text-anchor="middle" fill="#ffcc66" font-size="5.5" font-family="monospace">melt zone</text>
+      <!-- Island label -->
+      <text x="52"  y="144" text-anchor="middle" fill="#88aacc" font-size="5.5" font-family="monospace">islands</text>
+      <line x1="52" y1="146" x2="52" y2="151" stroke="#88aacc" stroke-width="0.5" opacity="0.6"/>
+      <!-- AFM label -->
+      <text x="266" y="108" text-anchor="middle" fill="#5588bb" font-size="5.5" font-family="monospace">AFM probe</text>
+
+      <!-- ═══ RIGHT: SIMULATED AFM TOPOGRAPHY ═══ -->
+      <rect x="312" y="8" width="240" height="215" rx="5" fill="url(#afmBg)" stroke="#1a2a40" stroke-width="0.8"/>
+      <!-- Panel title -->
+      <text x="432" y="22" text-anchor="middle" fill="#3366aa" font-size="6.5" font-family="monospace" letter-spacing="0.8">AFM TOPOGRAPHY · Ni FILM</text>
+      <line x1="318" y1="26" x2="546" y2="26" stroke="#1a2a40" stroke-width="0.5"/>
+      <!-- Fluence label -->
+      <text x="432" y="35" text-anchor="middle" fill="#2a4466" font-size="5.5" font-family="monospace">29 mJ · island nucleation stage</text>
+
+      <!-- AFM islands (pseudo-colored height map — cyan = tall, dark = short) -->
+      <!-- Tall islands (large, bright) -->
+      <circle cx="348" cy="60"  r="8"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.0s"/>
+      <circle cx="388" cy="52"  r="6"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.3s"/>
+      <circle cx="425" cy="65"  r="9"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.6s"/>
+      <circle cx="468" cy="55"  r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.2s"/>
+      <circle cx="508" cy="62"  r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.9s"/>
+      <circle cx="536" cy="50"  r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.4s"/>
+      <!-- Medium islands -->
+      <circle cx="335" cy="90"  r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.7s"/>
+      <circle cx="362" cy="85"  r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 1.0s"/>
+      <circle cx="400" cy="92"  r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.5s"/>
+      <circle cx="440" cy="82"  r="8"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 1.2s"/>
+      <circle cx="478" cy="88"  r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.1s"/>
+      <circle cx="516" cy="80"  r="6"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.8s"/>
+      <circle cx="540" cy="92"  r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.4s"/>
+      <!-- Third row -->
+      <circle cx="322" cy="118" r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.6s"/>
+      <circle cx="355" cy="122" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.1s"/>
+      <circle cx="382" cy="112" r="9"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.3s"/>
+      <circle cx="418" cy="120" r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.5s"/>
+      <circle cx="452" cy="115" r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.0s"/>
+      <circle cx="490" cy="122" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.9s"/>
+      <circle cx="522" cy="110" r="8"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.4s"/>
+      <!-- Fourth row -->
+      <circle cx="340" cy="148" r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.3s"/>
+      <circle cx="370" cy="155" r="8"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.7s"/>
+      <circle cx="408" cy="145" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.2s"/>
+      <circle cx="436" cy="152" r="6"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 1.0s"/>
+      <circle cx="468" cy="148" r="9"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.5s"/>
+      <circle cx="505" cy="155" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.6s"/>
+      <circle cx="536" cy="142" r="6"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.8s"/>
+      <!-- Fifth row -->
+      <circle cx="328" cy="180" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.2s"/>
+      <circle cx="358" cy="185" r="7"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.1s"/>
+      <circle cx="392" cy="178" r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.6s"/>
+      <circle cx="422" cy="188" r="8"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 1.4s"/>
+      <circle cx="460" cy="182" r="4"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 0.3s"/>
+      <circle cx="490" cy="190" r="6"   fill="url(#afmIslandLg)" style="animation:dotPulse 3s ease-in-out infinite 0.9s"/>
+      <circle cx="524" cy="180" r="5"   fill="url(#afmIsland)"   style="animation:dotPulse 3s ease-in-out infinite 1.7s"/>
+
+      <!-- Color scale bar (height legend) -->
+      <defs>
+        <linearGradient id="afmScale" x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%"   stop-color="#030912"/>
+          <stop offset="50%"  stop-color="#2288cc"/>
+          <stop offset="100%" stop-color="#aaeeff"/>
+        </linearGradient>
+      </defs>
+      <rect x="318" y="202" width="100" height="5" rx="2" fill="url(#afmScale)"/>
+      <text x="318" y="214" fill="#2a4466" font-size="5" font-family="monospace">low</text>
+      <text x="418" y="214" fill="#5599cc" font-size="5" font-family="monospace" text-anchor="end">high  height</text>
+      <!-- Scale bar 1 μm -->
+      <line x1="440" y1="206" x2="520" y2="206" stroke="#3366aa" stroke-width="1.2"/>
+      <line x1="440" y1="203" x2="440" y2="209" stroke="#3366aa" stroke-width="1.2"/>
+      <line x1="520" y1="203" x2="520" y2="209" stroke="#3366aa" stroke-width="1.2"/>
+      <text x="480" y="214" text-anchor="middle" fill="#3366aa" font-size="5.5" font-family="monospace">1 μm</text>
+
+      <!-- ═══ PIPELINE STRIP ═══ -->
+      <rect x="8" y="228" width="296" height="22" rx="3" fill="#06101e" stroke="#1a2a40" stroke-width="0.6"/>
+      <!-- 7 steps -->
+      <text x="22"  y="241" text-anchor="middle" fill="#2a4060" font-size="5" font-family="monospace">CLEAN</text>
+      <text x="60"  y="241" text-anchor="middle" fill="#cc5500" font-size="5" font-family="monospace">IRRADIATE</text>
+      <text x="100" y="241" text-anchor="middle" fill="#3366aa" font-size="5" font-family="monospace">AFM</text>
+      <text x="136" y="241" text-anchor="middle" fill="#2a4060" font-size="5" font-family="monospace">CMP 20nm</text>
+      <text x="177" y="241" text-anchor="middle" fill="#2a4060" font-size="5" font-family="monospace">ETCH</text>
+      <text x="218" y="241" text-anchor="middle" fill="#cc5500" font-size="5" font-family="monospace">RE-IRRADIATE</text>
+      <text x="270" y="241" text-anchor="middle" fill="#3366aa" font-size="5" font-family="monospace">FINAL AFM</text>
+      <!-- Arrows between steps -->
+      <text x="39"  y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+      <text x="76"  y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+      <text x="113" y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+      <text x="152" y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+      <text x="191" y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+      <text x="240" y="241" fill="#1a3050" font-size="6" font-family="monospace">›</text>
+
+      <!-- ═══ BOTTOM INFO BOXES ═══ -->
+      <!-- Box 1: LASER PARAMETERS -->
+      <rect x="8"   y="256" width="176" height="58" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="96"  y="268" text-anchor="middle" fill="#cc5500" font-size="6.5" font-family="monospace" letter-spacing="0.5">LASER PARAMETERS</text>
+      <line x1="14" y1="272" x2="178" y2="272" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="16"  y="282" fill="#3a5a7a" font-size="6" font-family="monospace">source · Nd:YAG  (266 nm UV)</text>
+      <text x="16"  y="292" fill="#3a5a7a" font-size="6" font-family="monospace">pulse width · ns regime</text>
+      <text x="16"  y="302" fill="#3a5a7a" font-size="6" font-family="monospace">fluence range · 1.3 – 29 mJ</text>
+      <text x="16"  y="312" fill="#3a5a7a" font-size="6" font-family="monospace">mask · selective area irradiation</text>
+
+      <!-- Box 2: NUCLEATION PHYSICS -->
+      <rect x="192" y="256" width="176" height="58" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="280" y="268" text-anchor="middle" fill="#3366aa" font-size="6.5" font-family="monospace" letter-spacing="0.5">NUCLEATION PHYSICS</text>
+      <line x1="198" y1="272" x2="362" y2="272" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="200" y="282" fill="#3a5a7a" font-size="6" font-family="monospace">stages · pre-melt → lateral growth</text>
+      <text x="200" y="292" fill="#3a5a7a" font-size="6" font-family="monospace">        → full melt → renucleation</text>
+      <text x="200" y="302" fill="#3a5a7a" font-size="6" font-family="monospace">grain morphology → fluence map</text>
+      <text x="200" y="312" fill="#3a5a7a" font-size="6" font-family="monospace">island density quantified via AFM</text>
+
+      <!-- Box 3: MATERIALS -->
+      <rect x="376" y="256" width="176" height="58" rx="4" fill="#060e1c" stroke="#1a2a3c" stroke-width="0.7"/>
+      <text x="464" y="268" text-anchor="middle" fill="#4a8a5a" font-size="6.5" font-family="monospace" letter-spacing="0.5">MATERIALS · APPLICATIONS</text>
+      <line x1="382" y1="272" x2="546" y2="272" stroke="#1a2a3c" stroke-width="0.5"/>
+      <text x="384" y="282" fill="#3a5a7a" font-size="6" font-family="monospace">Ni · turbine blade repair (superalloy)</text>
+      <text x="384" y="292" fill="#3a5a7a" font-size="6" font-family="monospace">Al · fuselage &amp; cryogenic tanks</text>
+      <text x="384" y="302" fill="#3a5a7a" font-size="6" font-family="monospace">Cu · satellite electronics · EMR</text>
+      <text x="384" y="312" fill="#3a5a7a" font-size="6" font-family="monospace">Dr. James Im Lab · Columbia Univ.</text>
     </svg>`;
   }
 
