@@ -1526,7 +1526,7 @@ footer {
 }
 
 /* Nanofab card: background image has text — darken it */
-.rcard[href*="nanofab"] .rcard-img { opacity: 0.05; }
+.rcard[href*="nanofab"] .rcard-img { opacity: 0; }
 
 @media (max-width: 680px) {
   /* Nav: hide section links so logo + Resume + Contact fit */
