@@ -2573,7 +2573,7 @@ function populateProjectPage() {
       <text x="277" y="251" text-anchor="middle" fill="#69f0ae" font-size="7.5" font-weight="700" font-family="sans-serif">WF₆ BOND MATCH</text>
       <text x="277" y="263" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">D(r) peak → r = 1.832 Å</text>
       <text x="277" y="272" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">matches measured W-F bond length</text>
-      <text x="277" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">CrF₆, MoF₆, WF₆ all validated</text>
+      <text x="277" y="281" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">UF₆, WF₆, MoF₆ all validated</text>
       <text x="277" y="290" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">effective temperature T ≈ 11.5 mK</text>
       <text x="277" y="310" text-anchor="middle" fill="#666" font-size="6" font-family="monospace">Oh symmetry · 6 equivalent bonds</text>
 
